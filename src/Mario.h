@@ -7,17 +7,19 @@
 
 class Mario {
 public:
-	Mario(double px, double py);
+    Mario(double px, double py);
 
-	void render(Vector2 top_left, Vector2 size);
+    void render(Vector2 top_left, Vector2 size);
 
 
 
-	void update(bool left, bool right, bool up, bool down);
+    void update(bool left, bool right, bool up, bool down);
 private:
-	double positionx;
-	double positiony;
-	Vector2 mario_size = {64, 64};
+    double positionx{};
+    double positiony{};
+    double dx{};
+    double dy{};
+    Vector2 mario_size = {64, 64};
 };
 
-#endif 
+#endif
