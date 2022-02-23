@@ -14,7 +14,7 @@ void Level::render(Vector2 top_left, Vector2 size) {
             if(tiles[y][x]){
                 DrawRectangleV(left, step, RED);
             } else {
-                DrawRectangleV(left, step, BLUE);
+
             }
         }
     }

@@ -41,8 +41,8 @@ int main(){
         DrawTexture(texture, 0, 0, WHITE);
 
         Vector2 top_left = {(float)0, (float)0};
-        Vector2 bottom_right = {(float)800, (float)800};
-        // level.render(top_left, bottom_right);
+        Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
+         level.render(top_left, bottom_right);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
