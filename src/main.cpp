@@ -4,10 +4,14 @@
 int main(){
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 800;
+    const int screenWidth = 1024;
+    const int screenHeight = 1024;
 
     InitWindow(screenWidth, screenHeight, "Mario Maker");
+
+    Image background = LoadImage("images/mario_background.png");
+    Texture2D texture = LoadTextureFromImage(background);
+    UnloadImage(background);
 
     int boxPositionY = screenHeight/2 - 40;
     int scrollSpeed = 4;            // Scrolling speed in pixels
@@ -34,9 +38,11 @@ int main(){
 
         ClearBackground(RAYWHITE);
 
+        DrawTexture(texture, 0, 0, WHITE);
+
         Vector2 top_left = {(float)0, (float)0};
         Vector2 bottom_right = {(float)800, (float)800};
-        level.render(top_left, bottom_right);
+        // level.render(top_left, bottom_right);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
