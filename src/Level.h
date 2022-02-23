@@ -12,7 +12,7 @@ class Level {
 public:
     Level(){};
     void render(Vector2 top_left, Vector2 bottom_right);
-    std::array<std::array<bool, 8>, 8> tiles{};
+    std::array<std::array<bool, 16>, 16> tiles{};
 };
 
 
