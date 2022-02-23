@@ -20,4 +20,4 @@ private:
 	Vector2 mario_size = {64, 64};
 };
 
-#endif //MARIO_H
+#endif 

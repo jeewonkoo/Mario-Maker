@@ -24,9 +24,9 @@ void Mario::update(bool left, bool right, bool up, bool down) {
 		positionx -= 5;
 	}
 	else if (up == true) {
-		positiony += 5;
+		positiony -= 5;
 	}
 	else if (down == true) {
-		positiony -= 5;
+		positiony += 5;
 	}
 }
