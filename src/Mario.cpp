@@ -7,8 +7,8 @@ Mario::Mario(double px, double py) {
 	positiony = py;
 }
 
-void render() {
-
+void render(Vector2 top_left, Vector2 size) {
+	DrawRectangleV(top_left, size, GREEN);
 }
 
 
