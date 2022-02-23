@@ -23,7 +23,7 @@ int main(){
         }
     }
 
-    Mario mario;
+    Mario mario(0,0);
 
     // Main game loop
     while (!WindowShouldClose()){
