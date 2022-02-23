@@ -7,12 +7,28 @@
 
 #include<array>
 #include<raylib.h>
+#include<random>
+
+struct Tile {
+    bool solid{};
+};
 
 class Level {
 public:
-    Level(){};
+    Level(){
+        for(int x = 0; x < 16; x++){
+            for(int y = 0; y < 16; y++){
+                tiles[15-y][x].solid = rand() % (y+1) == 0;
+            }
+        }
+    };
+
     void render(Vector2 top_left, Vector2 bottom_right);
-    std::array<std::array<bool, 16>, 16> tiles{};
+    Tile at(double x, double y);
+private:
+    static constexpr size_t width = 16;
+    static constexpr size_t height = 16;
+    std::array<std::array<Tile, width>, height> tiles{};
 };
 
 
