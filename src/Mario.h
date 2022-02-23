@@ -8,8 +8,15 @@
 class Mario {
 public:
 	Mario() {};
-	void render(Vector2 top_left, Vector2 size);
-	void update(bool left, bool right, bool up, bool down);
-};
 
-#endif //MARIO_H
+	Mario(double px, double py);
+
+	void render(Vector2 top_left, Vector2 size);
+
+
+
+	void update(bool left, bool right, bool up, bool down);
+private:
+	double positionx;
+	double positiony;
+};
