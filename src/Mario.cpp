@@ -3,8 +3,8 @@
 #include <raymath.h>
 
 
-void render() {
-
+void render(Vector2 top_left, Vector2 size) {
+	DrawRectangleV(top_left, size, GREEN);
 }
 
 
