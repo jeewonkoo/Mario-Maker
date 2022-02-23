@@ -20,3 +20,5 @@ private:
 	double positionx;
 	double positiony;
 };
+
+#endif 
