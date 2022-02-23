@@ -7,8 +7,6 @@
 
 class Mario {
 public:
-	Mario() {};
-
 	Mario(double px, double py);
 
 	void render(Vector2 top_left, Vector2 size);
@@ -20,3 +18,5 @@ private:
 	double positionx;
 	double positiony;
 };
+
+#endif //MARIO_H

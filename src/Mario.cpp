@@ -8,12 +8,13 @@ Mario::Mario(double px, double py) {
 }
 
 void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawRectangleV(top_left, size, GREEN);
+	DrawRectangleV(Vector2Add(top_left, {(float)positionx, (float)positiony}), size, GREEN);
+
 }
 
 
 void Mario::update(bool left, bool right, bool up, bool down) {
-	if (left == true and right == true) {
+	if (left == true && right == true) {
 		positionx += 0;
 	}
 	else if (right == true) {
