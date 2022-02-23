@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(raylib)
 
-add_executable(mario_maker src/main.cpp)
+add_executable(mario_maker src/main.cpp src/Level.cpp)
 target_link_libraries(mario_maker PRIVATE raylib)
