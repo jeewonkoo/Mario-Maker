@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "Level.h"
+#include "Mario.h"
 #include <cmath>
 int main(){
     // Initialization
@@ -21,6 +22,9 @@ int main(){
             level.tiles[15-y][x] = rand() % (y+1) == 0;
         }
     }
+
+    Mario mario;
+
     // Main game loop
     while (!WindowShouldClose()){
 
@@ -40,6 +44,8 @@ int main(){
             Vector2 top_left = {(float)0, (float)0};
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
+
+            mario.render(top_left, bottom_right);
 
         EndDrawing();
     }

@@ -4,5 +4,5 @@ project(mario_maker)
 
 add_subdirectory(raylib)
 
-add_executable(mario_maker src/main.cpp src/Level.cpp)
+add_executable(mario_maker src/main.cpp src/Level.cpp src/Mario.cpp)
 target_link_libraries(mario_maker PRIVATE raylib)
