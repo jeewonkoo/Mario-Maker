@@ -10,7 +10,8 @@
 ********************************************************************************************/
 
 #include <raylib.h>
-
+#include "Level.h"
+#include <cmath>
 int main(void)
 {
     // Initialization
@@ -25,7 +26,12 @@ int main(void)
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    Level level;
+    for(int x = 0; x < 8; x++){
+        for(int y = 0; y < 8; y++){
+            level.tiles[x][y] = rand() % 2;
+        }
+    }
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
         {
@@ -40,10 +46,13 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, MAROON);
-
-        DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
-        DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
+        Vector2 top_left = {(float)0, (float)0};
+        Vector2 bottom_right = {(float)100, (float)100};
+        level.render(top_left, bottom_right);
+//        DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, MAROON);
+//
+//        DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
+//        DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
