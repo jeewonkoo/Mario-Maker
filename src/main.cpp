@@ -13,11 +13,8 @@ int main(){
     Texture2D texture = LoadTextureFromImage(background);
     UnloadImage(background);
 
-    int boxPositionY = screenHeight/2 - 40;
-    int scrollSpeed = 4;            // Scrolling speed in pixels
-
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+
     Level level;
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
@@ -25,33 +22,29 @@ int main(){
         }
     }
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-        {
-        // Update
-        //----------------------------------------------------------------------------------
-        boxPositionY -= (GetMouseWheelMove()*scrollSpeed);
-        //----------------------------------------------------------------------------------
+    while (!WindowShouldClose()){
 
-        // Draw
-        //----------------------------------------------------------------------------------
+        PollInputEvents();
+
+        bool left = IsKeyDown(KEY_LEFT);
+        bool right = IsKeyDown(KEY_RIGHT);
+        bool up = IsKeyDown(KEY_UP);
+        bool down = IsKeyDown(KEY_DOWN);
+
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+            ClearBackground(RAYWHITE);
 
-        DrawTexture(texture, 0, 0, WHITE);
+            DrawTexture(texture, 0, 0, WHITE);
 
-        Vector2 top_left = {(float)0, (float)0};
-        Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
-         level.render(top_left, bottom_right);
+            Vector2 top_left = {(float)0, (float)0};
+            Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
+            level.render(top_left, bottom_right);
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
-        }
+    }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
 
     return 0;
 }
