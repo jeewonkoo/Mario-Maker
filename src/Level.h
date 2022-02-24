@@ -8,10 +8,7 @@
 #include<array>
 #include<raylib.h>
 #include<random>
-
-struct Tile {
-    bool solid{};
-};
+#include"Tile.h"
 
 class Level {
 public:

@@ -9,25 +9,24 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 
 }
 
-
 void Mario::update(bool left, bool right, bool up, bool down) {
 	if (left && right) {
 		velocity.x += 0;
 	}
 	else if (right) {
-		velocity.x += 0.1;
+		velocity.x += 0.05;
 	}
 	else if (left) {
-		velocity.x -= 0.1;
+		velocity.x -= 0.05;
 	}
 
 	if (up && position.y == 15) {
-	    velocity.y -= 2;
+	    velocity.y -= 1;
 	} else if (down) {
-		velocity.y += 0.1;
+		velocity.y += 0.05;
 	}
 
-	velocity.y += 0.1;
+	velocity.y += 0.05;
 
 
 	position = Vector2Add(position, velocity);
@@ -37,5 +36,5 @@ void Mario::update(bool left, bool right, bool up, bool down) {
 	    velocity.y = 0;
 	}
 
-	velocity = Vector2Multiply(velocity, {0.2f, 0.2f});
+	velocity = Vector2Multiply(velocity, {0.8f, 0.8f});
 }
