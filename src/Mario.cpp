@@ -14,19 +14,22 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 		velocity.x += 0;
 	}
 	else if (right) {
-		velocity.x += 0.05;
+		velocity.x += acceleration;
 	}
 	else if (left) {
-		velocity.x -= 0.05;
+		velocity.x -= acceleration;
 	}
 
 	if (space && grounded && (last_space != space)) {
-	    velocity.y -= 0.45;
-	} else if (down) {
-		velocity.y += 0.05;
+	    frames_since_jump = 0;
+	    velocity.y -= jump_instant_accel;
 	}
 
-	velocity.y += 0.02;
+	if (space && (frames_since_jump < jump_continuous_frames)){
+	    velocity.y -= jump_continuous_accel;
+	}
+
+	velocity.y += gravity;
 
 
 	position = Vector2Add(position, velocity);
@@ -64,4 +67,5 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 	}
 
 	last_space = space;
+	frames_since_jump++;
 }

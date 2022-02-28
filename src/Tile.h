@@ -6,6 +6,7 @@
 #define MARIO_MAKER_TILE_H
 
 #include<raymath.h>
+#include<raylib.h>
 #include<vector>
 
 struct Tile {
