@@ -1,14 +1,14 @@
-#ifndef MARIO_MAKER_LEVEL_H
-#define MARIO_MAKER_LEVEL_H
+#ifndef VILLAIN_H
+#define VILLAIN_H
 
 #include<raylib.h>
 
 class Villain {
-    public:
-        Villain();
+public:
+    Villain();
 
-    private:
-}
+private:
+};
 
 
 
