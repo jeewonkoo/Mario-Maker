@@ -23,15 +23,21 @@ int main(){
     Texture2D mario_texture = LoadTextureFromImage(mario_img);
     UnloadImage(mario_img);
 
+
     Image goomba_img = LoadImage("image/25685.png");
     Texture2D goomba_texture = LoadTextureFromImage(goomba_img);
     UnloadImage(goomba_img);
+
+    Image tile_img = LoadImage("images/mario_sprites_2.png");
+    Texture2D tile_texture = LoadTextureFromImage(tile_img);
+    UnloadImage(tile_img);
+
 
     //DrawTextureQuad(page2_texture, )
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    Level level{};
+    Level level(tile_texture);
 
 
     Mario mario(8,0, mario_texture);

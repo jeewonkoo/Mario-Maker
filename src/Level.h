@@ -13,7 +13,9 @@
 
 class Level {
 public:
-    Level(){
+    Level(Texture texture){
+        tex = texture;
+
         for(int x = 0; x < 16; x++){
             for(int y = 0; y < 16; y++){
                 tiles[15-y][x].solid = rand() % (y+1) == 0;
@@ -32,6 +34,8 @@ private:
     std::array<std::array<Tile, width>, height> tiles{};
 
     static std::optional<Collision> collide_rectangle(Rectangle from, Rectangle against) ;
+
+    Texture tex;
 };
 
 
