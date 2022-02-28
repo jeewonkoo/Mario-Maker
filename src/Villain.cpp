@@ -7,7 +7,7 @@
 Villain::Villain(float px, float py): position({px, py}), velocity({0,0}){}
 
 void Villain::render(Vector2 top_left, Vector2 size) {
-
+      
 }
 
 void Villain::update(const Level& level, bool left, bool right, bool up, bool down) {
@@ -22,3 +22,4 @@ void Villain::update(const Level& level, bool left, bool right, bool up, bool do
     else if (down) velocity.x += 0.05;
 
 }
+
