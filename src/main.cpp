@@ -40,8 +40,8 @@ int main(){
     Level level(tile_texture);
 
 
-    Mario mario(8,0, mario_texture);
-    Villain goomba(512, 512, goomba_texture);
+    Mario mario(10,10, mario_texture);
+    Villain goomba(10, 0, goomba_texture);
 
     // Main game loop
     while (!WindowShouldClose()){
