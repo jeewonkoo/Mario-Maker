@@ -8,8 +8,7 @@ class Villain {
         Villain();
 
     private:
-}
-
+};
 
 
 #endif //MARIO_MAKER_LEVEL_H

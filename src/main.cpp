@@ -29,8 +29,9 @@ int main(){
         bool right = IsKeyDown(KEY_RIGHT);
         bool up = IsKeyDown(KEY_UP);
         bool down = IsKeyDown(KEY_DOWN);
+        bool space = IsKeyDown(KEY_SPACE);
 
-        mario.update(level, left, right, up, down);
+        mario.update(level, left, right, up, down, space);
         BeginDrawing();
 
             ClearBackground(RAYWHITE);

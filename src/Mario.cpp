@@ -10,7 +10,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 
 }
 
-void Mario::update(const Level &level, bool left, bool right, bool up, bool down) {
+void Mario::update(const Level &level, bool left, bool right, bool up, bool down, bool space) {
 	if (left && right) {
 		velocity.x += 0;
 	}
@@ -21,7 +21,7 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 		velocity.x -= 0.05;
 	}
 
-	if (up && grounded) {
+	if (space && grounded && (last_space != space)) {
 	    velocity.y -= 0.45;
 	} else if (down) {
 		velocity.y += 0.05;
@@ -52,4 +52,5 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
     }
 
 	velocity = Vector2Multiply(velocity, {0.9f, 0.9f});
+	last_space = space;
 }
