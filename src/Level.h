@@ -17,9 +17,10 @@ public:
         tex = texture;
 
         for(int x = 0; x < 16; x++){
-            for(int y = 0; y < 16; y++){
-                tiles[15-y][x].solid = rand() % (y+1) == 0;
-            }
+            tiles[15][x].solid = true;
+//            for(int y = 0; y < 16; y++){
+//                tiles[15-y][x].solid = rand() % (y+1) == 0;
+//            }
         }
     };
 
