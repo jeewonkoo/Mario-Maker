@@ -1,46 +1,48 @@
 
 #include "Mario.h"
 #include <raymath.h>
+#include <algorithm>
 
-Mario::Mario(double px, double py) {
-	positionx = px;
-	positiony = py;
-}
+Mario::Mario(float px, float py): position({px, py}), velocity({0,0}){}
 
 void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawRectangleV(Vector2Add(top_left, {(float)positionx * 64, (float)positiony * 64}), mario_size, GREEN);
+	DrawRectangleV(Vector2Add(top_left, Vector2Multiply(position, {64.f, 64.f})), mario_size, GREEN);
 
 }
 
-
-void Mario::update(bool left, bool right, bool up, bool down) {
+void Mario::update(const Level &level, bool left, bool right, bool up, bool down) {
 	if (left && right) {
-		dx += 0;
+		velocity.x += 0;
 	}
 	else if (right) {
-		dx += 0.1;
+		velocity.x += 0.05;
 	}
 	else if (left) {
-		dx -= 0.1;
+		velocity.x -= 0.05;
 	}
 
-	if (up && positiony == 15) {
-	    dy -= 2;
+	if (up && grounded) {
+	    velocity.y -= 1;
 	} else if (down) {
-		dy += 0.1;
+		velocity.y += 0.05;
 	}
 
-	dy += 0.1;
+	velocity.y += 0.05;
 
 
-	positionx += dx;
-	positiony += dy;
+	position = Vector2Add(position, velocity);
 
-	if(positiony > 15){
-	    positiony = 15;
-	    dy = 0;
+	auto collisions = level.collide(rect());
+
+	if(collisions.eject_vector.has_value()){
+	    auto eject = collisions.eject_vector.value();
+	    position = Vector2Add(position, eject);
+	    auto eject_norm = Vector2Normalize(eject);
+        auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
+        velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
 	}
 
-	dx *= 0.5;
-	dy *= 0.5;
+	grounded = std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end();
+
+	velocity = Vector2Multiply(velocity, {0.8f, 0.8f});
 }

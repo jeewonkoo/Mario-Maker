@@ -22,12 +22,7 @@ int main(){
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    Level level;
-    for(int x = 0; x < 16; x++){
-        for(int y = 0; y < 16; y++){
-            level.tiles[15-y][x] = rand() % (y+1) == 0;
-        }
-    }
+    Level level{};
 
 
     Mario mario(0,0);
@@ -42,7 +37,7 @@ int main(){
         bool up = IsKeyDown(KEY_UP);
         bool down = IsKeyDown(KEY_DOWN);
 
-        mario.update(left, right, up, down);
+        mario.update(level, left, right, up, down);
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
