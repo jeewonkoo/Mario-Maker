@@ -22,27 +22,34 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 	}
 
 	if (up && grounded) {
-	    velocity.y -= 1;
+	    velocity.y -= 0.45;
 	} else if (down) {
 		velocity.y += 0.05;
 	}
 
-	velocity.y += 0.05;
+	velocity.y += 0.02;
 
 
 	position = Vector2Add(position, velocity);
 
-	auto collisions = level.collide(rect());
+	grounded = false;
+	while(true){
+	    auto collisions = level.collide(rect());
 
-	if(collisions.eject_vector.has_value()){
-	    auto eject = collisions.eject_vector.value();
-	    position = Vector2Add(position, eject);
-	    auto eject_norm = Vector2Normalize(eject);
-        auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
-        velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
-	}
+        if(collisions.eject_vector.has_value()){
+            auto eject = collisions.eject_vector.value();
+            position = Vector2Add(position, eject);
+            auto eject_norm = Vector2Normalize(eject);
+            auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
+            velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
 
-	grounded = std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end();
+            if(std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end()){
+                grounded = true;
+            }
+        } else {
+            break;
+        }
+    }
 
-	velocity = Vector2Multiply(velocity, {0.8f, 0.8f});
+	velocity = Vector2Multiply(velocity, {0.9f, 0.9f});
 }

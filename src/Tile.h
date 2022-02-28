@@ -22,6 +22,7 @@ enum class Side {
 struct Collision {
     Side collision_side;
     Vector2 eject_vector;
+    float area;
 };
 
 struct TileCollision {
