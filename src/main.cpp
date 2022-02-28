@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "Level.h"
 #include "Mario.h"
+#include "Villain.h"
 #include <cmath>
 int main(){
     // Initialization
@@ -22,9 +23,15 @@ int main(){
     Texture2D mario_texture = LoadTextureFromImage(mario_img);
     UnloadImage(mario_img);
 
+
+    Image goomba_img = LoadImage("image/25685.png");
+    Texture2D goomba_texture = LoadTextureFromImage(goomba_img);
+    UnloadImage(goomba_img);
+
     Image tile_img = LoadImage("images/mario_sprites_2.png");
     Texture2D tile_texture = LoadTextureFromImage(tile_img);
     UnloadImage(tile_img);
+
 
     //DrawTextureQuad(page2_texture, )
 
@@ -34,6 +41,7 @@ int main(){
 
 
     Mario mario(8,0, mario_texture);
+    Villain goomba(512, 512, goomba_texture);
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -46,6 +54,7 @@ int main(){
         bool down = IsKeyDown(KEY_DOWN);
         bool space = IsKeyDown(KEY_SPACE);
 
+        goomba.update(level);
         mario.update(level, left, right, up, down, space);
         BeginDrawing();
 
@@ -57,6 +66,7 @@ int main(){
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
 
+            goomba.render(top_left, bottom_right);
             mario.render(top_left, bottom_right);
 
         EndDrawing();
