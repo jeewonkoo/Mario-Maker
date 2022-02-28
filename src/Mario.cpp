@@ -10,6 +10,8 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 }
 
 void Mario::update(const Level &level, bool left, bool right, bool up, bool down, bool space) {
+    float acceleration = grounded ? ground_acceleration : air_acceleration;
+    float traction = grounded ? ground_traction : air_traction;
 	if (left && right) {
 		velocity.x += 0;
 	}
@@ -39,7 +41,11 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 	    auto collisions = level.collide(rect());
 
         if(collisions.eject_vector.has_value()){
+
             auto eject = collisions.eject_vector.value();
+
+            //ignore collisions that are impossible because of our movement direction
+            if(Vector2DotProduct(eject, velocity) > 0) break;
             position = Vector2Add(position, eject);
             auto eject_norm = Vector2Normalize(eject);
             auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
@@ -53,17 +59,17 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
         }
     }
 
-	if(velocity.x < -max_speed){
-	    velocity.x = -max_speed;
-	}
-	if(velocity.x > max_speed){
-	    velocity.x = max_speed;
-	}
+
+	velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
+
 	if(velocity.y > max_fall){
 	    velocity.y = max_fall;
 	}
-	if(grounded){
-	    velocity.x = velocity.x - velocity.x * ground_traction;
+
+	if(velocity.x > 0){
+	    velocity.x = std::max(velocity.x - traction, 0.f);
+	} else {
+	    velocity.x = std::min(velocity.x + traction, 0.f);
 	}
 
 	last_space = space;
