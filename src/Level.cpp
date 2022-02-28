@@ -53,7 +53,7 @@ TileCollisionSet Level::collide(Rectangle rect) const{
     }
 
     auto closest = std::max_element(collisions.collisions.begin(),  collisions.collisions.end(), [](auto & a, auto & b){
-        return Vector2LengthSqr(a.collision.eject_vector) < Vector2LengthSqr(b.collision.eject_vector);
+        return a.collision.area < b.collision.area;
     });
 
     if(closest != collisions.collisions.end()){
@@ -76,11 +76,20 @@ std::optional<Collision> Level::collide_rectangle(Rectangle from, Rectangle agai
     float bottom = -from.y - from.height + against.y;
     float closest = std::max({right, left, top, bottom});
 
-    if(closest > 0) return std::nullopt;
-    if(closest == left) return {Collision{ .collision_side = Side::LEFT, .eject_vector = Vector2{-left, 0}}};
-    if(closest == right) return {Collision{ .collision_side = Side::RIGHT, .eject_vector = Vector2{right, 0}}};
-    if(closest == top) return {Collision{ .collision_side = Side::TOP, .eject_vector = Vector2{0, -top}}};
-    if(closest == bottom) return {Collision{ .collision_side = Side::BOTTOM, .eject_vector = Vector2{0, bottom}}};
+
+
+    if(closest >= 0) return std::nullopt;
+
+
+    float x_dist = std::min(std::abs(from.x - against.x - against.width), std::abs(against.x - from.x - from.width));
+    float y_dist = std::min(std::abs(from.y - against.y - against.height), std::abs(against.y - from.y - from.height));
+    float area = x_dist * y_dist;
+
+
+    if(closest == left) return {Collision{ Side::LEFT, Vector2{-left, 0}, area}};
+    if(closest == right) return {Collision{ Side::RIGHT, Vector2{right, 0}, area}};
+    if(closest == top) return {Collision{ Side::TOP, Vector2{0, -top}, area}};
+    if(closest == bottom) return {Collision{ Side::BOTTOM, Vector2{0, bottom}, area}};
 
     return std::nullopt;
 }
