@@ -21,11 +21,19 @@ private:
     Texture tex;
     //whether mario is currently grounded
     bool grounded{};
+    bool jumping{};
     //whether mario pressed space in the previous frame
     bool last_space{};
+
+    int frames_since_jump{};
+    static constexpr float jump_instant_accel = 0.25;
+    static constexpr float jump_continuous_accel = 0.017;
+    static constexpr int jump_continuous_frames = 17;
+    static constexpr float gravity = 0.02;
+    static constexpr float acceleration = 0.015;
     static constexpr float max_speed = 0.5;
     static constexpr float max_fall = 0.5;
-    static constexpr float ground_traction = 0.2;
+    static constexpr float ground_traction = 0.1;
 };
 
 #endif
