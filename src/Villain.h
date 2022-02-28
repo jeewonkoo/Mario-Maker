@@ -11,7 +11,9 @@ public:
 
     void render(Vector2 top_left, Vector2 size);
 
-    void update(const Level &level);
+    virtual void update(const Level& level, bool left, bool right, bool up, bool down);
+
+    Rectangle rect() const { return {position.x, position.y, 1.0, 1.0};}
 
 private:
     Vector2 position;
