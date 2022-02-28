@@ -18,6 +18,10 @@ int main(){
     Texture2D page2_texture = LoadTextureFromImage(page2);
     UnloadImage(page2);
 
+    Image mario_img = LoadImage("images/marios.png");
+    Texture2D mario_texture = LoadTextureFromImage(mario_img);
+    UnloadImage(mario_img);
+
     //DrawTextureQuad(page2_texture, )
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -25,7 +29,7 @@ int main(){
     Level level{};
 
 
-    Mario mario(0,0);
+    Mario mario(8,0, mario_texture);
 
     // Main game loop
     while (!WindowShouldClose()){
