@@ -11,7 +11,7 @@ public:
 
     void render(Vector2 top_left, Vector2 size);
 
-    void update(const Level& level, bool left, bool right, bool up, bool down);
+    void update(const Level &level);
 
 private:
     Vector2 position;

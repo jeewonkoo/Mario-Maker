@@ -3,18 +3,14 @@
 #include <raymath.h>
 #include <algorithm>
 
-Mario::Mario(float px, float py): position({px, py}), velocity({0,0}){}
+Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
 
 void Mario::render(Vector2 top_left, Vector2 size) {
 	//DrawRectangleV(Vector2Add(top_left, Vector2Multiply(position, {64.f, 64.f})), mario_size, GREEN);
 
-	Image mario_img = LoadImage("images/marios.png");
-	Texture2D mario_texture = LoadTextureFromImage(mario_img);
-	UnloadImage(mario_img);
-
 	//DrawTextureV(mario_texture, Vector2Add(top_left, Vector2Multiply(position, { 64.f, 64.f })), WHITE);
 
-	DrawTextureRec(mario_texture, Rectangle{x, y, width, height}, Vector2Add(top_left, Vector2Multiply(position, { 64.f, 64.f })), WHITE);
+	DrawTextureRec(tex, Rectangle{position.x, position.y, 64, 64}, Vector2Add(top_left, Vector2Multiply(position, { 64.f, 64.f })), WHITE);
 }
 
 void Mario::update(const Level &level, bool left, bool right, bool up, bool down, bool space) {
@@ -58,6 +54,18 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
         }
     }
 
-	velocity = Vector2Multiply(velocity, {0.9f, 0.9f});
+	if(velocity.x < -max_speed){
+	    velocity.x = -max_speed;
+	}
+	if(velocity.x > max_speed){
+	    velocity.x = max_speed;
+	}
+	if(velocity.y > max_fall){
+	    velocity.y = max_fall;
+	}
+	if(grounded){
+	    velocity.x = velocity.x - velocity.x * ground_traction;
+	}
+
 	last_space = space;
 }
