@@ -11,12 +11,19 @@ int main(){
     InitWindow(screenWidth, screenHeight, "Mario Maker");
 
     Image background = LoadImage("images/mario_background.png");
-    Texture2D texture = LoadTextureFromImage(background);
+    Texture2D background_texture = LoadTextureFromImage(background);
     UnloadImage(background);
+
+    Image page2 = LoadImage("images/mario_sprites2.png");
+    Texture2D page2_texture = LoadTextureFromImage(page2);
+    UnloadImage(page2);
+
+    //DrawTextureQuad(page2_texture, )
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     Level level{};
+
 
     Mario mario(0,0);
 
@@ -35,7 +42,7 @@ int main(){
 
             ClearBackground(RAYWHITE);
 
-            DrawTexture(texture, 0, 0, WHITE);
+            DrawTexture(background_texture, 0, 0, WHITE);
 
             Vector2 top_left = {(float)0, (float)0};
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
