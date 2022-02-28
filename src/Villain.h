@@ -1,0 +1,4 @@
+#ifndef MARIO_MAKER_LEVEL_H
+#define MARIO_MAKER_LEVEL_H
+
+#endif //MARIO_MAKER_LEVEL_H
