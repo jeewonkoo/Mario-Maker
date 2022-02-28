@@ -1,6 +1,7 @@
 
 #include "Mario.h"
 #include <raymath.h>
+#include <algorithm>
 
 Mario::Mario(float px, float py): position({px, py}), velocity({0,0}){}
 
@@ -9,7 +10,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 
 }
 
-void Mario::update(bool left, bool right, bool up, bool down) {
+void Mario::update(const Level &level, bool left, bool right, bool up, bool down) {
 	if (left && right) {
 		velocity.x += 0;
 	}
@@ -20,7 +21,7 @@ void Mario::update(bool left, bool right, bool up, bool down) {
 		velocity.x -= 0.05;
 	}
 
-	if (up && position.y == 15) {
+	if (up && grounded) {
 	    velocity.y -= 1;
 	} else if (down) {
 		velocity.y += 0.05;
@@ -31,10 +32,17 @@ void Mario::update(bool left, bool right, bool up, bool down) {
 
 	position = Vector2Add(position, velocity);
 
-	if(position.y > 15){
-	    position.y = 15;
-	    velocity.y = 0;
+	auto collisions = level.collide(rect());
+
+	if(collisions.eject_vector.has_value()){
+	    auto eject = collisions.eject_vector.value();
+	    position = Vector2Add(position, eject);
+	    auto eject_norm = Vector2Normalize(eject);
+        auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
+        velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
 	}
+
+	grounded = std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end();
 
 	velocity = Vector2Multiply(velocity, {0.8f, 0.8f});
 }

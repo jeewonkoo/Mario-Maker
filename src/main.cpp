@@ -30,7 +30,7 @@ int main(){
         bool up = IsKeyDown(KEY_UP);
         bool down = IsKeyDown(KEY_DOWN);
 
-        mario.update(left, right, up, down);
+        mario.update(level, left, right, up, down);
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
