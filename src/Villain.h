@@ -16,8 +16,6 @@ public:
 private:
     Vector2 position;
     Vector2 velocity;
-    Vector2 mario_size = { 64, 64 };
-    bool grounded{};
 };
 
 
