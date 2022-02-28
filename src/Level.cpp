@@ -9,11 +9,16 @@
 void Level::render(Vector2 top_left, Vector2 size) const {
     auto step = Vector2Divide(size, {(float)tiles.size(), (float)tiles[0].size()});
 
+    Image tile_img = LoadImage("images/mario_sprites_2.png");
+    Texture2D tex = LoadTextureFromImage(tile_img);
+    UnloadImage(tile_img);
+
     for(int y = 0; y < tiles.size(); y++){
         for(int x = 0; x < tiles[y].size(); x++){
             auto left = Vector2Add(top_left, Vector2Multiply(step, {float(x), float(y)}));
             if(tiles[y][x].solid){
-                DrawRectangleV(left, step, RED);
+                //DrawRectangleV(left, step, RED);
+                DrawTexturePro(tex, Rectangle{ 1, 205, 15, 15 }, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
             } else {
 
             }
