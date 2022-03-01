@@ -9,7 +9,7 @@ class Villain {
 public:
     Villain(float px, float py, Texture texture);
 
-    virtual void render(Vector2 top_left, Vector2 size, float a, float b, float c, float d);
+    virtual void render(Vector2 top_left, Vector2 size);
 
     virtual void update(const Level& level);
 
