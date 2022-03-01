@@ -7,6 +7,7 @@
 
 class Villain {
 public:
+    Villain();
     Villain(float px, float py, Texture texture);
 
     virtual void render(Vector2 top_left, Vector2 size) =0;
