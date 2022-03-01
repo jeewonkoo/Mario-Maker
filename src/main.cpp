@@ -56,17 +56,7 @@ int main(){
         mario.update(level, left, right, up, down, space);
         Camera2D cam{};
         cam.rotation = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-        cam.offset = {0,0};
-=======
         cam.offset = {mario.rect().x * -64 + 512,0};
->>>>>>> 293a1c9a2e87cd3110f8e192bb5341eec388333f
-=======
-
-        cam.offset = {mario.rect().x * -64 + 512,0};
-
->>>>>>> 274bb40f83056a77268959f2acca4e277960fe7e
         cam.target = {0,0};
         cam.zoom = 1.0;
 
@@ -75,13 +65,13 @@ int main(){
             ClearBackground(RAYWHITE);
         BeginMode2D(cam);
 
-            DrawTexture(background_texture, 0, 0, WHITE);
-        DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{mario.rect().x * -30,0},0,1,WHITE);
+//            DrawTexture(background_texture, 0, 0, WHITE);
+            DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{mario.rect().x * -30,0},0,1,WHITE);
             Vector2 top_left = {(float)0, (float)0};
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
 
-            goomba.render(top_left, bottom_right);
+            goomba.render(top_left, bottom_right, 0, 0, 0, 0);
             mario.render(top_left, bottom_right);
         EndMode2D();
         EndDrawing();
