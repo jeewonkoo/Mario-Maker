@@ -37,7 +37,7 @@ int main(){
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    Level level(tile_texture);
+    Level level(tile_texture, 100, 16);
 
 
     Mario mario(10,10, mario_texture);
@@ -58,7 +58,9 @@ int main(){
         mario.update(level, left, right, up, down, space);
         Camera2D cam{};
         cam.rotation = 0;
-        cam.offset = {0,0};
+
+        cam.offset = {mario.rect().x * -64 + 512,0};
+
         cam.target = {0,0};
         cam.zoom = 1.0;
 

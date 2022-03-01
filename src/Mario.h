@@ -5,6 +5,7 @@
 #include<raylib.h>
 #include<raymath.h>
 #include "Level.h"
+
 class Mario {
 public:
     Mario(float px, float py, Texture texture);
@@ -30,7 +31,7 @@ private:
     static constexpr float jump_continuous_accel = 0.030;
     static constexpr int jump_continuous_frames = 8;
     static constexpr float gravity = 0.02;
-    static constexpr float ground_acceleration = 0.06;
+    static constexpr float ground_acceleration = 0.055;
     static constexpr float air_acceleration = 0.005;
     static constexpr float max_speed = 0.3;
     static constexpr float max_fall = 0.5;
