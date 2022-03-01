@@ -1,5 +1,5 @@
 #include "Villain.h"
 
-class goomba : public Villain {
+class Goomba : public Villain {
 
 };
