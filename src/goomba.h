@@ -1,3 +1,7 @@
+
+#ifndef MARIO_MAKER_GOOMBA_H
+#define MARIO_MAKER_GOOMBA_H
+
 #include "Villain.h"
 
 class Goomba : public Villain {
