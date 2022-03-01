@@ -9,6 +9,10 @@
 #include<raylib.h>
 #include<vector>
 
+struct EntityCollision {
+
+};
+
 struct Tile {
     bool solid{};
 };
