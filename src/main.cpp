@@ -40,7 +40,7 @@ int main(){
 
 
     Mario mario(10,10, mario_texture);
-    Goomba goomba(10, 10, goomba_texture);
+    Goomba gmba(10, 10, goomba_texture);
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -53,7 +53,7 @@ int main(){
         bool down = IsKeyDown(KEY_DOWN);
         bool space = IsKeyDown(KEY_SPACE);
 
-        goomba.update(level);
+        gmba.update(level);
         mario.update(level, left, right, up, down, space);
         Camera2D cam{};
         cam.rotation = 0;
@@ -72,7 +72,7 @@ int main(){
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
 
-            goomba.render(top_left, bottom_right, 0, 0, 0, 0);
+            gmba.render(top_left, bottom_right);
             mario.render(top_left, bottom_right);
         EndMode2D();
         EndDrawing();

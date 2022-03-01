@@ -1,4 +1,3 @@
-
 #ifndef MARIO_MAKER_GOOMBA_H
 #define MARIO_MAKER_GOOMBA_H
 
@@ -7,9 +6,9 @@
 class Goomba : public Villain {
 public:
 
-    Goomba();
+    Goomba(float px, float py, Texture texture);
 
-    void render(Vector2 top_left, Vector2 size, float a, float b, float c, float d);
+    void render(Vector2 top_left, Vector2 size);
 
     void update(const Level& level);
 
