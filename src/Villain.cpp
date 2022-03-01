@@ -40,7 +40,6 @@ void Villain::update(const Level& level) {
         else {
             break;
         }
->>>>>>> 274bb40f83056a77268959f2acca4e277960fe7e
     }
 }
 
