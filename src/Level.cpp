@@ -5,14 +5,15 @@
 #include "Level.h"
 #include <raymath.h>
 #include <algorithm>
+#include <cassert>
 
 void Level::render(Vector2 top_left, Vector2 size) const {
-    auto step = Vector2Divide(size, {(float)tiles.size(), (float)tiles[0].size()});
+    auto step = Vector2Divide(size, Vector2{static_cast<float>(width), static_cast<float>(height)});
 
-    for(int y = 0; y < tiles.size(); y++){
-        for(int x = 0; x < tiles[y].size(); x++){
+    for(int y = 0; y < height; y++){
+        for(int x = 0; x < width; x++){
             auto left = Vector2Add(top_left, Vector2Multiply(step, {float(x), float(y)}));
-            if(tiles[y][x].solid){
+            if(at(x,y).solid){
                 //DrawRectangleV(left, step, RED);
                 DrawTexturePro(tex, Rectangle{ 1, 205, 15, 15 }, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
             } else {
@@ -23,13 +24,17 @@ void Level::render(Vector2 top_left, Vector2 size) const {
 }
 
 Tile Level::at(int x, int y) const{
-    auto grid_x = (size_t)x;
-    auto grid_y = (size_t)y;
-    if(grid_x < 0 || grid_x >= width || grid_y < 0 || grid_y >= height){
+    if(x < 0 || x >= width || y < 0 || y >= height){
         return Tile{.solid = true};
     } else {
-        return tiles[grid_y][grid_x];
+        return tiles[y * width + x];
     }
+}
+
+
+Tile &Level::at_mut(int x, int y) {
+    assert(!(x < 0 || x >= width || y < 0 || y >= height) && "out of bounds tile access");
+    return tiles[y * width + x];
 }
 
 TileCollisionSet Level::collide(Rectangle rect) const{
@@ -94,3 +99,10 @@ std::optional<Collision> Level::collide_rectangle(Rectangle from, Rectangle agai
 
     return std::nullopt;
 }
+
+void Level::resize(size_t width, size_t height) {
+    tiles.resize(width * height);
+    this->width = width;
+    this->height = height;
+}
+
