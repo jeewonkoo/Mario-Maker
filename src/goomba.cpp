@@ -1,6 +1,6 @@
 #include "Goomba.h"
 
-Goommba::Goomba () {}
+Goomba::Goomba () {}
 
 void Goomba::render(Vector2 top_left, Vector2 size,float a,float b, float c, float d) {
     DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
