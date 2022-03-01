@@ -2,7 +2,7 @@
 #include "Level.h"
 #include "Mario.h"
 #include "Villain.h"
-#include "Goomba.h"
+#include "goomba.h"
 #include <cmath>
 int main(){
     // Initialization
