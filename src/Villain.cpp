@@ -11,12 +11,19 @@ void Villain::render(Vector2 top_left, Vector2 size) {
 }
 
 void Villain::update(const Level& level) {
-    if (position.x <= initialPosition.x + 10) {
-        position.x += 5;
+    bool move_right = true;
+    if (move_right) {
+        position.x += 0.05;
+        if (position.x == 64) move_right = false;
+    
     }
-    else {
-        position.x -= 5;
+
+    if (!move_right) {
+        position.x -= 0.05;
+        if (position.x == 0) move_right = true;
     }
 }
+
+
 
 

@@ -24,7 +24,7 @@ int main(){
     UnloadImage(mario_img);
 
 
-    Image goomba_img = LoadImage("image/25685.png");
+    Image goomba_img = LoadImage("images/goomba.png");
     Texture2D goomba_texture = LoadTextureFromImage(goomba_img);
     UnloadImage(goomba_img);
 
@@ -58,7 +58,7 @@ int main(){
         mario.update(level, left, right, up, down, space);
         Camera2D cam{};
         cam.rotation = 0;
-        cam.offset = {100,0};
+        cam.offset = {0,0};
         cam.target = {0,0};
         cam.zoom = 1.0;
 
