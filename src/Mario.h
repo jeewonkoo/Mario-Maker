@@ -27,13 +27,15 @@ private:
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.25;
-    static constexpr float jump_continuous_accel = 0.017;
-    static constexpr int jump_continuous_frames = 17;
+    static constexpr float jump_continuous_accel = 0.030;
+    static constexpr int jump_continuous_frames = 8;
     static constexpr float gravity = 0.02;
-    static constexpr float acceleration = 0.015;
-    static constexpr float max_speed = 0.5;
+    static constexpr float ground_acceleration = 0.06;
+    static constexpr float air_acceleration = 0.005;
+    static constexpr float max_speed = 0.3;
     static constexpr float max_fall = 0.5;
-    static constexpr float ground_traction = 0.1;
+    static constexpr float ground_traction = 0.05;
+    static constexpr float air_traction = 0;
 };
 
 #endif
