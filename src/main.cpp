@@ -56,10 +56,16 @@ int main(){
 
         goomba.update(level);
         mario.update(level, left, right, up, down, space);
+        Camera2D cam{};
+        cam.rotation = 0;
+        cam.offset = {100,0};
+        cam.target = {0,0};
+        cam.zoom = 1.0;
+
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
-
+        BeginMode2D(cam);
             DrawTexture(background_texture, 0, 0, WHITE);
 
             Vector2 top_left = {(float)0, (float)0};
@@ -68,7 +74,7 @@ int main(){
 
             goomba.render(top_left, bottom_right);
             mario.render(top_left, bottom_right);
-
+        EndMode2D();
         EndDrawing();
     }
 
