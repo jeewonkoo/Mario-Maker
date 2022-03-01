@@ -33,8 +33,6 @@ int main(){
     UnloadImage(tile_img);
 
 
-    //DrawTextureQuad(page2_texture, )
-
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     Level level(tile_texture, 100, 16);
@@ -66,8 +64,9 @@ int main(){
 
             ClearBackground(RAYWHITE);
         BeginMode2D(cam);
-            DrawTexture(background_texture, 0, 0, WHITE);
 
+            DrawTexture(background_texture, 0, 0, WHITE);
+        DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{mario.rect().x * -30,0},0,1,WHITE);
             Vector2 top_left = {(float)0, (float)0};
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
