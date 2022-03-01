@@ -24,7 +24,7 @@ int main(){
     UnloadImage(mario_img);
 
 
-    Image goomba_img = LoadImage("image/25685.png");
+    Image goomba_img = LoadImage("images/goomba.png");
     Texture2D goomba_texture = LoadTextureFromImage(goomba_img);
     UnloadImage(goomba_img);
 
@@ -39,7 +39,7 @@ int main(){
 
 
     Mario mario(10,10, mario_texture);
-    Villain goomba(10, 0, goomba_texture);
+    Villain goomba(10, 10, goomba_texture);
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -56,7 +56,17 @@ int main(){
         mario.update(level, left, right, up, down, space);
         Camera2D cam{};
         cam.rotation = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        cam.offset = {0,0};
+=======
         cam.offset = {mario.rect().x * -64 + 512,0};
+>>>>>>> 293a1c9a2e87cd3110f8e192bb5341eec388333f
+=======
+
+        cam.offset = {mario.rect().x * -64 + 512,0};
+
+>>>>>>> 274bb40f83056a77268959f2acca4e277960fe7e
         cam.target = {0,0};
         cam.zoom = 1.0;
 
