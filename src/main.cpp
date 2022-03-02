@@ -39,8 +39,12 @@ int main(){
 
     Level level{tile_texture};
 
-    level.add_entity(std::make_unique<Mario>(10, 10, mario_texture));
-    level.add_entity(std::make_unique<Goomba>(10, 10, goomba_texture));
+    auto m = std::make_unique<Mario>(10, 10, mario_texture);
+    Mario * mario = m.get();
+    level.add_entity(std::move(m));
+    for(int i = 0; i < 16; i++){
+        level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+    }
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -58,7 +62,7 @@ int main(){
         level.update(input);
         Camera2D cam{};
         cam.rotation = 0;
-        cam.offset = level.camera_center();
+        cam.offset = {mario->rect().x * -64 + 512, 0};
         cam.target = {0,0};
         cam.zoom = 1.0;
 
