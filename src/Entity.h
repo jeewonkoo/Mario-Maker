@@ -2,7 +2,7 @@
 #define MARIO_MAKER_ENTITY_H
 
 #include"Tile.h"
-#include"Level.h"
+#include"TileGrid.h"
 
 class Entity;
 
@@ -16,7 +16,7 @@ public:
     [[nodiscard]] virtual Rectangle rect() const = 0;
     virtual void OnCollide(EntityCollision collision) = 0;
     virtual void render(Vector2 top_left, Vector2 size) = 0;
-    virtual void update(const Level& level) = 0;
+    virtual void update(const TileGrid& level) = 0;
 };
 
 #endif //MARIO_MAKER_ENTITY_H

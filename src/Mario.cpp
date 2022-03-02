@@ -8,7 +8,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
-void Mario::update(const Level &level, bool left, bool right, bool up, bool down, bool space) {
+void Mario::update(const TileGrid &level, bool left, bool right, bool up, bool down, bool space) {
     float acceleration = grounded ? ground_acceleration : air_acceleration;
     float traction = grounded ? ground_traction : air_traction;
 	if (left && right) {
