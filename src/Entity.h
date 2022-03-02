@@ -14,10 +14,22 @@ struct EntityCollision {
 
 class Entity {
 public:
+
+    //the entity's hitbox
     [[nodiscard]] virtual Rectangle rect() const = 0;
-    virtual void OnCollide(EntityCollision collision) = 0;
+
+    //update the entity based on a collision with another entity
+    virtual void on_collide(EntityCollision collision) = 0;
+
+    //draw the entity to the screen
     virtual void render(Vector2 top_left, Vector2 size) = 0;
+
+    //update the entity
     virtual void update(const TileGrid &level, const InputState &keyboard_input) = 0;
+
+    //weather the entity should be removed from the current entities list
+    virtual bool should_remove() = 0;
+
     virtual ~Entity() = default;
 };
 

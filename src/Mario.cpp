@@ -75,6 +75,13 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	frames_since_jump++;
 }
 
-void Mario::OnCollide(EntityCollision collision) {
+void Mario::on_collide(EntityCollision collision) {
+    if(collision.side == Side::BOTTOM && velocity.y >= 0){
+        velocity.y = -0.3;
+        frames_since_jump = 0;
+    }
+}
 
+bool Mario::should_remove() {
+    return false;
 }

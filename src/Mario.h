@@ -14,8 +14,9 @@ public:
 
     Rectangle rect() const override { return {position.x, position.y, 0.9, 0.9};}
 
-    void OnCollide(EntityCollision collision) override;
+    void on_collide(EntityCollision collision) override;
 
+    bool should_remove() override;
     ~Mario() override = default;
 private:
     Vector2 position;

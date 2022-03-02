@@ -1,7 +1,7 @@
 #include "Goomba.h"
 #include<raymath.h>
 
-Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture) {}
+Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), is_dead(false) {}
 
 void Goomba::render(Vector2 top_left, Vector2 size) {
     DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
@@ -43,6 +43,12 @@ Rectangle Goomba::rect() const {
     return {position.x, position.y, 0.9, 0.9};
 }
 
-void Goomba::OnCollide(EntityCollision collision) {
+void Goomba::on_collide(EntityCollision collision) {
+    if(collision.side == Side::TOP){
+        is_dead = true;
+    }
+}
 
+bool Goomba::should_remove() {
+    return is_dead;
 }

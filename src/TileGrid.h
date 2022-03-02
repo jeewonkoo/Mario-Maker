@@ -35,9 +35,6 @@ private:
     size_t width;
     size_t height;
     std::vector<Tile> tiles{};
-
-    static std::optional<Collision> collide_rectangle(Rectangle from, Rectangle against) ;
-    //screen width and height in tiles
     Texture tex;
 };
 
