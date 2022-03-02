@@ -6,11 +6,11 @@ Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), vel
 void Goomba::render(Vector2 top_left, Vector2 size) {
     DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
-void Goomba::update(const TileGrid &level, const InputState &keyboard_input) {
-     
+void Goomba::update (const TileGrid& level) {
+
     position = Vector2Add(position, velocity);
     velocity.y += 0.02;
-    
+
     while (true) {
         auto collisions = level.collide(rect());
 

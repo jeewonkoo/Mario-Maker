@@ -2,7 +2,6 @@
 #define MARIO_MAKER_GOOMBA_H
 
 #include "Entity.h"
-#include "InputState.h"
 
 class Goomba : public Entity {
 public:
@@ -12,8 +11,7 @@ public:
     [[nodiscard]] Rectangle rect() const override;
     void OnCollide(EntityCollision collision) override;
     void render(Vector2 top_left, Vector2 size) override;
-    void update(const TileGrid &level, const InputState &keyboard_input) override;
-    ~Goomba() override = default;
+    void update(const TileGrid& level) override;
 
 private:
     Texture tex;
