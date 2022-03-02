@@ -1,4 +1,5 @@
 #include "goomba.h"
+#include<raymath.h>
 
 Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), initialPosition({ px,py }) {}
 
@@ -36,4 +37,12 @@ void Goomba::update (const Level& level) {
             break;
         }
     }
+}
+
+Rectangle Goomba::rect() const {
+    return {position.x, position.y, 0.9, 0.9};
+}
+
+void Goomba::OnCollide(EntityCollision collision) {
+
 }

@@ -3,9 +3,9 @@
 //
 
 #include "Level.h"
-#include <raymath.h>
 #include <algorithm>
 #include <cassert>
+#include <raymath.h>
 
 void Level::render(Vector2 top_left, Vector2 size) const {
     auto step = Vector2Divide(size, Vector2{static_cast<float>(width), static_cast<float>(height)});

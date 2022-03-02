@@ -5,8 +5,8 @@
 #ifndef MARIO_MAKER_LEVEL_H
 #define MARIO_MAKER_LEVEL_H
 
-#include<array>
 #include<raylib.h>
+#include<array>
 #include<random>
 #include<optional>
 #include"Tile.h"

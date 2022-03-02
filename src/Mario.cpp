@@ -75,3 +75,7 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 	last_space = space;
 	frames_since_jump++;
 }
+
+void Mario::OnCollide(EntityCollision collision) {
+
+}
