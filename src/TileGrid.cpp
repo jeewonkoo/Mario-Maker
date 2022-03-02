@@ -2,12 +2,11 @@
 // Created by 16182 on 2/23/2022.
 //
 
-#include "Level.h"
-#include <raymath.h>
-#include <algorithm>
+#include "TileGrid.h"
 #include <cassert>
+#include <raymath.h>
 
-void Level::render(Vector2 top_left, Vector2 size) const {
+void TileGrid::render(Vector2 top_left, Vector2 size) const {
     auto step = Vector2Divide(size, Vector2{static_cast<float>(width), static_cast<float>(height)});
 
     for(int y = 0; y < height; y++){
@@ -23,7 +22,7 @@ void Level::render(Vector2 top_left, Vector2 size) const {
     }
 }
 
-Tile Level::at(int x, int y) const{
+Tile TileGrid::at(int x, int y) const{
     if(x < 0 || x >= width || y < 0 || y >= height){
         return Tile{.solid = true};
     } else {
@@ -32,12 +31,12 @@ Tile Level::at(int x, int y) const{
 }
 
 
-Tile &Level::at_mut(int x, int y) {
+Tile &TileGrid::at_mut(int x, int y) {
     assert(!(x < 0 || x >= width || y < 0 || y >= height) && "out of bounds tile access");
     return tiles[y * width + x];
 }
 
-TileCollisionSet Level::collide(Rectangle rect) const{
+TileCollisionSet TileGrid::collide(Rectangle rect) const{
     int width_steps = std::ceil(rect.width);
     int height_steps = std::ceil(rect.height);
     int start_x = std::floor(rect.x);
@@ -69,12 +68,12 @@ TileCollisionSet Level::collide(Rectangle rect) const{
     return collisions;
 }
 
-std::optional<Collision> Level::collide_grid(Rectangle rect, int x, int y) {
+std::optional<Collision> TileGrid::collide_grid(Rectangle rect, int x, int y) {
     Rectangle tile_rect = {float(x), float(y), 1, 1};
     return collide_rectangle(rect, tile_rect);
 }
 
-std::optional<Collision> Level::collide_rectangle(Rectangle from, Rectangle against) {
+std::optional<Collision> TileGrid::collide_rectangle(Rectangle from, Rectangle against) {
     // less than 0 means inside
     float left = -against.x - against.width + from.x;
     float right = -from.x - from.width + against.x;
@@ -100,7 +99,7 @@ std::optional<Collision> Level::collide_rectangle(Rectangle from, Rectangle agai
     return std::nullopt;
 }
 
-void Level::resize(size_t width, size_t height) {
+void TileGrid::resize(size_t width, size_t height) {
     tiles.resize(width * height);
     this->width = width;
     this->height = height;

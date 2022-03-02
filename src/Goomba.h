@@ -1,9 +1,22 @@
+#ifndef MARIO_MAKER_GOOMBA_H
+#define MARIO_MAKER_GOOMBA_H
 
-#include "Villian.h";
+#include "Entity.h"
 
+class Goomba : public Entity {
+public:
 
-class Goomma : class Villian { 
-    public:
+    Goomba(float px, float py, Texture texture);
 
-    private: 
-}
+    [[nodiscard]] Rectangle rect() const override;
+    void OnCollide(EntityCollision collision) override;
+    void render(Vector2 top_left, Vector2 size) override;
+    void update(const TileGrid& level) override;
+
+private:
+    Texture tex;
+    Vector2 position;
+    Vector2 velocity;
+};
+
+#endif

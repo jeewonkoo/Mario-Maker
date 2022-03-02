@@ -1,9 +1,8 @@
 #include <raylib.h>
-#include "Level.h"
+#include "TileGrid.h"
 #include "Mario.h"
-#include "Villain.h"
-#include "goomba.h"
-#include <cmath>
+#include "Goomba.h"
+
 int main(){
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -36,7 +35,7 @@ int main(){
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    Level level(tile_texture, 100, 16);
+    TileGrid level(tile_texture, 100, 16);
 
 
     Mario mario(10,10, mario_texture);

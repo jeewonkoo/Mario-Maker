@@ -2,18 +2,18 @@
 // Created by 16182 on 2/23/2022.
 //
 
-#ifndef MARIO_MAKER_LEVEL_H
-#define MARIO_MAKER_LEVEL_H
+#ifndef MARIO_MAKER_TILEGRID_H
+#define MARIO_MAKER_TILEGRID_H
 
-#include<array>
 #include<raylib.h>
+#include<array>
 #include<random>
 #include<optional>
 #include"Tile.h"
 
-class Level {
+class TileGrid {
 public:
-    Level(Texture texture, size_t width, size_t height) {
+    TileGrid(Texture texture, size_t width, size_t height) {
         resize(width, height);
         tex = texture;
 
@@ -42,4 +42,4 @@ private:
 };
 
 
-#endif //MARIO_MAKER_LEVEL_H
+#endif //MARIO_MAKER_TILEGRID_H
