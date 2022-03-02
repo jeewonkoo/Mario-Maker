@@ -1,7 +1,6 @@
 #include <raylib.h>
 #include "Mario.h"
 #include <raymath.h>
-#include <algorithm>
 
 Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
 

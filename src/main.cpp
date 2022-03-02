@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include "Level.h"
 #include "Mario.h"
-#include "goomba.h"
+#include "Goomba.h"
 
 int main(){
     // Initialization

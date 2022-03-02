@@ -17,8 +17,6 @@ private:
     Texture tex;
     Vector2 position;
     Vector2 velocity;
-
-    Vector2 initialPosition;
 };
 
 #endif
