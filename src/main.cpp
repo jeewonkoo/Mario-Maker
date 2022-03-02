@@ -2,6 +2,7 @@
 #include "TileGrid.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "Level.h"
 
 int main(){
     // Initialization
@@ -35,28 +36,29 @@ int main(){
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    TileGrid level(tile_texture, 100, 16);
 
+    Level level{tile_texture};
 
-    Mario mario(10,10, mario_texture);
-    Goomba gmba(10, 10, goomba_texture);
+    level.add_entity(std::make_unique<Mario>(10, 10, mario_texture));
+    level.add_entity(std::make_unique<Goomba>(10, 10, goomba_texture));
 
     // Main game loop
     while (!WindowShouldClose()){
 
         PollInputEvents();
 
-        bool left = IsKeyDown(KEY_LEFT);
-        bool right = IsKeyDown(KEY_RIGHT);
-        bool up = IsKeyDown(KEY_UP);
-        bool down = IsKeyDown(KEY_DOWN);
-        bool space = IsKeyDown(KEY_SPACE);
+        InputState input {
+            .left = IsKeyDown(KEY_LEFT),
+            .right = IsKeyDown(KEY_RIGHT),
+            .up = IsKeyDown(KEY_UP),
+            .down = IsKeyDown(KEY_DOWN),
+            .space = IsKeyDown(KEY_SPACE),
+        };
 
-        gmba.update(level);
-        mario.update(level, left, right, up, down, space);
+        level.update(input);
         Camera2D cam{};
         cam.rotation = 0;
-        cam.offset = {mario.rect().x * -64 + 512,0};
+        cam.offset = level.camera_center();
         cam.target = {0,0};
         cam.zoom = 1.0;
 
@@ -66,13 +68,11 @@ int main(){
         BeginMode2D(cam);
 
 //            DrawTexture(background_texture, 0, 0, WHITE);
-            DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{mario.rect().x * -30,0},0,1,WHITE);
+            DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{0,0},0,1,WHITE);
             Vector2 top_left = {(float)0, (float)0};
             Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
             level.render(top_left, bottom_right);
 
-            gmba.render(top_left, bottom_right);
-            mario.render(top_left, bottom_right);
         EndMode2D();
         EndDrawing();
     }

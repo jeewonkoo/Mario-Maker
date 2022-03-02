@@ -2,6 +2,7 @@
 #define MARIO_H
 
 #include"Entity.h"
+#include "InputState.h"
 
 class Mario : public Entity {
 public:
@@ -9,13 +10,13 @@ public:
 
     void render(Vector2 top_left, Vector2 size) override;
 
-    void update(const TileGrid &level, bool left, bool right, bool up, bool down, bool space);
-
-    void update(const TileGrid &level) override{};
+    void update(const TileGrid &level, const InputState &keyboard_input) override;
 
     Rectangle rect() const override { return {position.x, position.y, 0.9, 0.9};}
 
     void OnCollide(EntityCollision collision) override;
+
+    ~Mario() override = default;
 private:
     Vector2 position;
     Vector2 velocity;
