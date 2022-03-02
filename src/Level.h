@@ -16,12 +16,14 @@ public:
     explicit Level(Texture tileset_texture): grid(tileset_texture, 100, 16){}
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
-    Vector2 camera_center() const;
     void add_entity(std::unique_ptr<Entity> ent) {
         entities.push_back(std::move(ent));
     }
+
 private:
     TileGrid grid;
+    Entity * camera_focus_entity{};
+    Vector2 camera_focus{};
     std::vector<std::unique_ptr<Entity>> entities;
 };
 

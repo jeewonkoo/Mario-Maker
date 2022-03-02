@@ -3,6 +3,7 @@
 //
 
 #include "Level.h"
+#include<algorithm>
 
 void Level::update(InputState keyboard_input) {
     for(auto & e : entities){
@@ -19,7 +20,7 @@ void Level::update(InputState keyboard_input) {
         }
     }
 
-    entities.erase(std::remove_if(entities.begin(),  entities.end(), [](const auto & e){ return e->should_remove();}), entities.end());
+    entities.erase(std::remove_if(entities.begin(),  entities.end(), [](auto & e){ return e->should_remove();}), entities.end());
 }
 
 void Level::render(Vector2 top_left, Vector2 size) {
@@ -27,9 +28,4 @@ void Level::render(Vector2 top_left, Vector2 size) {
     for(auto & e : entities){
         e->render(top_left, size);
     }
-
-}
-
-Vector2 Level::camera_center() const {
-    return {0, 0};
 }

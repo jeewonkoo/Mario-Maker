@@ -67,17 +67,25 @@ int main(){
         cam.zoom = 1.0;
 
         BeginDrawing();
-
+        {
             ClearBackground(RAYWHITE);
-        BeginMode2D(cam);
+            BeginMode2D(cam);
+            {
+                // draw mountains
+                float paralax_mountains = mario->rect().x * -40;
+                float paralax_clouds = mario->rect().x * -53;
 
-//            DrawTexture(background_texture, 0, 0, WHITE);
-            DrawTextureTiled(background_texture, {0, 0, 1024,1024}, {0, 0, 4*1024,1024},{0,0},0,1,WHITE);
-            Vector2 top_left = {(float)0, (float)0};
-            Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
-            level.render(top_left, bottom_right);
+                DrawTextureTiled(background_texture, {0, 512, 1024,512}, {-1024, 512, 6*1024,512},{paralax_mountains,0},0,1,WHITE);
+                DrawTextureTiled(background_texture, {0, 0, 1024,512}, {-1024, 0, 6*1024,512},{paralax_clouds,0},0,1,WHITE);
+                Vector2 top_left = {(float)0, (float)0};
+                Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
 
-        EndMode2D();
+
+                level.render(top_left, bottom_right);
+
+            }
+            EndMode2D();
+        }
         EndDrawing();
     }
 
