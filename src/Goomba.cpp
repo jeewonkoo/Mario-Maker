@@ -1,7 +1,7 @@
 #include "Goomba.h"
 #include<raymath.h>
 
-Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), initialPosition({ px,py }) {}
+Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture) {}
 
 void Goomba::render(Vector2 top_left, Vector2 size) {
     DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
