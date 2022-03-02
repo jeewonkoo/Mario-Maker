@@ -9,7 +9,18 @@ void Mario::render(Vector2 top_left, Vector2 size) {
 }
 
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
-    float acceleration = grounded ? ground_acceleration : air_acceleration;
+    float acceleration = [&]{
+       if(grounded){
+           if(std::abs(velocity.x) < low_speed_threshold){
+               return ground_acceleration_low_speed;
+           } else {
+               return ground_acceleration_high_speed;
+           }
+       } else {
+           return air_acceleration;
+       }
+    }();
+
     float traction = grounded ? ground_traction : air_traction;
 	if (keyboard_input.left && keyboard_input.right) {
 		velocity.x += 0;
@@ -26,7 +37,9 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	    velocity.y -= jump_instant_accel;
 	}
 
-	if (keyboard_input.space && (frames_since_jump < jump_continuous_frames)){
+	if (keyboard_input.space
+	    && (frames_since_jump < jump_continuous_frames)
+	    && (frames_since_jump >= jump_continuous_delay)){
 	    velocity.y -= jump_continuous_accel;
 	}
 
@@ -77,7 +90,7 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 
 void Mario::on_collide(EntityCollision collision) {
     if(collision.side == Side::BOTTOM && velocity.y >= 0){
-        velocity.y = -0.3;
+        velocity.y = -jump_instant_accel;
         frames_since_jump = 0;
     }
 }
