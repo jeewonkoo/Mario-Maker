@@ -11,7 +11,7 @@ public:
     [[nodiscard]] Rectangle rect() const override;
     void OnCollide(EntityCollision collision) override;
     void render(Vector2 top_left, Vector2 size) override;
-    void update(const TileGrid& level) override;
+    void update(const TileGrid& level, const InputState & keyboard_input) override;
 
 private:
     Texture tex;
