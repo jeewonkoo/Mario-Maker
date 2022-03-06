@@ -1,33 +1,49 @@
-
+#include <raylib.h>
 #include "Mario.h"
 #include <raymath.h>
-#include <algorithm>
 
-Mario::Mario(float px, float py): position({px, py}), velocity({0,0}){}
+Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
 
 void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawRectangleV(Vector2Add(top_left, Vector2Multiply(position, {64.f, 64.f})), mario_size, GREEN);
-
+	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
-void Mario::update(const Level &level, bool left, bool right, bool up, bool down) {
-	if (left && right) {
+void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
+    float acceleration = [&]{
+       if(grounded){
+           if(std::abs(velocity.x) < low_speed_threshold){
+               return ground_acceleration_low_speed;
+           } else {
+               return ground_acceleration_high_speed;
+           }
+       } else {
+           return air_acceleration;
+       }
+    }();
+
+    float traction = grounded ? ground_traction : air_traction;
+	if (keyboard_input.left && keyboard_input.right) {
 		velocity.x += 0;
 	}
-	else if (right) {
-		velocity.x += 0.05;
+	else if (keyboard_input.right) {
+		velocity.x += acceleration;
 	}
-	else if (left) {
-		velocity.x -= 0.05;
-	}
-
-	if (up && grounded) {
-	    velocity.y -= 0.45;
-	} else if (down) {
-		velocity.y += 0.05;
+	else if (keyboard_input.left) {
+		velocity.x -= acceleration;
 	}
 
-	velocity.y += 0.02;
+	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
+	    frames_since_jump = 0;
+	    velocity.y -= jump_instant_accel;
+	}
+
+	if (keyboard_input.space
+	    && (frames_since_jump < jump_continuous_frames)
+	    && (frames_since_jump >= jump_continuous_delay)){
+	    velocity.y -= jump_continuous_accel;
+	}
+
+	velocity.y += gravity;
 
 
 	position = Vector2Add(position, velocity);
@@ -37,7 +53,11 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
 	    auto collisions = level.collide(rect());
 
         if(collisions.eject_vector.has_value()){
+
             auto eject = collisions.eject_vector.value();
+
+            //ignore collisions that are impossible because of our movement direction
+            if(Vector2DotProduct(eject, velocity) > 0) break;
             position = Vector2Add(position, eject);
             auto eject_norm = Vector2Normalize(eject);
             auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
@@ -51,5 +71,30 @@ void Mario::update(const Level &level, bool left, bool right, bool up, bool down
         }
     }
 
-	velocity = Vector2Multiply(velocity, {0.9f, 0.9f});
+
+	velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
+
+	if(velocity.y > max_fall){
+	    velocity.y = max_fall;
+	}
+
+	if(velocity.x > 0){
+	    velocity.x = std::max(velocity.x - traction, 0.f);
+	} else {
+	    velocity.x = std::min(velocity.x + traction, 0.f);
+	}
+
+	last_space = keyboard_input.space;
+	frames_since_jump++;
+}
+
+void Mario::on_collide(EntityCollision collision) {
+    if(collision.side == Side::BOTTOM && velocity.y >= 0){
+        velocity.y = -jump_instant_accel;
+        frames_since_jump = 0;
+    }
+}
+
+bool Mario::should_remove() {
+    return false;
 }
