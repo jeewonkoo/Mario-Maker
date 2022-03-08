@@ -39,6 +39,10 @@ int main(){
     Texture2D boo_texture = LoadTextureFromImage(boo_img);
     UnloadImage(boo_img);
 
+    Image mushroom_img = LoadImage("images/mushroom.png");
+    Texture2D mushroom_texture = LoadTextureFromImage(mushroom_img);
+    UnloadImage(mushroom_img);
+
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -49,10 +53,14 @@ int main(){
     Mario * mario = m.get();
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){
-        level.add_entity(std::make_unique<Mushroom>(i, 10, goomba_texture));
+        level.add_entity(std::make_unique<Mushroom>(i, 10, mushroom_texture));
     }
+    //for (int i = 0; i < 16; i++) {
+    //    level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+    //}
 
-    level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
+
+    //level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
 
     // Main game loop
     while (!WindowShouldClose()){

@@ -19,6 +19,6 @@ add_executable(mario_maker
         src/powerups/Mushroom.h
           )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wno-missing-field-initializers")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 target_link_libraries(mario_maker PRIVATE raylib)
