@@ -5,6 +5,9 @@
 #include"TileGrid.h"
 #include "InputState.h"
 
+
+//Class called Entity. This class is for villians and mario powerUps. 
+
 class Entity;
 
 struct EntityCollision {
