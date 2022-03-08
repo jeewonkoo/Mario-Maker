@@ -14,5 +14,8 @@ add_executable(mario_maker
         src/Entity.h
         src/Level.cpp
         src/Level.h
-        src/InputState.h src/powerups/Mushroom.cpp src/powerups/Mushroom.h)
+        src/InputState.h 
+        src/powerups/Mushroom.cpp 
+        src/powerups/Mushroom.h
+        src/enemies/Boo.cpp)
 target_link_libraries(mario_maker PRIVATE raylib)

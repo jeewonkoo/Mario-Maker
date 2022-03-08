@@ -2,6 +2,7 @@
 #include "TileGrid.h"
 #include "Mario.h"
 #include "enemies/Goomba.h"
+#include "enemies/Boo.h"
 #include "powerups/Mushroom.h"
 #include "Level.h"
 
@@ -34,6 +35,10 @@ int main(){
     Texture2D tile_texture = LoadTextureFromImage(tile_img);
     UnloadImage(tile_img);
 
+    Image boo_img = LoadImage("images/Boo_opened.png");
+    Texture2D boo_texture = LoadTextureFromImage(boo_img);
+    UnloadImage(boo_img);
+
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -46,6 +51,8 @@ int main(){
     for(int i = 0; i < 16; i++){
         level.add_entity(std::make_unique<Mushroom>(i, 10, goomba_texture));
     }
+
+    level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
 
     // Main game loop
     while (!WindowShouldClose()){
