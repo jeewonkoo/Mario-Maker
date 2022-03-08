@@ -6,10 +6,10 @@
 #include "InputState.h"
 
 enum class MarioPowerUp {
-    None,
-    Big,
-    Small,
-    Fire
+    None = 0,
+    Big = 1,
+    Small = 2,
+    Fire = 3,
 };
 
 class Mario : public Entity {
@@ -40,7 +40,7 @@ private:
     //whether mario pressed space in the previous frame
     bool last_space{};
 
-    MarioPowerUp power_up = MarioPowerUp::None;
+    MarioPowerUp power_up = MarioPowerUp::Fire;
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;
@@ -64,12 +64,19 @@ private:
             Rectangle{ 186, 87, 19, 27 },
     };
 
-    static constexpr std::array<Rectangle, 4> hit_boxes = {
+    static constexpr std::array<Rectangle, 4> sprite_dests = {
             Rectangle{ 0, 0, 16*3, 16*3 },
             Rectangle{ 0, 0, 20*3, 27*3 },
             Rectangle{ 0, 0, 32, 32 },
             Rectangle{ 0, 0, 19*3, 27*3 },
     };
+
+    static constexpr std::array<Rectangle, 4> hit_boxes = {
+            Rectangle{ 0, 0, 0.75, 0.75 },
+            Rectangle{ 0, 0, 0.94, 1.26},
+            Rectangle{ 0, 0, 0.5, 0.5 },
+            Rectangle{ 0, 0, 0.89, 1.26},
+            };
 };
 
 #endif

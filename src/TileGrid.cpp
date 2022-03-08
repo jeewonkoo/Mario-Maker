@@ -9,8 +9,8 @@
 void TileGrid::render(Vector2 top_left, Vector2 size) const {
     auto step = Vector2Divide(size, Vector2{static_cast<float>(width), static_cast<float>(height)});
 
-    for(int y = 0; y < height; y++){
-        for(int x = 0; x < width; x++){
+    for(size_t y = 0; y < height; y++){
+        for(size_t x = 0; x < width; x++){
             auto left = Vector2Add(top_left, Vector2Multiply(step, {float(x), float(y)}));
             if(at(x,y).solid){
                 //DrawRectangleV(left, step, RED);
@@ -23,7 +23,7 @@ void TileGrid::render(Vector2 top_left, Vector2 size) const {
 }
 
 Tile TileGrid::at(int x, int y) const{
-    if(x < 0 || x >= width || y < 0 || y >= height){
+    if(x < 0 || x >= (int)width || y < 0 || y >= (int)height){
         return Tile{.solid = true};
     } else {
         return tiles[y * width + x];
@@ -32,7 +32,7 @@ Tile TileGrid::at(int x, int y) const{
 
 
 Tile &TileGrid::at_mut(int x, int y) {
-    assert(!(x < 0 || x >= width || y < 0 || y >= height) && "out of bounds tile access");
+    assert(!(x < 0 || x >= (int)width || y < 0 || y >= (int)height) && "out of bounds tile access");
     return tiles[y * width + x];
 }
 

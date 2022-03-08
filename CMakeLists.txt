@@ -14,5 +14,9 @@ add_executable(mario_maker
         src/Entity.h
         src/Level.cpp
         src/Level.h
-        src/InputState.h src/powerups/Mushroom.cpp src/powerups/Mushroom.h)
+        src/InputState.h
+        src/powerups/Mushroom.cpp
+        src/powerups/Mushroom.h)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wno-missing-field-initializers")
 target_link_libraries(mario_maker PRIVATE raylib)
