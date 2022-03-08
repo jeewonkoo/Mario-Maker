@@ -1,7 +1,8 @@
 #include <raylib.h>
 #include "TileGrid.h"
 #include "Mario.h"
-#include "Goomba.h"
+#include "enemies/Goomba.h"
+#include "powerups/Mushroom.h"
 #include "Level.h"
 
 int main(){
@@ -43,7 +44,7 @@ int main(){
     Mario * mario = m.get();
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){
-        level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+        level.add_entity(std::make_unique<Mushroom>(i, 10, goomba_texture));
     }
 
     // Main game loop

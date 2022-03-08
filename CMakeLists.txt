@@ -9,10 +9,10 @@ add_executable(mario_maker
         src/main.cpp
         src/TileGrid.cpp
         src/Mario.cpp
-        src/Goomba.cpp
+        src/enemies/Goomba.cpp
         src/Tile.h
         src/Entity.h
         src/Level.cpp
         src/Level.h
-        src/InputState.h)
+        src/InputState.h src/powerups/Mushroom.cpp src/powerups/Mushroom.h)
 target_link_libraries(mario_maker PRIVATE raylib)

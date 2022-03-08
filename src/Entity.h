@@ -12,6 +12,13 @@ struct EntityCollision {
     Side side;
 };
 
+enum class EntityType {
+    Mario,
+    JumpEnemy,
+    SpikeEnemy,
+    Mushroom
+};
+
 class Entity {
 public:
 
@@ -29,6 +36,8 @@ public:
 
     //weather the entity should be removed from the current entities list
     virtual bool should_remove() = 0;
+
+    virtual EntityType type() = 0;
 
     virtual ~Entity() = default;
 };

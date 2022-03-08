@@ -17,6 +17,9 @@ public:
     void on_collide(EntityCollision collision) override;
 
     bool should_remove() override;
+
+    EntityType type() override { return EntityType::Mario; }
+
     ~Mario() override = default;
 private:
     Vector2 position;
