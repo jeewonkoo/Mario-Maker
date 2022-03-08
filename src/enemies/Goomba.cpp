@@ -1,7 +1,7 @@
 #include "Goomba.h"
 #include<raymath.h>
 
-Goomba::Goomba (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), is_dead(false) {}
+Goomba::Goomba (float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.05,0 }), is_dead(false) {}
 
 void Goomba::render(Vector2 top_left, Vector2 size) {
     DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
@@ -11,11 +11,11 @@ void Goomba::update (const TileGrid& level, const InputState & keyboard_input) {
     position = Vector2Add(position, velocity);
     velocity.y += 0.02;
 
-    while (true) {
+    //terminate the loop if too many collisions
+    for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
         auto collisions = level.collide(rect());
 
         if (collisions.eject_vector.has_value()) {
-
             auto eject = collisions.eject_vector.value();
 
             //ignore collisions that are impossible because of our movement direction

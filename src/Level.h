@@ -22,8 +22,6 @@ public:
 
 private:
     TileGrid grid;
-    Entity * camera_focus_entity{};
-    Vector2 camera_focus{};
     std::vector<std::unique_ptr<Entity>> entities;
 };
 

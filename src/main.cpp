@@ -45,7 +45,7 @@ int main(){
 
     Level level{tile_texture};
 
-    auto m = std::make_unique<Mario>(10, 10, mario_texture);
+    auto m = std::make_unique<Mario>(10, 3, mario_texture);
     Mario * mario = m.get();
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){

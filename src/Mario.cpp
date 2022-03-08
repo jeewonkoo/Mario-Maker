@@ -5,7 +5,7 @@
 Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
 
 void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, sprite_sources.at((size_t)power_up), sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
 
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
@@ -62,7 +62,8 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	position = Vector2Add(position, velocity);
 
 	grounded = false;
-	while(true){
+	//terminate the loop if too many collisions
+	for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
 	    auto collisions = level.collide(rect());
 
         if(collisions.eject_vector.has_value()){
@@ -90,10 +91,27 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 }
 
 void Mario::on_collide(EntityCollision collision) {
-    if(collision.side == Side::BOTTOM && velocity.y >= 0){
-        velocity.y = -jump_instant_accel;
-        frames_since_jump = 0;
+    switch(collision.other.type()){
+        case EntityType::Mushroom:
+            break;
+        case EntityType::JumpEnemy:
+            if(collision.side == Side::BOTTOM && velocity.y >= 0){
+                velocity.y = -jump_instant_accel;
+                frames_since_jump = 0;
+            }
+            break;
+        case EntityType::SpikeEnemy:
+            break;
+        default:
+            break;
     }
+}
+
+Rectangle Mario::rect() const {
+    auto box = hit_boxes.at((size_t)power_up);
+    box.x += position.x;
+    box.y += position.y;
+    return box;
 }
 
 bool Mario::should_remove() {
