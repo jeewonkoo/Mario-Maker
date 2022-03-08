@@ -2,10 +2,13 @@
 #include "Mario.h"
 #include <raymath.h>
 
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
+Mario::Mario(float px, float py, Texture texture) : position({ px, py }), velocity({ 0,0 }), tex(texture) {
+	is_big = 2.f;
+}
 
 void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+	top_left = Vector2Subtract(top_left, { (int)is_big % 2 * 32.f, (int)is_big % 2 * 32.f });
+	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, is_big * 32, is_big * 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {

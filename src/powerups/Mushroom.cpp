@@ -1,10 +1,13 @@
 #include "Mushroom.h"
 #include<raymath.h>
 
-Mushroom::Mushroom (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), is_dead(false) {}
+Mushroom::Mushroom (float px, float py, Texture texture) : position({ px, py }), velocity({ 0.05,0 }), tex(texture), is_dead(false) {
+    is_big = rand() % 2 + 1;
+}
 
 void Mushroom::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    top_left = Vector2Subtract(top_left, { (int)is_big % 2 * 32.f, (int)is_big % 2 * 32.f });
+    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, is_big * 32, is_big * 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 void Mushroom::update (const TileGrid& level, const InputState & keyboard_input) {
 
@@ -51,4 +54,8 @@ void Mushroom::on_collide(EntityCollision collision) {
 
 bool Mushroom::should_remove() {
     return is_dead;
+}
+
+int Mushroom::is_big() {
+    return is_big;
 }

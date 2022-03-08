@@ -19,11 +19,13 @@ public:
     void update(const TileGrid& level, const InputState & keyboard_input) override;
     bool should_remove() override;
     EntityType type() override { return EntityType::Mushroom; }
+    int is_big();
 private:
     Texture tex;
     Vector2 position;
     Vector2 velocity;
     bool is_dead;
+    float is_big;
 };
 
 

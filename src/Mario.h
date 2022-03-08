@@ -31,6 +31,8 @@ private:
     //whether mario pressed space in the previous frame
     bool last_space{};
 
+    float is_big;
+
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;
     static constexpr float jump_continuous_accel = 0.025;
