@@ -2,7 +2,7 @@
 #include<raymath.h>
 
 
-Mushroom::Mushroom (float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.05,0 }) , is_dead(false) {
+Mushroom::Mushroom (float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.1,0 }) , is_dead(false) {
     is_big = rand() % 2 + 1;
 }
 

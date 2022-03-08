@@ -55,9 +55,9 @@ int main(){
     for(int i = 0; i < 16; i++){
         level.add_entity(std::make_unique<Mushroom>(i, 10, mushroom_texture));
     }
-    //for (int i = 0; i < 16; i++) {
-    //    level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
-    //}
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+    }
 
 
     //level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
