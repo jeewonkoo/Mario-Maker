@@ -30,6 +30,8 @@ public:
 
     ~Mario() override = default;
 
+    Vector2 getPosition() { return position; }
+
 private:
     Vector2 position;
     Vector2 velocity;
