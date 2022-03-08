@@ -1,8 +1,16 @@
 #ifndef MARIO_H
 #define MARIO_H
 
-#include"Entity.h"
+#include <array>
+#include "Entity.h"
 #include "InputState.h"
+
+enum class MarioPowerUp {
+    None = 0,
+    Big = 1,
+    Small = 2,
+    Fire = 3,
+};
 
 class Mario : public Entity {
 public:
@@ -12,7 +20,7 @@ public:
 
     void update(const TileGrid &level, const InputState &keyboard_input) override;
 
-    Rectangle rect() const override { return {position.x + 0.05f, position.y + 0.1f, 0.9, 0.9};}
+    Rectangle rect() const override;
 
     void on_collide(EntityCollision collision) override;
 
@@ -21,6 +29,7 @@ public:
     EntityType type() override { return EntityType::Mario; }
 
     ~Mario() override = default;
+
 private:
     Vector2 position;
     Vector2 velocity;
@@ -31,7 +40,7 @@ private:
     //whether mario pressed space in the previous frame
     bool last_space{};
 
-    float is_big;
+    MarioPowerUp power_up = MarioPowerUp::Fire;
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;
@@ -47,6 +56,27 @@ private:
     static constexpr float max_fall = 0.5;
     static constexpr float ground_traction = 0.05;
     static constexpr float air_traction = 0;
+
+    static constexpr std::array<Rectangle, 4> sprite_sources = {
+            Rectangle{ 187, 3, 16, 16 },
+            Rectangle{ 186, 25, 20, 27 },
+            Rectangle{ 187, 3, 16, 16 },
+            Rectangle{ 186, 87, 19, 27 },
+    };
+
+    static constexpr std::array<Rectangle, 4> sprite_dests = {
+            Rectangle{ 0, 0, 16*3, 16*3 },
+            Rectangle{ 0, 0, 20*3, 27*3 },
+            Rectangle{ 0, 0, 32, 32 },
+            Rectangle{ 0, 0, 19*3, 27*3 },
+    };
+
+    static constexpr std::array<Rectangle, 4> hit_boxes = {
+            Rectangle{ 0, 0, 0.75, 0.75 },
+            Rectangle{ 0, 0, 0.94, 1.26},
+            Rectangle{ 0, 0, 0.5, 0.5 },
+            Rectangle{ 0, 0, 0.89, 1.26},
+            };
 };
 
 #endif
