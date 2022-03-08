@@ -45,6 +45,19 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 
 	velocity.y += gravity;
 
+	if(velocity.x > 0){
+	    velocity.x = std::max(velocity.x - traction, 0.f);
+	} else {
+	    velocity.x = std::min(velocity.x + traction, 0.f);
+	}
+
+
+	velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
+
+	if(velocity.y > max_fall){
+	    velocity.y = max_fall;
+	}
+
 
 	position = Vector2Add(position, velocity);
 
@@ -71,18 +84,6 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
         }
     }
 
-
-	velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
-
-	if(velocity.y > max_fall){
-	    velocity.y = max_fall;
-	}
-
-	if(velocity.x > 0){
-	    velocity.x = std::max(velocity.x - traction, 0.f);
-	} else {
-	    velocity.x = std::min(velocity.x + traction, 0.f);
-	}
 
 	last_space = keyboard_input.space;
 	frames_since_jump++;

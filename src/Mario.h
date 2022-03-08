@@ -12,7 +12,7 @@ public:
 
     void update(const TileGrid &level, const InputState &keyboard_input) override;
 
-    Rectangle rect() const override { return {position.x, position.y, 0.9, 0.9};}
+    Rectangle rect() const override { return {position.x + 0.05f, position.y + 0.1f, 0.9, 0.9};}
 
     void on_collide(EntityCollision collision) override;
 
