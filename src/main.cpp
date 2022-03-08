@@ -44,10 +44,10 @@ int main(){
     UnloadImage(mushroom_img);                                          //unload mushroom sprite after turn into texture
 
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
 
-    Level level{tile_texture};
+    Level level{tile_texture};                                          
 
     auto m = std::make_unique<Mario>(10, 3, mario_texture);
     Mario * mario = m.get();
@@ -105,7 +105,7 @@ int main(){
         EndDrawing();
     }
 
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow();                                                      // Close window and OpenGL context
 
     return 0;
 }
