@@ -1,8 +1,12 @@
-#include <raylib.h>
 #include "Mario.h"
+#include <raylib.h>
 #include <raymath.h>
 
-Mario::Mario(float px, float py, Texture texture) : position({ px, py }), velocity({ 0,0 }), tex(texture) {
+Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){
+    for(int i = 0; i < sprite_sources.size(); i++){
+        sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
+        hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
+    }
 }
 
 void Mario::render(Vector2 top_left, Vector2 size) {

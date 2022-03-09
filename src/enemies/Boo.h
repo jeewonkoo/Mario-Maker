@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MARIO_MAKER_BOO_H
+#define MARIO_MAKER_BOO_H
+
 
 #include "../Entity.h"
 #include "../Mario.h"
@@ -22,3 +24,5 @@ private:
 
 	bool is_dead;
 };
+
+#endif //MARIO_MAKER_BOO_H

@@ -19,52 +19,34 @@ int main(){
     Texture2D background_texture = LoadTextureFromImage(background);    //load background iamge to turn into texture 
     UnloadImage(background);                                            //unload background image after turn into texture
 
-    Image page2 = LoadImage("images/mario_sprites2.png");               //set big mario sprite
-    Texture2D page2_texture = LoadTextureFromImage(page2);              //load big mario sprite to turn into texture
-    UnloadImage(page2);                                                 //unload big mario sprite after turn into texture
-
-    Image mario_img = LoadImage("images/marios.png");                   //set regular mario sprite
-    Texture2D mario_texture = LoadTextureFromImage(mario_img);          //load regular mario sprite to turn into texture
+    Image mario_img = LoadImage("images/mario_sprites.png");                   //set regular mario sprite
+    Texture2D sprite_texture = LoadTextureFromImage(mario_img);          //load regular mario sprite to turn into texture
     UnloadImage(mario_img);                                             //unload regular mario sprite after turn into texture
-
-
-    Image goomba_img = LoadImage("images/goomba.png");                  //set goomba sprite
-    Texture2D goomba_texture = LoadTextureFromImage(goomba_img);        //load goomba sprite to turn into texture
-    UnloadImage(goomba_img);                                            //unload goomba sprite after turn into texture
 
     Image tile_img = LoadImage("images/mario_sprites_2.png");           //set tile sprite
     Texture2D tile_texture = LoadTextureFromImage(tile_img);            //load tile sprite to turn into texture
     UnloadImage(tile_img);                                              //unload tile sprite after turn into texture
-
-    Image boo_img = LoadImage("images/Boo_opened.png");                 //set boo sprite
-    Texture2D boo_texture = LoadTextureFromImage(boo_img);              //load boo sprite to turn into texture
-    UnloadImage(boo_img);                                               //unload boo sprite after turn into texture
-
-    Image mushroom_img = LoadImage("images/mushroom.png");              //set mushroom sprite
-    Texture2D mushroom_texture = LoadTextureFromImage(mushroom_img);    //load mushroom sprite to turn into texture
-    UnloadImage(mushroom_img);                                          //unload mushroom sprite after turn into texture
-
 
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
 
     Level level{tile_texture};                                          
 
-    auto m = std::make_unique<Mario>(10, 3, mario_texture);
+    auto m = std::make_unique<Mario>(10, 3, sprite_texture);
     Mario * mario = m.get();
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){
-        level.add_entity(std::make_unique<Mushroom>(i, 10, mushroom_texture));
+        level.add_entity(std::make_unique<Mushroom>(i, 10, sprite_texture));
     }
     for (int i = 0; i < 16; i++) {
-        level.add_entity(std::make_unique<SmallShroom>(i, 10, mushroom_texture));
+        level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
     }
     for (int i = 0; i < 16; i++) {
-        level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+        level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
     }
 
 
-    level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
+    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
 
     // Main game loop
     while (!WindowShouldClose()){

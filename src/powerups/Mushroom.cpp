@@ -1,4 +1,5 @@
 #include "Mushroom.h"
+#include "../SpriteLocations.h"
 #include<raymath.h>
 
 
@@ -6,7 +7,7 @@ Mushroom::Mushroom (float px, float py, Texture texture) : tex(texture), positio
 }
 
 void Mushroom::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::Mushroom, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 #include<iostream>
 void Mushroom::update (const TileGrid& level, const InputState & keyboard_input) {
