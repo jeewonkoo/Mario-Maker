@@ -64,7 +64,7 @@ int main(){
     }
 
 
-    //level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
+    level.add_entity(std::make_unique<Boo>(5,10,boo_texture,mario));
 
     // Main game loop
     while (!WindowShouldClose()){
