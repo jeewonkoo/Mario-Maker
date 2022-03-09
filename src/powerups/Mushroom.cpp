@@ -49,7 +49,7 @@ Rectangle Mushroom::rect() const {
 }
 
 void Mushroom::on_collide(EntityCollision collision) {
-    if(collision.side == Side::TOP){
+    if(collision.other.type() == EntityType::Mario){
         is_dead = true;
     }
 }

@@ -39,7 +39,7 @@ public:
     //update the entity
     virtual void update(const TileGrid &level, const InputState &keyboard_input) = 0;
 
-    //weather the entity should be removed from the current entities list
+    //whether the entity should be removed from the current entities list
     virtual bool should_remove() = 0;
 
     virtual EntityType type() = 0;
