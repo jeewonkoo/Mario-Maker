@@ -4,6 +4,7 @@
 #include <array>
 #include "Entity.h"
 #include "InputState.h"
+#include "SpriteLocations.h"
 
 enum class MarioPowerUp {
     None = 0,
@@ -61,11 +62,11 @@ private:
     static constexpr float air_traction = 0;
 
     static constexpr std::array<Rectangle, 5> sprite_sources = {
-            Rectangle{ 12, 5, 12, 15 },
-            Rectangle{ 11, 26, 14, 27 },
-            Rectangle{ 12, 5, 12, 15 },
-            Rectangle{ 5, 85, 14, 27 },
-            Rectangle{ 3, 56, 21, 28 },
+            SpriteLocations::MarioSmall,
+            SpriteLocations::MarioBig,
+            SpriteLocations::MarioSmall, //mini
+            SpriteLocations::MarioFire,
+            SpriteLocations::MarioTanookie,
     };
 
     std::array<Rectangle, 5> sprite_dests{};

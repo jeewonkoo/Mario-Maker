@@ -22,7 +22,7 @@ add_executable(mario_maker
         src/powerups/TanookieLeaf.cpp
         src/powerups/TanookieLeaf.h
         src/powerups/SmallShroom.cpp
-        src/powerups/SmallShroom.h)
+        src/powerups/SmallShroom.h src/SpriteLocations.h)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 target_link_libraries(mario_maker PRIVATE raylib)
