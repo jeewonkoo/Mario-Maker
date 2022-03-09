@@ -20,7 +20,8 @@ enum class EntityType {
     JumpEnemy,
     SpikeEnemy,
     Mushroom,
-    SmallShroom
+    SmallShroom,
+    Piranha
 };
 
 class Entity {

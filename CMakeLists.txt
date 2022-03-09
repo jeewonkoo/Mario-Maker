@@ -18,7 +18,7 @@ add_executable(mario_maker
         src/powerups/Mushroom.cpp 
         src/powerups/Mushroom.h
         src/enemies/Boo.cpp
-         "src/powerups/SmallShroom.h" "src/powerups/SmallShroom.cpp")
+         "src/powerups/SmallShroom.h" "src/powerups/SmallShroom.cpp" "src/enemies/Piranha.cpp")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 target_link_libraries(mario_maker PRIVATE raylib)
