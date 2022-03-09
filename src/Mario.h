@@ -10,6 +10,7 @@ enum class MarioPowerUp {
     Big = 1,
     Small = 2,
     Fire = 3,
+    Tanookie = 4,
 };
 
 class Mario : public Entity {
@@ -59,26 +60,17 @@ private:
     static constexpr float ground_traction = 0.05;
     static constexpr float air_traction = 0;
 
-    static constexpr std::array<Rectangle, 4> sprite_sources = {
-            Rectangle{ 187, 3, 16, 16 },
-            Rectangle{ 186, 25, 20, 27 },
-            Rectangle{ 187, 3, 16, 16 },
-            Rectangle{ 186, 87, 19, 27 },
+    static constexpr std::array<Rectangle, 5> sprite_sources = {
+            Rectangle{ 12, 5, 12, 15 },
+            Rectangle{ 11, 26, 14, 27 },
+            Rectangle{ 12, 5, 12, 15 },
+            Rectangle{ 5, 85, 14, 27 },
+            Rectangle{ 3, 56, 21, 28 },
     };
 
-    static constexpr std::array<Rectangle, 4> sprite_dests = {
-            Rectangle{ 0, 0, 16*3, 16*3 },
-            Rectangle{ 0, 0, 20*3, 27*3 },
-            Rectangle{ 0, 0, 32, 32 },
-            Rectangle{ 0, 0, 19*3, 27*3 },
-    };
+    std::array<Rectangle, 5> sprite_dests{};
 
-    static constexpr std::array<Rectangle, 4> hit_boxes = {
-            Rectangle{ 0, 0, 0.75, 0.75 },
-            Rectangle{ 0, 0, 0.94, 1.26},
-            Rectangle{ 0, 0, 0.5, 0.5 },
-            Rectangle{ 0, 0, 0.89, 1.26},
-            };
+    std::array<Rectangle, 5> hit_boxes{};
 };
 
 #endif

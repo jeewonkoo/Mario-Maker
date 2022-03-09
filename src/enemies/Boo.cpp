@@ -13,7 +13,7 @@ void Boo::update(const TileGrid& level, const InputState& keyboard_input) {
 		position.x -= 0.01;
 	}
 	else if (mPos.x > this->position.x) {
-		position.y += 0.01;
+		position.x += 0.01;
 	}
 
 	if (mPos.y > this->position.y) {
@@ -31,7 +31,7 @@ Rectangle Boo::rect() const {
 
 void Boo::on_collide(EntityCollision collision) {
 	if (collision.side == Side::TOP) {
-		is_dead = true;
+//		is_dead = true;
 	}
 }
 

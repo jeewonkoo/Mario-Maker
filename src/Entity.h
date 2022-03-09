@@ -16,7 +16,8 @@ enum class EntityType {
     Mario,
     JumpEnemy,
     SpikeEnemy,
-    Mushroom
+    Mushroom,
+    TanookieLeaf
 };
 
 class Entity {
