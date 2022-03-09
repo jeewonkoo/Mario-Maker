@@ -21,7 +21,8 @@ enum class EntityType {
     SpikeEnemy,
     Mushroom,
     TanookieLeaf,
-    SmallShroom
+    SmallShroom,
+    Piranha
 };
 
 class Entity {

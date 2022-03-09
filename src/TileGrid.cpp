@@ -6,6 +6,12 @@
 #include <cassert>
 #include <raymath.h>
 
+/**
+ * Renders(draw) tile grids on graphic. Accepts two Vector2 as parameters
+ * 
+ * @param top_left top left location of tile grid on graphic 
+ * @param size size of tile grid on graphic 
+ */
 void TileGrid::render(Vector2 top_left, Vector2 size) const {
     auto step = Vector2Divide(size, Vector2{static_cast<float>(width), static_cast<float>(height)});
 
@@ -22,6 +28,13 @@ void TileGrid::render(Vector2 top_left, Vector2 size) const {
     }
 }
 
+/**
+ * Returns tile grid on given location x and y on graphic
+ * 
+ * @param x x axis coordinate 
+ * @param y y axis coordinate
+ * @return tile grid on x and y parameter
+ */
 Tile TileGrid::at(int x, int y) const{
     if(x < 0 || x >= (int)width || y < 0 || y >= (int)height){
         return Tile{.solid = true};
@@ -30,12 +43,24 @@ Tile TileGrid::at(int x, int y) const{
     }
 }
 
-
+/**
+ * Modifies tile grid with given x and y 
+ * 
+ * @param x x axis coordinate
+ * @param y y axis coordinate
+ * @return modified tile grid 
+ */
 Tile &TileGrid::at_mut(int x, int y) {
     assert(!(x < 0 || x >= (int)width || y < 0 || y >= (int)height) && "out of bounds tile access");
     return tiles[y * width + x];
 }
 
+/**
+ * Collides rectangle against the level geometry. Determines if tile collides with other entity.
+ * 
+ *  @param rect rectangle that collides against tile grid 
+ *  @return array of collided tile
+ */
 TileCollisionSet TileGrid::collide(Rectangle rect) const{
     int width_steps = std::ceil(rect.width);
     int height_steps = std::ceil(rect.height);
@@ -68,11 +93,26 @@ TileCollisionSet TileGrid::collide(Rectangle rect) const{
     return collisions;
 }
 
+/**
+ * Collides rectangle against the level geometry. Determines if tile collides with other entity.
+ * Indicates if the value is initialized or not using std::optional 
+ * 
+ * @param rect rectangle that collides against tile grid 
+ * @param x x axis coordinate
+ * @param y y axis coordinate
+ * @return collided rectangle
+ */
 std::optional<Collision> TileGrid::collide_grid(Rectangle rect, int x, int y) {
     Rectangle tile_rect = {float(x), float(y), 1, 1};
     return collide_rect(rect, tile_rect);
 }
 
+/**
+ * resize size of tile grid with given width and height parameters
+ * 
+ * @param width Width of new tile grid
+ * @param height Height of new tile grid
+ */
 void TileGrid::resize(size_t width, size_t height) {
     tiles.resize(width * height);
     this->width = width;
