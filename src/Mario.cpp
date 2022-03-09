@@ -94,6 +94,10 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 void Mario::on_collide(EntityCollision collision) {
     switch(collision.other.type()){
         case EntityType::Mushroom:
+            power_up = MarioPowerUp::Big;
+            break;
+        case EntityType::SmallShroom:
+            power_up = MarioPowerUp::Small;
             break;
         case EntityType::JumpEnemy:
             if(collision.side == Side::BOTTOM && velocity.y >= 0){
