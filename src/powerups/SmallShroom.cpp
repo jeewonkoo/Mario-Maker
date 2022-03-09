@@ -1,21 +1,22 @@
-#include "Mushroom.h"
+#include "SmallShroom.h"
 #include<raymath.h>
 
 
-Mushroom::Mushroom (float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.1,0 }) , is_dead(false) {
+SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
 }
 
-void Mushroom::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+void SmallShroom::render(Vector2 top_left, Vector2 size) {
+    top_left = Vector2Subtract(top_left, { 32.f, 32.f });
+    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 32, 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 #include<iostream>
-void Mushroom::update (const TileGrid& level, const InputState & keyboard_input) {
+void SmallShroom::update(const TileGrid& level, const InputState& keyboard_input) {
 
     position = Vector2Add(position, velocity);
     velocity.y += 0.02;
 
     //terminate the loop if too many collisions
-    for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
+    for (int coll_idx = 0; coll_idx < 10; coll_idx++) {
         auto collisions = level.collide(rect());
 
         if (collisions.eject_vector.has_value()) {
@@ -33,7 +34,7 @@ void Mushroom::update (const TileGrid& level, const InputState & keyboard_input)
             if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::RIGHT; }) != collisions.collisions.end()) {
                 velocity.x = -0.05;
             }
-            else if(std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
+            else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
                 velocity.x = 0.05;
             }
         }
@@ -43,16 +44,16 @@ void Mushroom::update (const TileGrid& level, const InputState & keyboard_input)
     }
 }
 
-Rectangle Mushroom::rect() const {
-    return {position.x, position.y, 0.9, 0.9};
+Rectangle SmallShroom::rect() const {
+    return { position.x, position.y, 0.9, 0.9 };
 }
 
-void Mushroom::on_collide(EntityCollision collision) {
-    if(collision.side == Side::TOP){
+void SmallShroom::on_collide(EntityCollision collision) {
+    if (collision.side == Side::TOP) {
         is_dead = true;
     }
 }
 
-bool Mushroom::should_remove() {
+bool SmallShroom::should_remove() {
     return is_dead;
 }

@@ -4,6 +4,7 @@
 #include "enemies/Goomba.h"
 #include "enemies/Boo.h"
 #include "powerups/Mushroom.h"
+#include "powerups/SmallShroom.h"
 #include "Level.h"
 
 int main(){
@@ -54,6 +55,9 @@ int main(){
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){
         level.add_entity(std::make_unique<Mushroom>(i, 10, mushroom_texture));
+    }
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<SmallShroom>(i, 10, mushroom_texture));
     }
     for (int i = 0; i < 16; i++) {
         level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
