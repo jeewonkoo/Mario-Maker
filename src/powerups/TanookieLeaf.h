@@ -1,7 +1,3 @@
-//
-// Created by 16182 on 3/8/2022.
-//
-
 #ifndef MARIO_MAKER_TANOOKIE_LEAF_H
 #define MARIO_MAKER_TANOOKIE_LEAF_H
 
