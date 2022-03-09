@@ -1,5 +1,5 @@
-#include <raylib.h>
 #include "Mario.h"
+#include <raylib.h>
 #include <raymath.h>
 
 Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){
