@@ -108,8 +108,12 @@ void Mario::on_collide(EntityCollision collision) {
                 velocity.y = -jump_instant_accel;
                 frames_since_jump = 0;
             }
+            if (collision.side != Side::BOTTOM)
+                power_up = MarioPowerUp::None;
             break;
         case EntityType::SpikeEnemy:
+            if (collision.side != Side::BOTTOM)
+                power_up = MarioPowerUp::None;
             break;
         default:
             break;

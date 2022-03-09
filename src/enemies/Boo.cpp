@@ -30,9 +30,7 @@ Rectangle Boo::rect() const {
 }
 
 void Boo::on_collide(EntityCollision collision) {
-	if (collision.side == Side::TOP) {
-//		is_dead = true;
-	}
+	return;
 }
 
 bool Boo::should_remove() {
