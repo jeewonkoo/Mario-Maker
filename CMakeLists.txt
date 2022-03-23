@@ -35,6 +35,7 @@ add_executable(mario_maker
 
 add_executable(tests
     tests/catch.cc
+    tests/tests.cc
     ${mario_src})
 
 
