@@ -61,10 +61,10 @@ void Goomba::update (const TileGrid& level, const InputState & keyboard_input) {
 }
 
 /**
- * Updates location and direction of Goomba entity
+ * Resize hitbox of Goomba entity
+ * (Hitbox refers padding of entity image that determins collision with other entity)
  * 
- * @param level TileGrid object to determine collision 
- * @param keyboard_input pressed keyboard by user
+ * @return resized hitbox 
  */
 Rectangle Goomba::rect() const {
     return {position.x, position.y, 0.9, 0.9};

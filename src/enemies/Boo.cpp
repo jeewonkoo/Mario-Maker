@@ -46,10 +46,10 @@ void Boo::update(const TileGrid& level, const InputState& keyboard_input) {
 }
 
 /**
- * Updates location and direction of Boo entity
+ * Resize hitbox of Boo entity
+ * (Hitbox refers padding of entity image that determins collision with other entity)
  * 
- * @param level TileGrid object to determine collision 
- * @param keyboard_input pressed keyboard by user
+ * @return resized hitbox 
  */
 Rectangle Boo::rect() const {
 	return { position.x, position.y, 0.9, 0.9 };

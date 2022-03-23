@@ -2,6 +2,13 @@
 #include "../SpriteLocations.h"
 #include<raymath.h>
 
+/**
+ * Constructor for Piranha class. Sets private variable of Piranha class with given parameters. 
+ * 
+ * @param px start x axis location
+ * @param py start y axis location
+ * @param texture rendered Piranha image sprite
+ */
 Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0), is_dead(false) {}
 
 /**
@@ -42,10 +49,21 @@ void Piranha::update(const TileGrid& level, const InputState& keyboard_input) {
 	
 }
 
+/**
+ * Determines if Boo should be disappeared or not 
+ * 
+ * @return is_dead boolean private member variable 
+ */
 bool Piranha::should_remove() {
 	return is_dead;
 }
 
+/**
+ * Resize hitbox of Piranha entity
+ * (Hitbox refers padding of entity image that determins collision with other entity)
+ * 
+ * @return resized hitbox 
+ */
 Rectangle Piranha::rect() const {
 	return { position.x, position.y, 0.9, 0.9 };
 }
