@@ -9,7 +9,6 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-
 Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
@@ -146,8 +145,10 @@ void Mario::on_collide(EntityCollision collision) {
 }
 
 /**
+ * Resize hitbox of Mario entity
+ * (Hitbox refers padding of entity image that determins collision with other entity)
  * 
- * @return box 
+ * @return box resized hitbox 
  */
 Rectangle Mario::rect() const {
     auto box = hit_boxes.at((size_t)power_up);

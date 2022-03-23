@@ -3,7 +3,6 @@
 //
 
 #include "Level.h"
-#include<algorithm>
 
 void Level::update(InputState keyboard_input) {
     for(auto & e : entities){
