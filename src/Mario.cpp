@@ -35,10 +35,6 @@ void Mario::render(Vector2 top_left, Vector2 size) {
  */
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 
-    // Mario dies
-    if (dead)
-        return;
-
     if (power_up == MarioPowerUp::SmallInv)
         invincibility++;
     if (invincibility == 180) {
@@ -187,4 +183,8 @@ Rectangle Mario::rect() const {
  */
 bool Mario::should_remove() {
     return false;
+}
+
+bool Mario::is_dead() {
+    return dead;
 }

@@ -35,6 +35,8 @@ public:
 
     Vector2 getPosition() { return position; }
 
+    bool is_dead();
+
 private:
     Vector2 position;
     Vector2 velocity;
@@ -65,17 +67,18 @@ private:
     static constexpr float ground_traction = 0.05;
     static constexpr float air_traction = 0;
 
-    static constexpr std::array<Rectangle, 5> sprite_sources = {
+    static constexpr std::array<Rectangle, 6> sprite_sources = {
             SpriteLocations::MarioSmall,
             SpriteLocations::MarioBig,
             SpriteLocations::MarioSmall, //mini
             SpriteLocations::MarioFire,
             SpriteLocations::MarioTanookie,
+            SpriteLocations::MarioSmall
     };
 
-    std::array<Rectangle, 5> sprite_dests{};
+    std::array<Rectangle, 6> sprite_dests{};
 
-    std::array<Rectangle, 5> hit_boxes{};
+    std::array<Rectangle, 6> hit_boxes{};
 };
 
 #endif

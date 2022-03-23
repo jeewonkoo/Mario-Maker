@@ -28,6 +28,10 @@ int main(){
     Texture2D tile_texture = LoadTextureFromImage(tile_img);            //load tile sprite to turn into texture
     UnloadImage(tile_img);                                              //unload tile sprite after turn into texture
 
+    Image end_img = LoadImage("images/dead_screen.png");        //set end_screen image
+    Texture2D end_texture = LoadTextureFromImage(end_img);    //load end_screen image to turn into texture
+    UnloadImage(end_img);
+
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
 
@@ -66,12 +70,19 @@ int main(){
             .space = IsKeyDown(KEY_SPACE),
         };
 
-        level.update(input);
+        if (!mario->is_dead())
+            level.update(input);
+        
         Camera2D cam{};
         cam.rotation = 0;
         cam.offset = {mario->rect().x * -64 + 512, 0};
         cam.target = {0,0};
         cam.zoom = 1.0;
+
+        if (mario->is_dead()) {
+            cam.offset = {0, 0};
+            break;
+        }
 
         BeginDrawing();
         {
@@ -95,6 +106,16 @@ int main(){
         }
         EndDrawing();
     }
+
+    while (!WindowShouldClose()) {
+        // dead screen
+        BeginDrawing();
+        {
+            DrawTextureTiled(end_texture, { 0, 0, 512,512 }, { 512,512 }, { 0,0 }, 0, 1, WHITE);
+        }
+        EndDrawing();
+    }
+
 
     CloseWindow();                                                      // Close window and OpenGL context
 
