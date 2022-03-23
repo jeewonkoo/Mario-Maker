@@ -10,8 +10,7 @@
  * @param py start y axis location
  * @param texture rendered SmallShroom image sprite
  */
-SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
-}
+SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {}
 
 /**
  * Renders(draw) SmallShroom on graphic. Accepts two Vector2 as parameters
