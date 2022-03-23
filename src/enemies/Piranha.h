@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MARIO_MAKER_PIRANHA_H
+#define MARIO_MAKER_PIRANHA_H
+
 
 #include "../Entity.h"
 #include "../Mario.h"
@@ -11,6 +13,7 @@ public:
 	void on_collide(EntityCollision collision) override;
 	void render(Vector2 top_left, Vector2 size) override;
 	void update(const TileGrid& level, const InputState& keyboard_input) override;
+	bool should_remove() override;
 	EntityType type() override { return EntityType::SpikeEnemy; }
 
 private:
@@ -19,4 +22,7 @@ private:
 	Vector2 position;
 	int dormantPlant; // keep track of how long the plant is dormant
 	int activePlant; // keep track of how long the plant is active
+	bool is_dead;
 };
+
+#endif //MARIO_MAKER_PIRANHA_H

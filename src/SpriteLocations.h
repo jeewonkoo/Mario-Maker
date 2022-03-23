@@ -19,6 +19,7 @@ namespace SpriteLocations {
     constexpr Rectangle Mushroom = {567, 995, 16, 16};
     constexpr Rectangle TanookieLeafRight = {513, 995, 16, 16};
     constexpr Rectangle TanookieLeafLeft = {531, 995, 16, 16};
+    constexpr Rectangle Piranha = { 20, 832, 16, 32 };
 }
 
 namespace TileLocations {
