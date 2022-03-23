@@ -17,12 +17,12 @@ class TileGrid {
             resize(width, height);
             tex = texture;
 
-            for(size_t x = 0; x < width; x++){
-    //            at_mut(x, height - 1).solid = true;
-                for(size_t y = 0; y < height; y++){
-                    at_mut(x, height - 1 - y).solid = rand() % (y+1) == 0;
-                }
-            }
+            //for(size_t x = 0; x < width; x++){
+                //at_mut(x, height - 1).solid = true;
+                //for(size_t y = 0; y < height; y++){
+               //     at_mut(x, height - 1 - y).solid = rand() % (y+1) == 0;
+               // }
+          //  }
         };
 
         void render(Vector2 top_left, Vector2 bottom_right) const;
