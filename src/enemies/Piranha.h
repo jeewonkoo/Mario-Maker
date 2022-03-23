@@ -19,4 +19,5 @@ private:
 	Vector2 position;
 	int dormantPlant; // keep track of how long the plant is dormant
 	int activePlant; // keep track of how long the plant is active
+	
 };
