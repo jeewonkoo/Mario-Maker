@@ -1,10 +1,11 @@
 #include "Piranha.h"
+#include "../SpriteLocations.h"
 #include<raymath.h>
 
 Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0) {}
 
 void Piranha::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, Rectangle{ 0, 0, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+	DrawTexturePro(tex, SpriteLocations::Piranha, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 void Piranha::update(const TileGrid& level, const InputState& keyboard_input) {
@@ -27,6 +28,10 @@ void Piranha::update(const TileGrid& level, const InputState& keyboard_input) {
 
 
 	
+}
+
+bool Boo::should_remove() {
+	return is_dead;
 }
 
 Rectangle Piranha::rect() const {

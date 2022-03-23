@@ -1,13 +1,14 @@
 #include "SmallShroom.h"
 #include<raymath.h>
+#include "../SpriteLocations.h"
 
 
-SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
+SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.15,0 }), is_dead(false) {
 }
 
 void SmallShroom::render(Vector2 top_left, Vector2 size) {
     top_left = Vector2Subtract(top_left, { 32.f, 32.f });
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 32, 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::Mushroom, Rectangle{ 0, 0, 32, 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 #include<iostream>
 void SmallShroom::update(const TileGrid& level, const InputState& keyboard_input) {
