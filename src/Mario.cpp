@@ -146,8 +146,9 @@ void Mario::on_collide(EntityCollision collision) {
 }
 
 /**
+ * Returns rectangle object to get position of mario for drawing or getting offset purpose 
  * 
- * @return box 
+ * @return box returns rectangle
  */
 Rectangle Mario::rect() const {
     auto box = hit_boxes.at((size_t)power_up);

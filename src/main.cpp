@@ -33,19 +33,26 @@ int main(){
     Level level{tile_texture};                                          
 
     auto m = std::make_unique<Mario>(10, 3, sprite_texture);
+
     Mario * mario = m.get();
     level.add_entity(std::move(m));
+
+    //add mushroom entity for Mario powerUp
     for(int i = 0; i < 16; i++){
         level.add_entity(std::make_unique<Mushroom>(i, 10, sprite_texture));
     }
+
+    //add mushroom entity for Mario powerUp
     for (int i = 0; i < 16; i++) {
         level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
     }
+
+    //add Goomba entity (villian)
     for (int i = 0; i < 16; i++) {
         level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
     }
 
-
+    //add Boo entity (villian)
     level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
 
     // Main game loop
@@ -53,6 +60,7 @@ int main(){
 
         PollInputEvents();
 
+        //receive keoboard input for direction/jump
         InputState input {
             .left = IsKeyDown(KEY_LEFT),
             .right = IsKeyDown(KEY_RIGHT),
@@ -62,6 +70,8 @@ int main(){
         };
 
         level.update(input);
+
+        //adjust background image of graphic while mario is moving  
         Camera2D cam{};
         cam.rotation = 0;
         cam.offset = {mario->rect().x * -64 + 512, 0};
@@ -91,7 +101,8 @@ int main(){
         EndDrawing();
     }
 
-    CloseWindow();                                                      // Close window and OpenGL context
+    // Close window and OpenGL context
+    CloseWindow();     
 
     return 0;
 }

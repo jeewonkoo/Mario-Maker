@@ -5,6 +5,11 @@
 #include "Level.h"
 #include<algorithm>
 
+/**
+ * update graphic based on keyboard_input, which is same as how mario moves
+ * 
+ * @param keyborad_input keyboard pressed by Users 
+ */
 void Level::update(InputState keyboard_input) {
     for(auto & e : entities){
         e->update(grid, keyboard_input);
@@ -23,6 +28,12 @@ void Level::update(InputState keyboard_input) {
     entities.erase(std::remove_if(entities.begin(),  entities.end(), [](auto & e){ return e->should_remove();}), entities.end());
 }
 
+/**
+ * Render(draw) graphic 
+ * 
+ * @param top_left top_left location of entity/tile that you want to render 
+ * @param size size of entity/tile that you want to render 
+ */
 void Level::render(Vector2 top_left, Vector2 size) {
     grid.render(top_left, size);
     for(auto & e : entities){
