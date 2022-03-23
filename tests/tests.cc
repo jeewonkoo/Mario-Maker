@@ -133,4 +133,18 @@ TEST_CASE("Goomba") {
 	Goomba* goomba = g.get();
 	level.add_entity(std::move(g));
 
+	SECTION("Goomba moving right") {
+		Vector2 initialpos = goomba->get_position();
+
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 5; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = goomba->get_position();
+
+		REQUIRE(finalPos.x > initialpos.x);
+	}
+
 }
