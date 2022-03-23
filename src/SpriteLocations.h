@@ -21,4 +21,8 @@ namespace SpriteLocations {
     constexpr Rectangle TanookieLeafLeft = {531, 995, 16, 16};
 }
 
+namespace TileLocations {
+    constexpr Rectangle Ground = {137, 188, 16, 16};
+}
+
 #endif //MARIO_MAKER_SPRITELOCATIONS_H
