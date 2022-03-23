@@ -17,7 +17,7 @@ public:
 
     Vector2 get_position() { return{ position }; };
     bool is_goomba_dead() {
-        return{ is_dead };
+        return is_dead;
     };
 private:
     Texture tex;
