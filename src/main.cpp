@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "enemies/Goomba.h"
 #include "enemies/Boo.h"
+#include "enemies/Piranha.h"
 #include "powerups/Mushroom.h"
 #include "powerups/SmallShroom.h"
 #include "Level.h"
@@ -46,7 +47,11 @@ int main(){
     }
 
 
-    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
+    //level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
+
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<Piranha>(rand() % 30, rand() % 10, sprite_texture, mario));
+    }
 
     // Main game loop
     while (!WindowShouldClose()){

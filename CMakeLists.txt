@@ -18,12 +18,15 @@ set(mario_src
     src/powerups/Mushroom.h
     src/enemies/Boo.cpp
     src/enemies/Boo.h
+    src/enemies/Piranha.cpp
+    src/enemies/Piranha.h
     src/powerups/TanookieLeaf.cpp
     src/powerups/TanookieLeaf.h
     src/powerups/SmallShroom.cpp
     src/powerups/SmallShroom.h
     src/BuilderUI.cpp
-    src/BuilderUI.h)
+    src/BuilderUI.h
+)
 
 add_executable(mario_maker
         src/main.cpp

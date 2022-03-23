@@ -1,14 +1,8 @@
 #include "Piranha.h"
+#include "../SpriteLocations.h"
 #include<raymath.h>
 
-/**
- * Constructor for Piranha class. Sets private variable of Piranha class with given parameters. 
- * 
- * @param px start x axis location
- * @param py start y axis location
- * @param texture rendered Piranha image sprite
- */
-Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0) {}
+Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0), is_dead(false) {}
 
 /**
  * Renders(draw) Piranha on graphic. Accepts two Vector2 as parameters
@@ -17,7 +11,7 @@ Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ p
  * @param size size of Piranha on graphic 
  */
 void Piranha::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, Rectangle{ 0, 0, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+	DrawTexturePro(tex, SpriteLocations::Piranha, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -48,12 +42,10 @@ void Piranha::update(const TileGrid& level, const InputState& keyboard_input) {
 	
 }
 
-/**
- * Updates location and direction of Piranha entity
- * 
- * @param level TileGrid object to determine collision 
- * @param keyboard_input pressed keyboard by user
- */
+bool Piranha::should_remove() {
+	return is_dead;
+}
+
 Rectangle Piranha::rect() const {
 	return { position.x, position.y, 0.9, 0.9 };
 }

@@ -1,4 +1,5 @@
 #include "SmallShroom.h"
+<<<<<<< HEAD
 #include <raymath.h>
 #include <iostream>
 
@@ -10,6 +11,13 @@
  * @param texture rendered SmallShroom image sprite
  */
 SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
+=======
+#include<raymath.h>
+#include "../SpriteLocations.h"
+
+
+SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.15,0 }), is_dead(false) {
+>>>>>>> 28109e72e917d5fc2cda16a8bbcfeaab8b51ee37
 }
 
 /**
@@ -20,7 +28,7 @@ SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), po
  */
 void SmallShroom::render(Vector2 top_left, Vector2 size) {
     top_left = Vector2Subtract(top_left, { 32.f, 32.f });
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 32, 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::Mushroom, Rectangle{ 0, 0, 32, 32 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
