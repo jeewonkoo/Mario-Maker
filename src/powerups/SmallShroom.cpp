@@ -1,5 +1,5 @@
 #include "SmallShroom.h"
-<<<<<<< HEAD
+#include "../SpriteLocations.h"
 #include <raymath.h>
 #include <iostream>
 
@@ -11,13 +11,6 @@
  * @param texture rendered SmallShroom image sprite
  */
 SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
-=======
-#include<raymath.h>
-#include "../SpriteLocations.h"
-
-
-SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.15,0 }), is_dead(false) {
->>>>>>> 28109e72e917d5fc2cda16a8bbcfeaab8b51ee37
 }
 
 /**
