@@ -9,12 +9,7 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-<<<<<<< HEAD
-
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0) {
-=======
 Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture) {
->>>>>>> 219c8a0d33c88a49923fa1af105761dd20f3f14a
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
         hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
