@@ -47,7 +47,7 @@ int main(){
     }
 
 
-    //level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
+    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
 
     for (int i = 0; i < 16; i++) {
         level.add_entity(std::make_unique<Piranha>(rand() % 30, rand() % 10, sprite_texture, mario));

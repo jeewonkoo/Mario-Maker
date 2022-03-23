@@ -12,6 +12,7 @@ enum class MarioPowerUp {
     Small = 2,
     Fire = 3,
     Tanookie = 4,
+    SmallInv = 5
 };
 
 class Mario : public Entity {
@@ -43,6 +44,9 @@ private:
     bool jumping{};
     //whether mario pressed space in the previous frame
     bool last_space{};
+
+    bool dead;
+    int invincibility;
 
     MarioPowerUp power_up = MarioPowerUp::Fire;
 
