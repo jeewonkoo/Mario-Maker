@@ -1,18 +1,24 @@
-#ifndef MARIO_MAKER_GOOMBA_H
-#define MARIO_MAKER_GOOMBA_H
+//
+// Created by 16182 on 3/8/2022.
+//
 
-#include "Entity.h"
+#ifndef MARIO_MAKER_MUSHROOM_H
+#define MARIO_MAKER_MUSHROOM_H
 
-class Goomba : public Entity {
+
+#include "../Entity.h"
+
+class Mushroom : public Entity {
 public:
 
-    Goomba(float px, float py, Texture texture);
+    Mushroom(float px, float py, Texture texture);
 
     [[nodiscard]] Rectangle rect() const override;
     void on_collide(EntityCollision collision) override;
     void render(Vector2 top_left, Vector2 size) override;
     void update(const TileGrid& level, const InputState & keyboard_input) override;
     bool should_remove() override;
+    EntityType type() override { return EntityType::Mushroom; }
 private:
     Texture tex;
     Vector2 position;
@@ -20,4 +26,5 @@ private:
     bool is_dead;
 };
 
-#endif
+
+#endif //MARIO_MAKER_MUSHROOM_H

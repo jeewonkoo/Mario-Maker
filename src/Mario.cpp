@@ -1,13 +1,38 @@
-#include <raylib.h>
 #include "Mario.h"
+#include <raylib.h>
 #include <raymath.h>
 
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture){}
+/**
+ * Constructor for mario class. Sets private variable of mario class with given parameters. 
+ * 
+ * @param px start x axis location
+ * @param py start y axis location
+ * @param texture rendered mario image sprite
+ */
 
-void Mario::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, Rectangle{ 187, 3, 16, 16 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture) {
+    for(int i = 0; i < sprite_sources.size(); i++){
+        sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
+        hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
+    }
 }
 
+/**
+ * Renders(draw) mario on graphic. Accepts two Vector2 as parameters
+ * 
+ * @param top_left top left location of mario on graphic 
+ * @param size size of mario on graphic 
+ */
+void Mario::render(Vector2 top_left, Vector2 size) {
+    DrawTexturePro(tex, sprite_sources.at((size_t)power_up), sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
+}
+
+/**
+ * Updates location and direction of mario entity
+ * 
+ * @param level TileGrid object to determine collision 
+ * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
+ */
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
     float acceleration = [&]{
        if(grounded){
@@ -62,7 +87,8 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	position = Vector2Add(position, velocity);
 
 	grounded = false;
-	while(true){
+	//terminate the loop if too many collisions
+	for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
 	    auto collisions = level.collide(rect());
 
         if(collisions.eject_vector.has_value()){
@@ -89,13 +115,52 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	frames_since_jump++;
 }
 
+/**
+ * Collides entity against the mario. Determines if tile collides with other entity.
+ * 
+ *  @param collision array of colided entity set 
+ */
 void Mario::on_collide(EntityCollision collision) {
-    if(collision.side == Side::BOTTOM && velocity.y >= 0){
-        velocity.y = -jump_instant_accel;
-        frames_since_jump = 0;
+    switch(collision.other.type()){
+        case EntityType::Mushroom:
+            power_up = MarioPowerUp::Big;
+            break;
+        case EntityType::SmallShroom:
+            power_up = MarioPowerUp::Small;
+            break;
+        case EntityType::JumpEnemy:
+            if(collision.side == Side::BOTTOM && velocity.y >= 0){
+                velocity.y = -jump_instant_accel;
+                frames_since_jump = 0;
+            }
+            if (collision.side != Side::BOTTOM)
+                power_up = MarioPowerUp::None;
+            break;
+        case EntityType::SpikeEnemy:
+            if (collision.side != Side::BOTTOM)
+                power_up = MarioPowerUp::None;
+            break;
+        default:
+            break;
     }
 }
 
+/**
+ * 
+ * @return box 
+ */
+Rectangle Mario::rect() const {
+    auto box = hit_boxes.at((size_t)power_up);
+    box.x += position.x;
+    box.y += position.y;
+    return box;
+}
+
+/**
+ * Determines if mario entity should be removed or not 
+ * 
+ * @return false 
+ */
 bool Mario::should_remove() {
     return false;
 }

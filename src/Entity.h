@@ -5,11 +5,24 @@
 #include"TileGrid.h"
 #include "InputState.h"
 
+
+//Class called Entity. This class is for villians and mario powerUps. 
+
 class Entity;
 
 struct EntityCollision {
     Entity& other;
     Side side;
+};
+
+enum class EntityType {
+    Mario,
+    JumpEnemy,
+    SpikeEnemy,
+    Mushroom,
+    TanookieLeaf,
+    SmallShroom,
+    Piranha
 };
 
 class Entity {
@@ -29,6 +42,8 @@ public:
 
     //weather the entity should be removed from the current entities list
     virtual bool should_remove() = 0;
+
+    virtual EntityType type() = 0;
 
     virtual ~Entity() = default;
 };

@@ -1,8 +1,18 @@
 #ifndef MARIO_H
 #define MARIO_H
 
-#include"Entity.h"
+#include <array>
+#include "Entity.h"
 #include "InputState.h"
+#include "SpriteLocations.h"
+
+enum class MarioPowerUp {
+    None = 0,
+    Big = 1,
+    Small = 2,
+    Fire = 3,
+    Tanookie = 4,
+};
 
 class Mario : public Entity {
 public:
@@ -12,12 +22,18 @@ public:
 
     void update(const TileGrid &level, const InputState &keyboard_input) override;
 
-    Rectangle rect() const override { return {position.x + 0.05f, position.y + 0.1f, 0.9, 0.9};}
+    Rectangle rect() const override;
 
     void on_collide(EntityCollision collision) override;
 
     bool should_remove() override;
+
+    EntityType type() override { return EntityType::Mario; }
+
     ~Mario() override = default;
+
+    Vector2 getPosition() { return position; }
+
 private:
     Vector2 position;
     Vector2 velocity;
@@ -27,6 +43,8 @@ private:
     bool jumping{};
     //whether mario pressed space in the previous frame
     bool last_space{};
+
+    MarioPowerUp power_up = MarioPowerUp::Fire;
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;
@@ -42,6 +60,18 @@ private:
     static constexpr float max_fall = 0.5;
     static constexpr float ground_traction = 0.05;
     static constexpr float air_traction = 0;
+
+    static constexpr std::array<Rectangle, 5> sprite_sources = {
+            SpriteLocations::MarioSmall,
+            SpriteLocations::MarioBig,
+            SpriteLocations::MarioSmall, //mini
+            SpriteLocations::MarioFire,
+            SpriteLocations::MarioTanookie,
+    };
+
+    std::array<Rectangle, 5> sprite_dests{};
+
+    std::array<Rectangle, 5> hit_boxes{};
 };
 
 #endif

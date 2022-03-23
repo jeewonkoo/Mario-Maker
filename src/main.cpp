@@ -1,50 +1,52 @@
 #include <raylib.h>
 #include "TileGrid.h"
 #include "Mario.h"
-#include "Goomba.h"
+#include "enemies/Goomba.h"
+#include "enemies/Boo.h"
+#include "powerups/Mushroom.h"
+#include "powerups/SmallShroom.h"
 #include "Level.h"
 
 int main(){
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 1024;
-    const int screenHeight = 1024;
+    const int screenWidth = 1024;                                       //set width size of screen
+    const int screenHeight = 1024;                                      //set height size of screen
 
-    InitWindow(screenWidth, screenHeight, "Mario Maker");
+    InitWindow(screenWidth, screenHeight, "Mario Maker");               //initializing game graphic window
 
-    Image background = LoadImage("images/mario_background.png");
-    Texture2D background_texture = LoadTextureFromImage(background);
-    UnloadImage(background);
+    Image background = LoadImage("images/mario_background.png");        //set background image
+    Texture2D background_texture = LoadTextureFromImage(background);    //load background iamge to turn into texture 
+    UnloadImage(background);                                            //unload background image after turn into texture
 
-    Image page2 = LoadImage("images/mario_sprites2.png");
-    Texture2D page2_texture = LoadTextureFromImage(page2);
-    UnloadImage(page2);
+    Image mario_img = LoadImage("images/mario_sprites.png");                   //set regular mario sprite
+    Texture2D sprite_texture = LoadTextureFromImage(mario_img);          //load regular mario sprite to turn into texture
+    UnloadImage(mario_img);                                             //unload regular mario sprite after turn into texture
 
-    Image mario_img = LoadImage("images/marios.png");
-    Texture2D mario_texture = LoadTextureFromImage(mario_img);
-    UnloadImage(mario_img);
+    Image tile_img = LoadImage("images/mario_sprites_2.png");           //set tile sprite
+    Texture2D tile_texture = LoadTextureFromImage(tile_img);            //load tile sprite to turn into texture
+    UnloadImage(tile_img);                                              //unload tile sprite after turn into texture
 
-
-    Image goomba_img = LoadImage("images/goomba.png");
-    Texture2D goomba_texture = LoadTextureFromImage(goomba_img);
-    UnloadImage(goomba_img);
-
-    Image tile_img = LoadImage("images/mario_sprites_2.png");
-    Texture2D tile_texture = LoadTextureFromImage(tile_img);
-    UnloadImage(tile_img);
+    SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    Level level{tile_texture};                                          
 
-
-    Level level{tile_texture};
-
-    auto m = std::make_unique<Mario>(10, 10, mario_texture);
+    auto m = std::make_unique<Mario>(10, 3, sprite_texture);
     Mario * mario = m.get();
     level.add_entity(std::move(m));
     for(int i = 0; i < 16; i++){
-        level.add_entity(std::make_unique<Goomba>(i, 10, goomba_texture));
+        level.add_entity(std::make_unique<Mushroom>(i, 10, sprite_texture));
     }
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
+    }
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
+    }
+
+
+    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -89,7 +91,7 @@ int main(){
         EndDrawing();
     }
 
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow();                                                      // Close window and OpenGL context
 
     return 0;
 }
