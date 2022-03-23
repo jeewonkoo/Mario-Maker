@@ -16,7 +16,7 @@ int main(){
     InitWindow(screenWidth, screenHeight, "Mario Maker");               //initializing game graphic window
 
     Image background = LoadImage("images/mario_background.png");        //set background image
-    Texture2D background_texture = LoadTextureFromImage(background);    //load background iamge to turn into texture 
+    Texture2D background_texture = LoadTextureFromImage(background);    //load background image to turn into texture
     UnloadImage(background);                                            //unload background image after turn into texture
 
     Image mario_img = LoadImage("images/mario_sprites.png");                   //set regular mario sprite
