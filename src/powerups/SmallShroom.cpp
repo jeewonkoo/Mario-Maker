@@ -1,8 +1,5 @@
 #include "SmallShroom.h"
-<<<<<<< HEAD
-#include <raymath.h>
-#include <iostream>
-
+#include "../SpriteLocations.h"
 /**
  * Constructor for SmallShroom class. Sets private variable of SmallShroom class with given parameters. 
  * 
@@ -10,15 +7,7 @@
  * @param py start y axis location
  * @param texture rendered SmallShroom image sprite
  */
-SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {
-=======
-#include<raymath.h>
-#include "../SpriteLocations.h"
-
-
-SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.15,0 }), is_dead(false) {
->>>>>>> 28109e72e917d5fc2cda16a8bbcfeaab8b51ee37
-}
+SmallShroom::SmallShroom(float px, float py, Texture texture) : tex(texture), position({ px, py }), velocity({ 0.13,0 }), is_dead(false) {}
 
 /**
  * Renders(draw) SmallShroom on graphic. Accepts two Vector2 as parameters
