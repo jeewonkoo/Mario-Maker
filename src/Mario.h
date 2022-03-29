@@ -50,7 +50,7 @@ private:
     bool dead;
     int invincibility;
 
-    MarioPowerUp power_up = MarioPowerUp::Fire;
+    MarioPowerUp power_up = MarioPowerUp::Small;
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;

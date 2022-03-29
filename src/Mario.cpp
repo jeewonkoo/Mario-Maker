@@ -139,6 +139,9 @@ void Mario::on_collide(EntityCollision collision) {
         case EntityType::SmallShroom:
             power_up = MarioPowerUp::Small;
             break;
+        case EntityType::FireFlower:
+            power_up = MarioPowerUp::Fire;
+            break;
         case EntityType::JumpEnemy:
             if (power_up == MarioPowerUp::Small) {
                 dead = true;
