@@ -31,12 +31,12 @@ set(mario_src
 add_executable(mario_maker
         src/main.cpp
         ${mario_src}
-        )
+         "src/powerups/FireFlower.h" "src/powerups/FireFlower.cpp")
 
 add_executable(tests
     tests/catch.cc
     tests/tests.cc
-    ${mario_src})
+    ${mario_src} "src/powerups/FireFlower.h" "src/powerups/FireFlower.cpp")
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
