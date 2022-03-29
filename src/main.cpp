@@ -76,13 +76,14 @@ int main(){
             .space = IsKeyDown(KEY_SPACE),
         };
 
-        if (!mario->is_dead())
-            level.update(input);
         
         if(in_builder){
             ui.handle_events();
         } else {
-            level.update(input);
+            if (!mario->is_dead())
+                level.update(input);
+            else
+                break;
         }
 
         Camera2D cam{};
@@ -90,11 +91,6 @@ int main(){
         cam.offset = Vector2Add(Vector2Multiply(level.get_camera_offset(), {-64.f, -64.f}), {512, 0});
         cam.target = {0,0};
         cam.zoom = 1.0;
-
-        if (mario->is_dead()) {
-            cam.offset = {0, 0};
-            break;
-        }
 
         BeginDrawing();
         {
@@ -127,7 +123,18 @@ int main(){
         // dead screen
         BeginDrawing();
         {
-            DrawTextureTiled(end_texture, { 0, 0, 512,512 }, { 512,512 }, { 0,0 }, 0, 1, WHITE);
+            Camera2D cam{};
+            cam.rotation = 0;
+            cam.offset = {0, 0};
+            cam.target = { 0,0 };
+            cam.zoom = 1.0;
+
+            ClearBackground(RAYWHITE);
+            BeginMode2D(cam);
+            {
+                DrawTextureTiled(end_texture, { 0, 0, 512,512 }, { 512,512 }, { 0,0 }, 0, 1, WHITE);
+            }
+            EndMode2D();
         }
         EndDrawing();
     }
