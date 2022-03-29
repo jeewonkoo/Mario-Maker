@@ -6,6 +6,7 @@
 #include "enemies/Piranha.h"
 #include "powerups/Mushroom.h"
 #include "powerups/SmallShroom.h"
+#include "powerups/FireFlower.h"
 #include "Level.h"
 #include "BuilderUI.h"
 
@@ -53,6 +54,7 @@ int main(){
         level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
     }
 
+    level.add_entity(std::make_unique<FireFlower>(5, 10, sprite_texture));
 
     level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
 

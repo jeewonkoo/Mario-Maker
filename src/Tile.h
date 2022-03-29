@@ -5,9 +5,32 @@
 #include<vector>
 #include<optional>
 
+#include<nlohmann/json.hpp>
+
 struct Tile {
     bool solid{};
     Rectangle tex_src;
+    nlohmann::json to_json() const {
+        auto tile_json = nlohmann::json();
+        tile_json["solid"] = solid;
+        tile_json["x"] = tex_src.x;
+        tile_json["y"] = tex_src.y;
+        tile_json["w"] = tex_src.width;
+        tile_json["h"] = tex_src.height;
+        return tile_json;
+    }
+
+    static Tile from_json(const nlohmann::json & json){
+        return {
+            .solid = json.at("solid"),
+            .tex_src = {
+                .x = json.at("x"),
+                .y = json.at("y"),
+                .width = json.at("width"),
+                .height = json.at("height")
+            }
+        };
+    }
 };
 
 enum class Side {
