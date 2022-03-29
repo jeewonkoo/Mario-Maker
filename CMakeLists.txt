@@ -5,7 +5,27 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(raylib)
 
-set(mario_src "src/TileGrid.cpp;src/Mario.cpp;src/enemies/Goomba.cpp;src/Tile.h;src/Entity.h;src/Level.cpp;src/Level.h;src/InputState.h;src/powerups/Mushroom.cpp ;src/powerups/Mushroom.h;src/enemies/Boo.cpp;src/enemies/Boo.h;src/powerups/TanookieLeaf.cpp;src/powerups/TanookieLeaf.h;src/powerups/SmallShroom.cpp;src/powerups/SmallShroom.h"
+set(mario_src
+        src/TileGrid.cpp
+        src/Mario.cpp
+    src/enemies/Goomba.cpp
+    src/Tile.h
+    src/Entity.h
+    src/Level.cpp
+    src/Level.h
+    src/InputState.h
+    src/powerups/Mushroom.cpp
+    src/powerups/Mushroom.h
+    src/enemies/Boo.cpp
+    src/enemies/Boo.h
+    src/enemies/Piranha.cpp
+    src/enemies/Piranha.h
+    src/powerups/TanookieLeaf.cpp
+    src/powerups/TanookieLeaf.h
+    src/powerups/SmallShroom.cpp
+    src/powerups/SmallShroom.h
+    src/BuilderUI.cpp
+    src/BuilderUI.h
 )
 
 add_executable(mario_maker
@@ -15,6 +35,7 @@ add_executable(mario_maker
 
 add_executable(tests
     tests/catch.cc
+    tests/tests.cc
     ${mario_src})
 
 

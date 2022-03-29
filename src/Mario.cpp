@@ -9,8 +9,7 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture) {
+Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
         hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
@@ -34,6 +33,14 @@ void Mario::render(Vector2 top_left, Vector2 size) {
  * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
  */
 void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
+
+    if (power_up == MarioPowerUp::SmallInv)
+        invincibility++;
+    if (invincibility == 180) {
+        invincibility = 0;
+        power_up = MarioPowerUp::Small;
+    }
+
     float acceleration = [&]{
        if(grounded){
            if(std::abs(velocity.x) < low_speed_threshold){
@@ -121,6 +128,10 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
  *  @param collision array of colided entity set 
  */
 void Mario::on_collide(EntityCollision collision) {
+
+    if (power_up == MarioPowerUp::SmallInv)
+        return;
+
     switch(collision.other.type()){
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
@@ -129,16 +140,24 @@ void Mario::on_collide(EntityCollision collision) {
             power_up = MarioPowerUp::Small;
             break;
         case EntityType::JumpEnemy:
+            if (power_up == MarioPowerUp::Small) {
+                dead = true;
+                return;
+            }
             if(collision.side == Side::BOTTOM && velocity.y >= 0){
                 velocity.y = -jump_instant_accel;
                 frames_since_jump = 0;
             }
             if (collision.side != Side::BOTTOM)
-                power_up = MarioPowerUp::None;
+                power_up = MarioPowerUp::SmallInv;
             break;
         case EntityType::SpikeEnemy:
+            if (power_up == MarioPowerUp::Small) {
+                dead = true;
+                return;
+            }
             if (collision.side != Side::BOTTOM)
-                power_up = MarioPowerUp::None;
+                power_up = MarioPowerUp::SmallInv;
             break;
         default:
             break;
@@ -146,8 +165,10 @@ void Mario::on_collide(EntityCollision collision) {
 }
 
 /**
+ * Resize hitbox of Mario entity
+ * (Hitbox refers padding of entity image that determins collision with other entity)
  * 
- * @return box 
+ * @return box resized hitbox 
  */
 Rectangle Mario::rect() const {
     auto box = hit_boxes.at((size_t)power_up);
@@ -163,4 +184,8 @@ Rectangle Mario::rect() const {
  */
 bool Mario::should_remove() {
     return false;
+}
+
+bool Mario::is_dead() {
+    return dead;
 }
