@@ -82,8 +82,6 @@ int main(){
         } else {
             if (!mario->is_dead())
                 level.update(input);
-            else
-                break;
         }
 
         Camera2D cam{};
@@ -97,17 +95,23 @@ int main(){
             ClearBackground(RAYWHITE);
             BeginMode2D(cam);
             {
-                // draw mountains
-                float paralax_mountains = mario->rect().x * -40;
-                float paralax_clouds = mario->rect().x * -53;
+                if (mario->is_dead()) {
+                    cam.offset = { 0, 0 };
+                    DrawTextureTiled(end_texture, { 0, 0, 1900, 705 }, { 0, 0, 1170, 1024}, { 0,0 }, 0, 1, WHITE);
+                }
+                else {
+                    // draw mountains
+                    float paralax_mountains = mario->rect().x * -40;
+                    float paralax_clouds = mario->rect().x * -53;
 
-                DrawTextureTiled(background_texture, {0, 512, 1024,512}, {-1024, 512, 6*1024,512},{paralax_mountains,0},0,1,WHITE);
-                DrawTextureTiled(background_texture, {0, 0, 1024,512}, {-1024, 0, 6*1024,512},{paralax_clouds,0},0,1,WHITE);
-                Vector2 top_left = {(float)0, (float)0};
-                Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
+                    DrawTextureTiled(background_texture, { 0, 512, 1024,512 }, { -1024, 512, 6 * 1024,512 }, { paralax_mountains,0 }, 0, 1, WHITE);
+                    DrawTextureTiled(background_texture, { 0, 0, 1024,512 }, { -1024, 0, 6 * 1024,512 }, { paralax_clouds,0 }, 0, 1, WHITE);
+                    Vector2 top_left = { (float)0, (float)0 };
+                    Vector2 bottom_right = { (float)screenWidth, (float)screenHeight };
 
 
-                level.render(top_left, bottom_right);
+                    level.render(top_left, bottom_right);
+                }
             }
             EndMode2D();
 
@@ -118,7 +122,7 @@ int main(){
         EndDrawing();
 
     }
-
+    /*
     while (!WindowShouldClose()) {
         // dead screen
         BeginDrawing();
@@ -137,7 +141,7 @@ int main(){
             EndMode2D();
         }
         EndDrawing();
-    }
+    }*/
 
 
     CloseWindow();                                                      // Close window and OpenGL context
