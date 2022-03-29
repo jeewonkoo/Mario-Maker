@@ -119,3 +119,37 @@ void TileGrid::resize(size_t width, size_t height) {
     this->height = height;
 }
 
+using namespace nlohmann;
+
+nlohmann::json TileGrid::to_json() const {
+    auto grid_json = json{};
+    grid_json["width"] = width;
+    grid_json["height"] = height;
+
+    auto rows = json::array();
+    for(int y = 0; y < height; y++){
+        auto row = json::array();
+        for(int x = 0; x < width; x++){
+            row.push_back(at(x,y).to_json());
+        }
+        rows.push_back(std::move(row));
+    }
+
+    grid_json["rows"] = std::move(rows);
+    return grid_json;
+}
+
+TileGrid::TileGrid(Texture texture, size_t width, size_t height, const json &rows): tex(texture), width(width), height(height) {
+    resize(width, height);
+    for(size_t y = 0; y < height; y++){
+        for(size_t x = 0; x < width; x++){
+            at_mut(x,y) = Tile::from_json(rows[y][x]);
+        }
+    }
+}
+
+TileGrid TileGrid::from_json(const nlohmann::json& json, Texture tex) {
+    size_t width = json["width"];
+    size_t height = json["height"];
+    return {tex, width, height, json["rows"]};
+}

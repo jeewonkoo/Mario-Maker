@@ -4,6 +4,7 @@ project(mario_maker)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(raylib)
+add_subdirectory(json)
 
 set(mario_src
         src/TileGrid.cpp
@@ -40,5 +41,5 @@ add_executable(tests
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-target_link_libraries(mario_maker PRIVATE raylib)
-target_link_libraries(tests PRIVATE raylib)
+target_link_libraries(mario_maker PRIVATE raylib nlohmann_json::nlohmann_json)
+target_link_libraries(tests PRIVATE raylib nlohmann_json::nlohmann_json)
