@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include <iostream>
 #include "../src/TileGrid.h"
 #include "../src/Mario.h"
 #include "../src/enemies/Goomba.h"
@@ -146,6 +147,27 @@ TEST_CASE("Goomba") {
 		Vector2 finalPos = goomba->get_position();
 
 		REQUIRE(finalPos.x > initialpos.x);
+	}
+
+	SECTION("Goomba moving left after hitting block") {
+		Rectangle rect1{ 8, 10.1, 5, 5 };
+		Vector2 initialpos = goomba->get_position();
+		std::cout << initialpos.x << std::endl;
+		std::cout << initialpos.y << std::endl;
+
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = goomba->get_position();
+		std::cout << finalPos.x << std::endl;
+		std::cout << finalPos.y << std::endl;
+
+		REQUIRE(finalPos.x < initialpos.x);
+
+
 	}
 
 }
