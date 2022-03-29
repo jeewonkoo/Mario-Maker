@@ -1,6 +1,11 @@
 # Mario Maker
 
 
+
+![header](https://capsule-render.vercel.app/api?type=soft&&color=timeAuto&height=200&section=header&text=Mario%20Maker&fontSize=60&fontAlignY=43&desc=CS+222+@+Software+Design+Lab+Project&descAlign=50&descAlignY=70&animation=twinkling)
+
+## 
+
 ## Team 
 > Nicholas Phillips (nwp2@illinois.edu)
 >
@@ -13,6 +18,7 @@
 ## Description 
 
 Mario is a game that many people enjoy, but with Mario Maker, people are allowed to create their own levels with infinite possibilities and share them with the world. The goal is to provide a creative space where people can challenge and share their talents, all while having fun.
+
 
 ## Functionality 
 
@@ -38,6 +44,7 @@ git submodule update --init --recursive
 ```
 
 </div>
+
 
 #
 course-project-pb-b created by GitHub Classroom
