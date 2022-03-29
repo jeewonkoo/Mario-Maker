@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include <raylib.h>
+#include <raymath.h>
 #include <memory>
 #include "../src/TileGrid.h"
 #include "../src/Mario.h"
@@ -13,38 +14,38 @@
 
 TEST_CASE("Test Collision,[Collision]") {
 	SECTION("Not Colliding") {
-		Rectangle rect1(5, 5, 5,5);
-		Rectangle rect2(10, 10, 5, 5);
+		Rectangle rect1{5, 5, 5,5};
+		Rectangle rect2{10, 10, 5, 5};
 		REQUIRE_FALSE(collide_rect(rect1, rect2).has_value());
 	}
 
 	SECTION("Colliding left") {
-		Rectangle rect1(5, 5, 5, 5);
-		Rectangle rect2(4, 5, 5, 5);
+		Rectangle rect1{5, 5, 5, 5};
+		Rectangle rect2{4, 5, 5, 5};
 		auto c = collide_rect(rect1, rect2);
 		REQUIRE(collide_rect(rect1, rect2).has_value());
 		REQUIRE(c->collision_side == Side::LEFT);
 	}
 
 	SECTION("Colliding right") {
-		Rectangle rect1(5, 5, 5, 5);
-		Rectangle rect2(6, 5, 5, 5);
+		Rectangle rect1{5, 5, 5, 5};
+		Rectangle rect2{6, 5, 5, 5};
 		auto c = collide_rect(rect1, rect2);
 		REQUIRE(collide_rect(rect1, rect2).has_value());
 		REQUIRE(c->collision_side == Side::RIGHT);
 	}
 
 	SECTION("Colliding up") {
-		Rectangle rect1(5, 5, 5, 5);
-		Rectangle rect2(5, 4, 5, 5);
+		Rectangle rect1{5, 5, 5, 5};
+		Rectangle rect2{5, 4, 5, 5};
 		auto c = collide_rect(rect1, rect2);
 		REQUIRE(collide_rect(rect1, rect2).has_value());
 		REQUIRE(c->collision_side == Side::TOP);
 	}
 
 	SECTION("Colliding down") {
-		Rectangle rect1(5, 5, 5, 5);
-		Rectangle rect2(5, 6, 5, 5);
+		Rectangle rect1{5, 5, 5, 5};
+		Rectangle rect2{5, 6, 5, 5};
 		auto c = collide_rect(rect1, rect2);
 		REQUIRE(collide_rect(rect1, rect2).has_value());
 		REQUIRE(c->collision_side == Side::BOTTOM);
