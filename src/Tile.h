@@ -7,6 +7,7 @@
 
 struct Tile {
     bool solid{};
+    Rectangle tex_src;
 };
 
 enum class Side {

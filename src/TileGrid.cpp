@@ -20,7 +20,7 @@ void TileGrid::render(Vector2 top_left, Vector2 size) const {
             auto left = Vector2Add(top_left, Vector2Multiply(step, {float(x), float(y)}));
             if(at(x,y).solid){
                 //DrawRectangleV(left, step, RED);
-                DrawTexturePro(tex, Rectangle{ 1, 205, 15, 15 }, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
+                DrawTexturePro(tex, at(x,y).tex_src, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
             } else {
 
             }
