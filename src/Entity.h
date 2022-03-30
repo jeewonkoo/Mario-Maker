@@ -23,7 +23,8 @@ enum class EntityType {
     TanookieLeaf,
     SmallShroom,
     Piranha,
-    FireFlower
+    FireFlower,
+    FireBall
 };
 
 class Entity {
