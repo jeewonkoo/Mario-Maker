@@ -14,6 +14,14 @@
 #include "Mario.h"
 #include <memory>
 
+/** 
+ * Spawn each entity respect to given parameter. 
+ * For unknwon entity type, throw runtime error. 
+ * 
+ * @param tex rendered entity image sprite 
+ * @param mario Pointer to Mario entity 
+ */
+
 std::unique_ptr<Entity> EntitySpawn::make(Texture tex, Mario* mario) {
     switch(type){
         case Type::Mario:
@@ -39,6 +47,10 @@ std::unique_ptr<Entity> EntitySpawn::make(Texture tex, Mario* mario) {
     }
 }
 
+/** 
+ * Converting float x, float y and Entity type to json to load/save level.  
+ */
+
 nlohmann::json EntitySpawn::to_json() {
     nlohmann::json json;
     json["x"] = x;
@@ -47,6 +59,10 @@ nlohmann::json EntitySpawn::to_json() {
     return json;
 }
 
+/** 
+ * Get json object respect to given parameter in order to load/save level.
+ * @param json reference type of json object 
+ */
 EntitySpawn EntitySpawn::from_json(const nlohmann::json &json) {
     return {json["x"], json["y"], json["type"]};
 }
