@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "Level.h"
-#include "FireBall.h"
+#include "EntitySpawn.h"
 
 /**
  * Constructor for mario class. Sets private variable of mario class with given parameters. 
@@ -12,7 +12,7 @@
  * @param texture rendered mario image sprite
  */
 
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0) {
+Mario::Mario(float px, float py, Texture texture, Texture fire_texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), fire_tex(fire_texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
         hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
@@ -35,7 +35,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
  * @param level TileGrid object to determine collision 
  * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
  */
-void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
+void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
     if (power_up == MarioPowerUp::SmallInv)
         invincibility++;
@@ -80,8 +80,10 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	    velocity.y -= jump_continuous_accel;
 	}
 
-    if (keyboard_input.f && power_up == MarioPowerUp::Fire)
-        level.add_entity(std::make_unique<FireBall>(position.x, position.y, sprite_texture, facing_right));
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
+        EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
+        level->add_entity(ent, fire_tex);
+    }
 
 	velocity.y += gravity;
 
@@ -104,7 +106,7 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	grounded = false;
 	//terminate the loop if too many collisions
 	for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
-	    auto collisions = level.collide(rect());
+	    auto collisions = grid.collide(rect());
 
         if(collisions.eject_vector.has_value()){
 

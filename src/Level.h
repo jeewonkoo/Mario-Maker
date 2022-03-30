@@ -15,7 +15,7 @@
 
 class Level {
 public:
-    explicit Level(Texture tileset_texture, Texture sprite_texture): grid_(tileset_texture, 100, 16), mario_(5, 5, sprite_texture){}
+    explicit Level(Texture tileset_texture, Texture sprite_texture): grid_(tileset_texture, 100, 16), mario_(5, 5, sprite_texture, sprite_texture, this){}
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
     void add_entity(EntitySpawn ent, Texture tex) {

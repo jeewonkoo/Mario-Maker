@@ -22,6 +22,7 @@ struct EntitySpawn {
         Mushroom,
         SmallShroom,
         TanookieLeaf,
+        FireBall
     };
 
 

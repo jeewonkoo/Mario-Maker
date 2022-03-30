@@ -10,6 +10,7 @@
 #include "powerups/Mushroom.h"
 #include "powerups/SmallShroom.h"
 #include "powerups/TanookieLeaf.h"
+#include "FireBall.h"
 #include "Mario.h"
 #include <memory>
 
@@ -31,6 +32,8 @@ std::unique_ptr<Entity> EntitySpawn::make(Texture tex, Mario* mario) {
             return std::make_unique<SmallShroom>(x, y, tex);
         case Type::TanookieLeaf:
             return std::make_unique<TanookieLeaf>(x, y, tex);
+        case Type::FireBall:
+            return std::make_unique<FireBall>(x, y, tex, mario->is_right());
         default:
             throw std::runtime_error("unhandeled entity type id");
     }
