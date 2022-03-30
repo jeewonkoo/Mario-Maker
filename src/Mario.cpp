@@ -60,9 +60,11 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
+        facing_right = true;
 	}
 	else if (keyboard_input.left) {
 		velocity.x -= acceleration;
+        facing_right = false;
 	}
 
 	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
@@ -129,6 +131,14 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
  *  @param collision array of colided entity set 
  */
 void Mario::on_collide(EntityCollision collision) {
+
+    if (power_up == MarioPowerUp::SmallInv)
+        invincibility++;
+    if (invincibility == 180) {
+        invincibility = 0;
+        power_up = MarioPowerUp::Small;
+    }
+
     switch(collision.other.type()){
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
@@ -180,7 +190,7 @@ Rectangle Mario::rect() const {
 }
 
 /**
- * Determines if mario entity should be removed or not 
+ * Determines if Mario entity should be removed or not 
  * 
  * @return false 
  */
@@ -188,6 +198,15 @@ bool Mario::should_remove() {
     return false;
 }
 
+/**
+ * Determines if Mario entity should be dead or not 
+ * 
+ * @return dead True if Mario is dead 
+ * */
 bool Mario::is_dead() {
     return dead;
+}
+
+bool Mario::is_right() {
+    return facing_right;
 }
