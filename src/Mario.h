@@ -37,6 +37,8 @@ public:
 
     bool is_dead();
 
+    bool is_right();
+
 private:
     Vector2 position;
     Vector2 velocity;
@@ -49,6 +51,8 @@ private:
 
     bool dead;
     int invincibility;
+
+    bool facing_right;
 
     MarioPowerUp power_up = MarioPowerUp::Big;
 
