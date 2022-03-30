@@ -12,7 +12,7 @@
  * The entity will be moved or jumped based on these boolean varaibles. 
  */
 struct InputState {
-    bool left, right, up, down, space;      
+    bool left, right, up, down, space, f;      
 };
 
 #endif //MARIO_MAKER_INPUTSTATE_H
