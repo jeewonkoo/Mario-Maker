@@ -12,7 +12,7 @@ public:
     void render(Vector2 top_left, Vector2 size) override;
     void update(const TileGrid& level, const InputState& keyboard_input) override;
     bool should_remove() override;
-    EntityType type() override { return EntityType::Mushroom; }
+    EntityType type() override { return EntityType::FireFlower; }
 private:
     Texture tex;
     Vector2 position;
