@@ -128,10 +128,6 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
  *  @param collision array of colided entity set 
  */
 void Mario::on_collide(EntityCollision collision) {
-
-    if (power_up == MarioPowerUp::SmallInv)
-        return;
-
     switch(collision.other.type()){
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
@@ -143,16 +139,18 @@ void Mario::on_collide(EntityCollision collision) {
             power_up = MarioPowerUp::Fire;
             break;
         case EntityType::JumpEnemy:
-            if (power_up == MarioPowerUp::Small) {
-                dead = true;
-                return;
-            }
             if(collision.side == Side::BOTTOM && velocity.y >= 0){
                 velocity.y = -jump_instant_accel;
                 frames_since_jump = 0;
             }
-            if (collision.side != Side::BOTTOM)
-                power_up = MarioPowerUp::SmallInv;
+            if (collision.side != Side::BOTTOM){
+                if (power_up == MarioPowerUp::Small) {
+                    dead = true;
+                } else {
+                    power_up = MarioPowerUp::SmallInv;
+                }
+            }
+
             break;
         case EntityType::SpikeEnemy:
             if (power_up == MarioPowerUp::Small) {
