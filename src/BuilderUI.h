@@ -24,8 +24,12 @@ public:
                 float x = GetMouseX() / 64.f + offset.x - 8;
                 float y = GetMouseY() / 64.f + offset.y;
 
+
+
+
+
                 if(current_action == TILE){
-                    level.set_tile(x, y, {.solid = true});
+                    level.set_tile(x, y, {.solid = true, .tex_src = TileLocations::Ground});
                 } else if(current_action == MUSHROOM){
                     level.add_entity(std::make_unique<Mushroom>(x, y, sprite_tex));
                 }
