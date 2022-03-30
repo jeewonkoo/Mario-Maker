@@ -24,8 +24,6 @@
 
 std::unique_ptr<Entity> EntitySpawn::make(Texture tex, Mario* mario) {
     switch(type){
-        case Type::Mario:
-            return std::make_unique<Mario>(x, y, tex);
         case Type::Boo:
             return std::make_unique<Boo>(x, y, tex, mario);
         case Type::Goomba:

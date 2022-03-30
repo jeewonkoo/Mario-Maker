@@ -29,6 +29,8 @@ set(mario_src
     src/BuilderUI.h
     src/EntitySpawn.cpp
     src/EntitySpawn.h
+    src/FireBall.h
+    src/FireBall.cpp
 )
 
 add_executable(mario_maker

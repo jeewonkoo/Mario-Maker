@@ -11,12 +11,12 @@
 #include<memory>
 #include<nlohmann/json.hpp>
 #include "EntitySpawn.h"
+#include "Mario.h"
 
 
 class Level {
 public:
-
-    explicit Level(Texture tileset_texture, Texture sprite_texture,float px, float py): grid_(tileset_texture, 100, 16), mario_(px, py, sprite_texture){}
+    explicit Level(Texture tileset_texture, Texture sprite_texture,float px, float py): grid_(tileset_texture, 100, 16), mario_(px, py, sprite_texture, this){}
 
 
     void update(InputState keyboard_input);

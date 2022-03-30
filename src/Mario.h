@@ -5,6 +5,9 @@
 #include "Entity.h"
 #include "InputState.h"
 #include "SpriteLocations.h"
+#include "EntitySpawn.h"
+
+class Level;
 
 enum class MarioPowerUp {
     None = 0,
@@ -17,7 +20,7 @@ enum class MarioPowerUp {
 
 class Mario : public Entity {
 public:
-    Mario(float px, float py, Texture texture, Texture fire_texture, Level* lvl);
+    Mario(float px, float py, Texture texture, Level* lvl);
 
     void render(Vector2 top_left, Vector2 size) override;
 
@@ -43,7 +46,6 @@ private:
     Vector2 position;
     Vector2 velocity;
     Texture tex;
-    Texture fire_tex;
     //whether mario is currently grounded
     bool grounded{};
     bool jumping{};

@@ -9,8 +9,9 @@
 #include<memory>
 #include<nlohmann/json.hpp>
 #include <raylib.h>
-#include "Mario.h"
 #include "Entity.h"
+
+class Mario;
 
 struct EntitySpawn {
     enum class Type {

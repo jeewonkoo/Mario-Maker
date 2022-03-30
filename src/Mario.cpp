@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "Level.h"
-#include "EntitySpawn.h"
 
 /**
  * Constructor for mario class. Sets private variable of mario class with given parameters. 
@@ -12,7 +11,7 @@
  * @param texture rendered mario image sprite
  */
 
-Mario::Mario(float px, float py, Texture texture, Texture fire_texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), fire_tex(fire_texture), dead(false), invincibility(0), level(lvl) {
+Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
         hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
@@ -82,7 +81,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
     if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
-        level->add_entity(ent, fire_tex);
+        level->add_entity(ent, tex);
     }
 
 	velocity.y += gravity;
