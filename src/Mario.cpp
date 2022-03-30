@@ -181,7 +181,7 @@ Rectangle Mario::rect() const {
 }
 
 /**
- * Determines if mario entity should be removed or not 
+ * Determines if Mario entity should be removed or not 
  * 
  * @return false 
  */
@@ -189,6 +189,11 @@ bool Mario::should_remove() {
     return false;
 }
 
+/**
+ * Determines if Mario entity should be dead or not 
+ * 
+ * @return dead True if Mario is dead 
+ * */
 bool Mario::is_dead() {
     return dead;
 }
