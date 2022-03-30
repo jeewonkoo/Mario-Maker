@@ -59,9 +59,11 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
+        facing_right = true;
 	}
 	else if (keyboard_input.left) {
 		velocity.x -= acceleration;
+        facing_right = false;
 	}
 
 	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
@@ -191,4 +193,8 @@ bool Mario::should_remove() {
 
 bool Mario::is_dead() {
     return dead;
+}
+
+bool Mario::is_right() {
+    return facing_right;
 }

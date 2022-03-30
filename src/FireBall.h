@@ -5,7 +5,7 @@
 class FireBall : public Entity {
 public:
 
-    FireBall(float px, float py, Texture texture);
+    FireBall(float px, float py, Texture texture, bool facing_right);
 
     [[nodiscard]] Rectangle rect() const override;
     void on_collide(EntityCollision collision) override;
@@ -18,4 +18,5 @@ private:
     Vector2 position;
     Vector2 velocity;
     bool is_dead;
+    bool facing_right;
 };
