@@ -63,7 +63,7 @@ Rectangle Boo::rect() const {
  */
 void Boo::on_collide(EntityCollision collision) {
 	if(collision.other.type() == EntityType::Mario){
-		is_dead = true;
+		is_dead = false;
 	}
 }
 

@@ -89,8 +89,6 @@ int main(){
         } else {
             if (!mario->is_dead())
                 level.update(input);
-            else
-                break;
         }
 
         Camera2D cam{};
@@ -102,21 +100,30 @@ int main(){
         BeginDrawing();
         {
             ClearBackground(RAYWHITE);
+
+            if (mario->is_dead())
+                cam.offset = { 0, 0 };
+
             BeginMode2D(cam);
             {
-                // draw mountains
-                float paralax_mountains = mario->rect().x * -40;
-                float paralax_clouds = mario->rect().x * -53;
+                if (mario->is_dead())
+                    DrawTextureTiled(end_texture, { 100, 0, 1500, 705 }, { 0, 0, 1024, 1024 }, { 0,0 }, 0, 1, WHITE);
+                else {
+                    // draw mountains
+                    float paralax_mountains = mario->rect().x * -40;
+                    float paralax_clouds = mario->rect().x * -53;
 
-                DrawTextureTiled(background_texture, {0, 512, 1024,512}, {-1024, 512, 6*1024,512},{paralax_mountains,0},0,1,WHITE);
-                DrawTextureTiled(background_texture, {0, 0, 1024,512}, {-1024, 0, 6*1024,512},{paralax_clouds,0},0,1,WHITE);
-                Vector2 top_left = {(float)0, (float)0};
-                Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
+                    DrawTextureTiled(background_texture, { 0, 512, 1024,512 }, { -1024, 512, 6 * 1024,512 }, { paralax_mountains,0 }, 0, 1, WHITE);
+                    DrawTextureTiled(background_texture, { 0, 0, 1024,512 }, { -1024, 0, 6 * 1024,512 }, { paralax_clouds,0 }, 0, 1, WHITE);
+                    Vector2 top_left = { (float)0, (float)0 };
+                    Vector2 bottom_right = { (float)screenWidth, (float)screenHeight };
 
 
-                level.render(top_left, bottom_right);
+                    level.render(top_left, bottom_right);
+                }
             }
             EndMode2D();
+            
 
         }
 
@@ -125,7 +132,7 @@ int main(){
         EndDrawing();
 
     }
-
+    /*
     while (!WindowShouldClose()) {
         // dead screen
         BeginDrawing();
@@ -144,7 +151,7 @@ int main(){
             EndMode2D();
         }
         EndDrawing();
-    }
+    }*/
 
     std::ofstream("saved_level.json") << level.to_json();
 
