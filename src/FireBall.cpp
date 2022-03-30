@@ -1,5 +1,5 @@
 #include "FireBall.h"
-#include "../SpriteLocations.h"
+#include "SpriteLocations.h"
 #include <raymath.h>
 #include <iostream>
 

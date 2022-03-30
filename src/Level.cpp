@@ -61,7 +61,7 @@ Level Level::from_json(const nlohmann::json &json, Texture tile_tex, Texture spr
     return {json["tiles"], json["entities"], tile_tex, sprite_tex};
 }
 
-Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex) {
+Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex, this) {
     for(const auto &ent : entities_json){
         add_entity(EntitySpawn::from_json(ent), sprite_tex);
     }
