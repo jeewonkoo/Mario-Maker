@@ -4,6 +4,7 @@
 #include"Tile.h"
 #include"TileGrid.h"
 #include "InputState.h"
+#include<memory>
 
 
 //Class called Entity. This class is for villians and mario powerUps. 
@@ -27,6 +28,7 @@ enum class EntityType {
     FireBall
 };
 
+
 class Entity {
 public:
 
@@ -49,5 +51,6 @@ public:
 
     virtual ~Entity() = default;
 };
+
 
 #endif //MARIO_MAKER_ENTITY_H

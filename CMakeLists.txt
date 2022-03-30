@@ -27,6 +27,8 @@ set(mario_src
     src/powerups/SmallShroom.h
     src/BuilderUI.cpp
     src/BuilderUI.h
+    src/EntitySpawn.cpp
+    src/EntitySpawn.h
 )
 
 add_executable(mario_maker

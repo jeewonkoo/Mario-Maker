@@ -7,7 +7,7 @@
 
 class Boo : public Entity {
 public:
-	Boo(float px, float py, Texture texture,Mario* mpt);
+	Boo(float px, float py, Texture texture, Mario* mpt);
 
 	[[nodiscard]] Rectangle rect() const override;
 	void on_collide(EntityCollision collision) override;

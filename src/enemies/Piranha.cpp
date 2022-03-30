@@ -9,7 +9,7 @@
  * @param py start y axis location
  * @param texture rendered Piranha image sprite
  */
-Piranha::Piranha(float px, float py, Texture texture, Mario* mpt) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0), is_dead(false) {}
+Piranha::Piranha(float px, float py, Texture texture) : position({ px, py }), initPos({ px, py }), tex(texture), dormantPlant(0), activePlant(0), is_dead(false) {}
 
 /**
  * Renders(draw) Piranha on graphic. Accepts two Vector2 as parameters

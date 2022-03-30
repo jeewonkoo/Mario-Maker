@@ -7,7 +7,7 @@
 
 class Piranha : public Entity {
 public:
-	Piranha(float px, float py, Texture texture, Mario* mpt);
+	Piranha(float px, float py, Texture texture);
 
 	[[nodiscard]] Rectangle rect() const override;
 	void on_collide(EntityCollision collision) override;
