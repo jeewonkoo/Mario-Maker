@@ -13,37 +13,9 @@
 #include "powerups/Mushroom.h"
 class BuilderUI {
 public:
-    BuilderUI(Level & level, Texture sprite_tex, Texture tile_tex): level(level), sprite_tex(sprite_tex), tile_tex(tile_tex){}
-    void handle_events(){
-        bool pressed_this_frame = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
-        if(pressed_this_frame && !pressed_last_frame){
-            if(GetMouseX() > 1024 - 128){
-                current_action = icon_at(GetMouseX(), GetMouseY());
-            } else {
-                auto offset = level.get_camera_offset();
-                float x = GetMouseX() / 64.f + offset.x - 8;
-                float y = GetMouseY() / 64.f + offset.y;
-
-
-
-
-
-                if(current_action == TILE){
-                    level.set_tile(x, y, {.solid = true, .tex_src = TileLocations::Ground});
-                } else if(current_action == MUSHROOM){
-                    level.add_entity({x, y, EntitySpawn::Type::Mushroom}, sprite_tex);
-                }
-            }
-        }
-
-        pressed_last_frame = pressed_this_frame;
-    }
-    void render(Vector2 top_left, Vector2 size){
-        DrawRectangle(1024 - 128, 0, 128, 1024, BLUE);
-        DrawTexturePro(sprite_tex, SpriteLocations::Mushroom, {1024 - 128, 0, 128, 128}, {0,0}, 0, WHITE);
-        DrawTexturePro(tile_tex, TileLocations::Ground, {1024 - 128, 128, 128, 128}, {0,0}, 0, WHITE);
-
-    }
+    BuilderUI(Level & level, Texture sprite_tex, Texture tile_tex);
+    void handle_events(); 
+    void render(Vector2 top_left, Vector2 size);
 
 private:
     enum ActionType {
