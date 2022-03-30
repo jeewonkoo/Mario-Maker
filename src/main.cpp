@@ -81,6 +81,7 @@ int main(){
             .up = IsKeyDown(KEY_UP),
             .down = IsKeyDown(KEY_DOWN),
             .space = IsKeyDown(KEY_SPACE),
+            .f = IsKeyDown(KEY_F)
         };
 
         

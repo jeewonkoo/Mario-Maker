@@ -1,6 +1,8 @@
 #include "Mario.h"
 #include <raylib.h>
 #include <raymath.h>
+#include "Level.h"
+#include "FireBall.h"
 
 /**
  * Constructor for mario class. Sets private variable of mario class with given parameters. 
@@ -76,6 +78,9 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	    && (frames_since_jump >= jump_continuous_delay)){
 	    velocity.y -= jump_continuous_accel;
 	}
+
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire)
+        level.add_entity(std::make_unique<FireBall>(position.x, position.y, sprite_texture, facing_right));
 
 	velocity.y += gravity;
 
