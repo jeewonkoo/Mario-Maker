@@ -95,12 +95,14 @@ int main(){
         BeginDrawing();
         {
             ClearBackground(RAYWHITE);
+
+            if (mario->is_dead())
+                cam.offset = { 0, 0 };
+
             BeginMode2D(cam);
             {
-                if (mario->is_dead()) {
-                    cam.offset = { 0, 0 };
-                    DrawTextureTiled(end_texture, { 0, 0, 1900, 705 }, { 0, 0, 1170, 1024}, { 0,0 }, 0, 1, WHITE);
-                }
+                if (mario->is_dead())
+                    DrawTextureTiled(end_texture, { 100, 0, 1500, 705 }, { 0, 0, 1024, 1024 }, { 0,0 }, 0, 1, WHITE);
                 else {
                     // draw mountains
                     float paralax_mountains = mario->rect().x * -40;
@@ -116,6 +118,7 @@ int main(){
                 }
             }
             EndMode2D();
+            
 
         }
 
