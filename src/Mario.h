@@ -38,6 +38,8 @@ public:
 
     Vector2 getPosition() { return position; }
 
+    MarioPowerUp get_PowerUp() { return power_up; }
+
     bool is_dead();
 
     bool is_right();

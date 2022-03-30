@@ -128,20 +128,18 @@ TEST_CASE("Movement") {
 }
 
 TEST_CASE("Goomba") {
-	Level level{ Texture{},Texture{},5,8 };
-
-	Tile t(true, TileLocations::Ground);
-	
-	for (int i = 0; i < 30; i++) {
-		level.set_tile(i, 10,t);
-	}
-
-
 	SECTION("Goomba moving right") {
+		Level level{ Texture{},Texture{},30,8 };
 
-		EntitySpawn goomba(5, 10, EntitySpawn::Type::Goomba);
-		level.add_entity(goomba, Texture{});
+		Tile t(true, TileLocations::Ground);
 
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 9, EntitySpawn::Type::Goomba);
+		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		
 		Vector2 initialpos = goomba->get_position();
 
 
@@ -156,17 +154,23 @@ TEST_CASE("Goomba") {
 	}
 
 	SECTION("Goomba moving left after hitting block") {
-		auto g = std::make_unique<Goomba>(5, 10, Texture{});
-		Goomba* goomba = g.get();
-		level.add_entity(std::move(g));
+		Level level{ Texture{},Texture{},30,8 };
 
-		level.set_tile(8, 15, t);
+		Tile t(true, TileLocations::Ground);
 
-		Rectangle rect1{ 8, 10.1, 5, 5 };
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
+		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+
+		level.set_tile(8, 9, t);
+
 		Vector2 initialpos = goomba->get_position();
 
 
-		InputState s = { false,false,false,false,false };
+		InputState s = { true,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
 		}
@@ -179,15 +183,18 @@ TEST_CASE("Goomba") {
 	}
 
 	SECTION("Mario kills Goomba while stepping on top") {
+		Level level{ Texture{},Texture{},5,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
 
 		level.set_tile(5, 12, t);
-		auto g = std::make_unique<Goomba>(5, 10, Texture{});
-		Goomba* goomba = g.get();
-		level.add_entity(std::move(g));
+		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
+		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
 
-		auto m = std::make_unique<Mario>(5, 8, Texture{});
-		Mario* mario = m.get();
-		level.add_entity(std::move(m));
 		
 
 		bool goomdead = goomba->is_goomba_dead();
@@ -202,5 +209,90 @@ TEST_CASE("Goomba") {
 		REQUIRE(goomdead);
 	}
 
+	SECTION("Goomba damages mario") {
+		Level level{ Texture{},Texture{},10,8 };
+		Mario& mario = level.mario();
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
+		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+
+
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::SmallInv);
+	}
+
 }
 
+
+TEST_CASE("BOO") {
+	SECTION("Boo moves towards mario") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn b(5, 0, EntitySpawn::Type::Boo);
+		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+
+		Vector2 initialpos = boo->get_position();
+
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalpos = boo->get_position();
+
+		REQUIRE(initialpos.x < finalpos.x);
+		REQUIRE(initialpos.y < finalpos.y);
+	}
+
+	SECTION("Boo Damages Mario") {
+		Level level{ Texture{},Texture{},10,8 };
+		Mario& mario = level.mario();
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+
+		EntitySpawn b(9, 5, EntitySpawn::Type::Boo);
+		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+
+
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::SmallInv);
+	}
+
+}

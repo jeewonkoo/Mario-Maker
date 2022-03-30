@@ -16,6 +16,8 @@ public:
 	bool should_remove() override;
 	EntityType type() override { return EntityType::SpikeEnemy; }
 
+	Vector2 get_position() { return{ position }; };
+
 private:
 	Mario* MarioPointer;
 	Texture tex;
