@@ -16,12 +16,17 @@
 
 class Level {
 public:
-    explicit Level(Texture tileset_texture, Texture sprite_texture): grid_(tileset_texture, 100, 16), mario_(5, 5, sprite_texture, this){}
+    explicit Level(Texture tileset_texture, Texture sprite_texture,float px, float py): grid_(tileset_texture, 100, 16), mario_(px, py, sprite_texture, this){}
+
+
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
-    void add_entity(EntitySpawn ent, Texture tex) {
+    Entity* add_entity(EntitySpawn ent, Texture tex) {
         entity_spawns_.push_back(ent);
-        entities_.push_back(ent.make(tex, &mario()));
+        auto spawned = ent.make(tex, &mario());
+        auto ret = spawned.get();
+        entities_.push_back(std::move(spawned));
+        return ret;
     }
     void set_tile(int x, int y, Tile tile){
         grid_.at_mut(x, y) = tile;
@@ -33,6 +38,10 @@ public:
     Vector2 get_camera_offset(){
         auto r = mario_.rect();
         return {r.x + r.width / 2, 0};
+    }
+
+    int number_of_entities() {
+        return entities_.size();
     }
 
     nlohmann::json to_json();
