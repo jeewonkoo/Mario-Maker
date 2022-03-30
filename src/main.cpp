@@ -56,6 +56,7 @@ int main(){
         level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
     }
     for (int i = 0; i < 16; i++) {
+     
         level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
     }
 

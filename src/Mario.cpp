@@ -130,6 +130,14 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
  *  @param collision array of colided entity set 
  */
 void Mario::on_collide(EntityCollision collision) {
+
+    if (power_up == MarioPowerUp::SmallInv)
+        invincibility++;
+    if (invincibility == 180) {
+        invincibility = 0;
+        power_up = MarioPowerUp::Small;
+    }
+
     switch(collision.other.type()){
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
