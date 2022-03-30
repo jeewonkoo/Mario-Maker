@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "InputState.h"
 #include<memory>
+#include<nlohmann/json.hpp>
 
 
 class Level {
@@ -34,7 +35,11 @@ public:
         }
     }
 
+    nlohmann::json to_json();
+    static Level from_json(const nlohmann::json &json, Texture tex);
+
 private:
+    Level(const nlohmann::json& grid_json, const nlohmann::json& entities_json, Texture tex);
     TileGrid grid;
     std::vector<std::unique_ptr<Entity>> entities;
     Entity * focus_entity;
