@@ -9,6 +9,8 @@
 #include "powerups/FireFlower.h"
 #include "Level.h"
 #include "BuilderUI.h"
+#include <iostream>
+#include <fstream>
 
 int main(){
     // Initialization
@@ -37,7 +39,10 @@ int main(){
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
     bool in_builder = false;
-    Level level{tile_texture};
+
+    nlohmann::json level_json;
+    std::ifstream("saved_level.json") >> level_json;
+    Level level = Level::from_json(level_json, tile_texture);
     BuilderUI ui(level, sprite_texture, tile_texture);
 
     auto m = std::make_unique<Mario>(10, 3, sprite_texture);
@@ -148,6 +153,7 @@ int main(){
         EndDrawing();
     }*/
 
+    std::ofstream("saved_level.json") << level.to_json();
 
     CloseWindow();                                                      // Close window and OpenGL context
 

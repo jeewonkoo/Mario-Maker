@@ -22,12 +22,12 @@ struct Tile {
 
     static Tile from_json(const nlohmann::json & json){
         return {
-            .solid = json.at("solid"),
+            .solid = json["solid"],
             .tex_src = {
-                .x = json.at("x"),
-                .y = json.at("y"),
-                .width = json.at("width"),
-                .height = json.at("height")
+                .x = json["x"],
+                .y = json["y"],
+                .width = json["w"],
+                .height = json["h"]
             }
         };
     }

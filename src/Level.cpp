@@ -34,3 +34,18 @@ void Level::render(Vector2 top_left, Vector2 size) {
         e->render(top_left, size);
     }
 }
+
+nlohmann::json Level::to_json() {
+    auto json = nlohmann::json{};
+    json["tiles"] = std::move(grid.to_json());
+    json["entities"] = nlohmann::json::array();
+    return json;
+}
+
+Level Level::from_json(const nlohmann::json &json, Texture tex) {
+    return {json["tiles"], json["entities"], tex};
+}
+
+Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture tex): grid(TileGrid::from_json(grid_json, tex)) {
+    focus_entity = nullptr;
+}
