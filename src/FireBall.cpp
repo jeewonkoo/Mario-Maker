@@ -31,10 +31,40 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  */
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
     if (facing_right) {
-        position = Vector2Add(position, { 1, -1 });
+        position = Vector2Add(position, velocity);
     }
     else {
-        position = Vector2Add(position, { -1, -1 });
+        position = Vector2Add(position, Vector2Multiply({-1, 1}, velocity));
+    }
+
+    //terminate the loop if too many collisions
+    for (int coll_idx = 0; coll_idx < 10; coll_idx++) {
+        auto collisions = level.collide(rect());
+
+        if (collisions.eject_vector.has_value()) {
+            auto eject = collisions.eject_vector.value();
+
+            //ignore collisions that are impossible because of our movement direction
+            if (Vector2DotProduct(eject, velocity) > 0) break;
+            position = Vector2Add(position, eject);
+            auto eject_norm = Vector2Normalize(eject);
+            auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
+            velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, { velocity_diff, velocity_diff }));
+
+
+            if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::RIGHT; }) != collisions.collisions.end()) {
+                is_dead = true;
+            }
+            else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
+                is_dead = true;
+            }
+            else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::BOTTOM; }) != collisions.collisions.end()) {
+                velocity = {0,0};
+            }
+        }
+        else {
+            break;
+        }
     }
 }
 
@@ -55,9 +85,7 @@ Rectangle FireBall::rect() const {
  *  @param collision array of colided entity set
  */
 void FireBall::on_collide(EntityCollision collision) {
-    if (collision.other.type() == EntityType::Mario) {
-        is_dead = true;
-    }
+    
 }
 
 /**
