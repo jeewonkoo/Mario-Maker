@@ -4,7 +4,7 @@
 #include <iostream>
 
 /**
- * Constructor for Mushroom class. Sets private variable of FireBall class with given parameters.
+ * Constructor for FireBall class. Sets private variable of FireBall class with given parameters.
  *
  * @param px start x axis location
  * @param py start y axis location
