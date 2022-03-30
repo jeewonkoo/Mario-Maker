@@ -31,7 +31,7 @@ public:
                 if(current_action == TILE){
                     level.set_tile(x, y, {.solid = true, .tex_src = TileLocations::Ground});
                 } else if(current_action == MUSHROOM){
-                    level.add_entity(std::make_unique<Mushroom>(x, y, sprite_tex));
+                    level.add_entity({x, y, EntitySpawn::Type::Mushroom}, sprite_tex);
                 }
             }
         }

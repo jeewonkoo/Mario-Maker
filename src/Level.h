@@ -10,39 +10,39 @@
 #include "InputState.h"
 #include<memory>
 #include<nlohmann/json.hpp>
+#include "EntitySpawn.h"
 
 
 class Level {
 public:
-    explicit Level(Texture tileset_texture): grid(tileset_texture, 100, 16){}
+    explicit Level(Texture tileset_texture, Texture sprite_texture): grid_(tileset_texture, 100, 16), mario_(5, 5, sprite_texture){}
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
-    void add_entity(std::unique_ptr<Entity> ent) {
-        entities.push_back(std::move(ent));
+    void add_entity(EntitySpawn ent, Texture tex) {
+        entity_spawns_.push_back(ent);
+        entities_.push_back(ent.make(tex, &mario()));
     }
     void set_tile(int x, int y, Tile tile){
-        grid.at_mut(x,y) = tile;
+        grid_.at_mut(x, y) = tile;
     }
-    void set_focus_entity(Entity * entity){
-        focus_entity = entity;
+
+    Mario& mario(){
+        return mario_;
     }
     Vector2 get_camera_offset(){
-        if(focus_entity){
-            auto r = focus_entity->rect();
-            return {r.x + r.width / 2, 0};
-        } else {
-            return {0,0};
-        }
+        auto r = mario_.rect();
+        return {r.x + r.width / 2, 0};
     }
 
     nlohmann::json to_json();
-    static Level from_json(const nlohmann::json &json, Texture tex);
+    static Level from_json(const nlohmann::json &json, Texture tile_tex, Texture sprite_tex);
 
 private:
-    Level(const nlohmann::json& grid_json, const nlohmann::json& entities_json, Texture tex);
-    TileGrid grid;
-    std::vector<std::unique_ptr<Entity>> entities;
-    Entity * focus_entity;
+    Level(const nlohmann::json& grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex);
+    TileGrid grid_;
+    std::vector<std::unique_ptr<Entity>> entities_;
+    std::vector<EntitySpawn> entity_spawns_;
+    Mario mario_;
 };
 
 
