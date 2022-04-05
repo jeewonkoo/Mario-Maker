@@ -296,3 +296,207 @@ TEST_CASE("BOO") {
 	}
 
 }
+
+TEST_CASE("Small Mushroom") {
+	SECTION("Small Mushroom moving right") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 9, EntitySpawn::Type::SmallShroom);
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+
+		Vector2 initialpos = smallshroom->getPosition();
+
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 5; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = smallshroom->getPosition();
+
+		REQUIRE(finalPos.x > initialpos.x);
+	}
+
+	SECTION("Small mushroom left after hitting block") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::SmallShroom);
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+
+		level.set_tile(8, 9, t);
+
+		Vector2 initialpos = smallshroom->getPosition();
+
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = smallshroom->getPosition();
+
+		REQUIRE(finalPos.x < initialpos.x);
+	}
+
+	SECTION("Mario gets Small after stepping on small mushroom") {
+		Level level{ Texture{},Texture{},5,8 };
+		Mario& mario = level.mario();
+		
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		level.set_tile(8, 9, t);
+		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Small);
+
+	}
+}
+
+TEST_CASE("Mushroom") {
+	SECTION("Mushroom moving right") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 9, EntitySpawn::Type::Mushroom);
+		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+
+		Vector2 initialpos = mush->getPosition();
+
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 5; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = mush->getPosition();
+
+		REQUIRE(finalPos.x > initialpos.x);
+	}
+
+	SECTION("Small mushroom left after hitting block") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::Mushroom);
+		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+
+		level.set_tile(8, 9, t);
+
+		Vector2 initialpos = mush->getPosition();
+
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		Vector2 finalPos = mush->getPosition();
+
+		REQUIRE(finalPos.x < initialpos.x);
+	}
+
+	SECTION("Mario gets big after stepping on mushroom") {
+		Level level{ Texture{},Texture{},5,8 };
+		Mario& mario = level.mario();
+
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		level.set_tile(8, 9, t);
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+
+		InputState s = { false,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Small);
+
+		EntitySpawn g1(5, 6, EntitySpawn::Type::Mushroom);
+		Mushroom* mush = (Mushroom*)(level.add_entity(g1, Texture{}));
+
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+	}
+
+}
+
+TEST_CASE("FireFlower") {
+	SECTION("Mario gets a FireFlower powerup walking on the fireflower") {
+		Level level{ Texture{},Texture{},5,8 };
+		Mario& mario = level.mario();
+
+		Tile t(true, TileLocations::Ground);
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(10, 10, EntitySpawn::Type::FireFlower);
+		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
+
+
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Fire);
+	}
+
+}
+
