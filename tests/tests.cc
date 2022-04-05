@@ -13,51 +13,62 @@
 #include "../src/SpriteLocations.h"
 
 
-
+/**
+ * This is a test for Basic Collision functionality between each entity in different case/direction. 
+ */
 TEST_CASE("Test Collision,[Collision]") {
+
+	//Check when there is no collision between entity
 	SECTION("Not Colliding") {
 		Rectangle rect1{5, 5, 5,5};
 		Rectangle rect2{10, 10, 5, 5};
 		REQUIRE_FALSE(collide_rect(rect1, rect2).has_value());
 	}
 
+	//Check when if two different entity collides on left side of one entity 
 	SECTION("Colliding left") {
 		Rectangle rect1{5, 5, 5, 5};
 		Rectangle rect2{4, 5, 5, 5};
 		auto c = collide_rect(rect1, rect2);
-		REQUIRE(collide_rect(rect1, rect2).has_value());
-		REQUIRE(c->collision_side == Side::LEFT);
-	}
+		REQUIRE(collide_rect(rect1, rect2).has_value());			//check if rect1 and rect 2 
+		REQUIRE(c->collision_side == Side::LEFT);					//check if rect1 and rect2 collides on left side
+	}	
 
+	//Check when if two different entity collides on right side of one entity 
 	SECTION("Colliding right") {
 		Rectangle rect1{5, 5, 5, 5};
 		Rectangle rect2{6, 5, 5, 5};
 		auto c = collide_rect(rect1, rect2);
-		REQUIRE(collide_rect(rect1, rect2).has_value());
-		REQUIRE(c->collision_side == Side::RIGHT);
-	}
+		REQUIRE(collide_rect(rect1, rect2).has_value());			//check if rect1 and rect 2
+		REQUIRE(c->collision_side == Side::RIGHT);					//check if rect1 and rect2 collides on right side
+	}	
 
+	//Check when if two different entity collides on up/top side of one entity
 	SECTION("Colliding up") {
 		Rectangle rect1{5, 5, 5, 5};
 		Rectangle rect2{5, 4, 5, 5};
 		auto c = collide_rect(rect1, rect2);
-		REQUIRE(collide_rect(rect1, rect2).has_value());
-		REQUIRE(c->collision_side == Side::TOP);
+		REQUIRE(collide_rect(rect1, rect2).has_value());			//check if rect1 and rect 2
+		REQUIRE(c->collision_side == Side::TOP);					//check if rect1 and rect2 collides on up/top side
 	}
 
+	//Check when if two different entity collides on down/bottom side of one entity
 	SECTION("Colliding down") {
 		Rectangle rect1{5, 5, 5, 5};
 		Rectangle rect2{5, 6, 5, 5};
 		auto c = collide_rect(rect1, rect2);
-		REQUIRE(collide_rect(rect1, rect2).has_value());
-		REQUIRE(c->collision_side == Side::BOTTOM);
+		REQUIRE(collide_rect(rect1, rect2).has_value());			//check if rect1 and rect 2
+		REQUIRE(c->collision_side == Side::BOTTOM);					//check if rect1 and rect2 collides on down/bottom side
 	}
 }
 
+//Test Entity movement based on Key board input by User 
 TEST_CASE("Movement") {
 
 	Level level{ Texture{},Texture{},5,5 };
 	Mario& mario = level.mario();
+
+	//Check if mario entity can move in right direction 
 	SECTION("Move Right") {
 		Vector2 initialpos = mario.getPosition();
 		InputState s = { false,true,false,false,false };
@@ -68,16 +79,7 @@ TEST_CASE("Movement") {
 		REQUIRE(nextpos.x > initialpos.x);
 	}
 
-	SECTION("Move Right") {
-		Vector2 initialpos = mario.getPosition();
-		InputState s = { false,true,false,false,false };
-		level.update(s);
-
-		Vector2 nextpos = mario.getPosition();
-
-		REQUIRE(nextpos.x > initialpos.x);
-	}
-
+	//Check if mario entity can move in left direction
 	SECTION("Move Left") {
 		Vector2 initialpos = mario.getPosition();
 		InputState s = { true,false,false,false,false };
@@ -85,9 +87,11 @@ TEST_CASE("Movement") {
 
 		Vector2 nextpos = mario.getPosition();
 
-		REQUIRE(nextpos.x < initialpos.x);
+		REQUIRE(nextpos.x < initialpos.x); 
 	}
-	
+
+
+	//Check if mario entity can move up direction (jump)
 	SECTION("Jumping,[going up]") {
 
 		InputState s = { false,false,false,false,false };
@@ -101,9 +105,10 @@ TEST_CASE("Movement") {
 
 		Vector2 nextpos = mario.getPosition();
 
-		REQUIRE(nextpos.y < initialpos.y);
+		REQUIRE(nextpos.y < initialpos.y); //check if y coordinate changed
 	}
 
+	//Check if mario entity can move down direction (after mario jumps)
 	SECTION("Jumping,[going down]") {
 
 		InputState s = { false,false,false,false,false };
@@ -127,7 +132,10 @@ TEST_CASE("Movement") {
 
 }
 
+//Test functionality of Goomba Entity
 TEST_CASE("Goomba") {
+
+	//Check if Goomba entity can move in right direction 
 	SECTION("Goomba moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -153,6 +161,7 @@ TEST_CASE("Goomba") {
 		REQUIRE(finalPos.x > initialpos.x);
 	}
 
+	//Check if Goomba entity can move in left direction 
 	SECTION("Goomba moving left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -182,6 +191,7 @@ TEST_CASE("Goomba") {
 
 	}
 
+	//Check if Goomba entity disappear if Mario steps on Goomba
 	SECTION("Mario kills Goomba while stepping on top") {
 		Level level{ Texture{},Texture{},5,8 };
 
@@ -209,6 +219,7 @@ TEST_CASE("Goomba") {
 		REQUIRE(goomdead);
 	}
 
+	//Check if Mario can get killed/reduced by Goombda
 	SECTION("Goomba damages mario") {
 		Level level{ Texture{},Texture{},10,8 };
 		Mario& mario = level.mario();
@@ -239,8 +250,10 @@ TEST_CASE("Goomba") {
 
 }
 
-
+//Test functionality of Boo Entity
 TEST_CASE("BOO") {
+
+	//Check if Boo follows wherever Mario goes 
 	SECTION("Boo moves towards mario") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -267,6 +280,7 @@ TEST_CASE("BOO") {
 		REQUIRE(initialpos.y < finalpos.y);
 	}
 
+	//Check if Mario can get killed/reduced by Boo
 	SECTION("Boo Damages Mario") {
 		Level level{ Texture{},Texture{},10,8 };
 		Mario& mario = level.mario();
