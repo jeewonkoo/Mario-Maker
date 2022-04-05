@@ -5,6 +5,9 @@
 #include "Entity.h"
 #include "InputState.h"
 #include "SpriteLocations.h"
+#include "EntitySpawn.h"
+
+class Level;
 
 enum class MarioPowerUp {
     None = 0,
@@ -17,7 +20,7 @@ enum class MarioPowerUp {
 
 class Mario : public Entity {
 public:
-    Mario(float px, float py, Texture texture);
+    Mario(float px, float py, Texture texture, Level* lvl);
 
     void render(Vector2 top_left, Vector2 size) override;
 
@@ -35,7 +38,11 @@ public:
 
     Vector2 getPosition() { return position; }
 
+    MarioPowerUp get_PowerUp() { return power_up; }
+
     bool is_dead();
+
+    bool is_right();
 
 private:
     Vector2 position;
@@ -50,7 +57,11 @@ private:
     bool dead;
     int invincibility;
 
-    MarioPowerUp power_up = MarioPowerUp::Fire;
+    bool facing_right;
+
+    Level* level;
+
+    MarioPowerUp power_up = MarioPowerUp::Big;
 
     int frames_since_jump{};
     static constexpr float jump_instant_accel = 0.3;

@@ -4,6 +4,7 @@ project(mario_maker)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(raylib)
+add_subdirectory(json)
 
 set(mario_src
         src/TileGrid.cpp
@@ -26,19 +27,23 @@ set(mario_src
     src/powerups/SmallShroom.h
     src/BuilderUI.cpp
     src/BuilderUI.h
+    src/EntitySpawn.cpp
+    src/EntitySpawn.h
+    src/FireBall.h
+    src/FireBall.cpp
 )
 
 add_executable(mario_maker
         src/main.cpp
         ${mario_src}
-        )
+         "src/powerups/FireFlower.h" "src/powerups/FireFlower.cpp")
 
 add_executable(tests
     tests/catch.cc
     tests/tests.cc
-    ${mario_src})
+    ${mario_src} "src/powerups/FireFlower.h" "src/powerups/FireFlower.cpp")
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-target_link_libraries(mario_maker PRIVATE raylib)
-target_link_libraries(tests PRIVATE raylib)
+target_link_libraries(mario_maker PRIVATE raylib nlohmann_json::nlohmann_json)
+target_link_libraries(tests PRIVATE raylib nlohmann_json::nlohmann_json)

@@ -7,7 +7,7 @@
 
 class Boo : public Entity {
 public:
-	Boo(float px, float py, Texture texture,Mario* mpt);
+	Boo(float px, float py, Texture texture, Mario* mpt);
 
 	[[nodiscard]] Rectangle rect() const override;
 	void on_collide(EntityCollision collision) override;
@@ -15,6 +15,8 @@ public:
 	void update(const TileGrid& level, const InputState& keyboard_input) override;
 	bool should_remove() override;
 	EntityType type() override { return EntityType::SpikeEnemy; }
+
+	Vector2 get_position() { return{ position }; };
 
 private:
 	Mario* MarioPointer;

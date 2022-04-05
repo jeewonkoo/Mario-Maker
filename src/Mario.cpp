@@ -1,6 +1,7 @@
 #include "Mario.h"
 #include <raylib.h>
 #include <raymath.h>
+#include "Level.h"
 
 /**
  * Constructor for mario class. Sets private variable of mario class with given parameters. 
@@ -9,7 +10,8 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-Mario::Mario(float px, float py, Texture texture): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0) {
+
+Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
         hit_boxes[i] = {0, 0, sprite_sources[i].width * 3.f / 64.f, sprite_sources[i].height * 3.f / 64.f};
@@ -32,7 +34,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
  * @param level TileGrid object to determine collision 
  * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
  */
-void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
+void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
     if (power_up == MarioPowerUp::SmallInv)
         invincibility++;
@@ -59,9 +61,11 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
+        facing_right = true;
 	}
 	else if (keyboard_input.left) {
 		velocity.x -= acceleration;
+        facing_right = false;
 	}
 
 	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
@@ -74,6 +78,11 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	    && (frames_since_jump >= jump_continuous_delay)){
 	    velocity.y -= jump_continuous_accel;
 	}
+
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
+        EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
+        level->add_entity(ent, tex);
+    }
 
 	velocity.y += gravity;
 
@@ -96,7 +105,7 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 	grounded = false;
 	//terminate the loop if too many collisions
 	for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
-	    auto collisions = level.collide(rect());
+	    auto collisions = grid.collide(rect());
 
         if(collisions.eject_vector.has_value()){
 
@@ -130,7 +139,11 @@ void Mario::update(const TileGrid &level, const InputState & keyboard_input) {
 void Mario::on_collide(EntityCollision collision) {
 
     if (power_up == MarioPowerUp::SmallInv)
-        return;
+        invincibility++;
+    if (invincibility == 180) {
+        invincibility = 0;
+        power_up = MarioPowerUp::Small;
+    }
 
     switch(collision.other.type()){
         case EntityType::Mushroom:
@@ -139,17 +152,22 @@ void Mario::on_collide(EntityCollision collision) {
         case EntityType::SmallShroom:
             power_up = MarioPowerUp::Small;
             break;
+        case EntityType::FireFlower:
+            power_up = MarioPowerUp::Fire;
+            break;
         case EntityType::JumpEnemy:
-            if (power_up == MarioPowerUp::Small) {
-                dead = true;
-                return;
-            }
             if(collision.side == Side::BOTTOM && velocity.y >= 0){
                 velocity.y = -jump_instant_accel;
                 frames_since_jump = 0;
             }
-            if (collision.side != Side::BOTTOM)
-                power_up = MarioPowerUp::SmallInv;
+            if (collision.side != Side::BOTTOM){
+                if (power_up == MarioPowerUp::Small) {
+                    dead = true;
+                } else {
+                    power_up = MarioPowerUp::SmallInv;
+                }
+            }
+
             break;
         case EntityType::SpikeEnemy:
             if (power_up == MarioPowerUp::Small) {
@@ -178,7 +196,7 @@ Rectangle Mario::rect() const {
 }
 
 /**
- * Determines if mario entity should be removed or not 
+ * Determines if Mario entity should be removed or not 
  * 
  * @return false 
  */
@@ -186,6 +204,15 @@ bool Mario::should_remove() {
     return false;
 }
 
+/**
+ * Determines if Mario entity should be dead or not 
+ * 
+ * @return dead True if Mario is dead 
+ * */
 bool Mario::is_dead() {
     return dead;
+}
+
+bool Mario::is_right() {
+    return facing_right;
 }

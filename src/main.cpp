@@ -6,8 +6,11 @@
 #include "enemies/Piranha.h"
 #include "powerups/Mushroom.h"
 #include "powerups/SmallShroom.h"
+#include "powerups/FireFlower.h"
 #include "Level.h"
 #include "BuilderUI.h"
+#include <iostream>
+#include <fstream>
 
 int main(){
     // Initialization
@@ -36,29 +39,27 @@ int main(){
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
     bool in_builder = false;
-    Level level{tile_texture};
+    bool last_enter_key = false;
+
+    nlohmann::json level_json;
+    std::ifstream("saved_level.json") >> level_json;
+    Level level = Level::from_json(level_json, tile_texture, sprite_texture);
     BuilderUI ui(level, sprite_texture, tile_texture);
 
-    auto m = std::make_unique<Mario>(10, 3, sprite_texture);
-    Mario * mario = m.get();
-    level.add_entity(std::move(m));
-    level.set_focus_entity(mario);
-    for(int i = 0; i < 16; i++){
-        level.add_entity(std::make_unique<Mushroom>(i, 10, sprite_texture));
-    }
-    for (int i = 0; i < 16; i++) {
-        level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
-    }
-    for (int i = 0; i < 16; i++) {
-        level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
-    }
-
-
-    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
-
-    for (int i = 0; i < 16; i++) {
-        level.add_entity(std::make_unique<Piranha>(rand() % 30, rand() % 10, sprite_texture, mario));
-    }
+//    for(int i = 0; i < 16; i++){
+//        level.add_entity({(float)i, 10, EntitySpawn::Type::Mushroom}, sprite_texture);
+//    }
+//    for (int i = 0; i < 16; i++) {
+//        level.add_entity({(float)i, 10, EntitySpawn::Type::Goomba}, sprite_texture);
+//    }
+//
+//    level.add_entity({5, 10, EntitySpawn::Type::FireFlower}, sprite_texture);
+//
+//    level.add_entity({10, 10, EntitySpawn::Type::Boo}, sprite_texture);
+//
+//    for (int i = 0; i < 16; i++) {
+//        level.add_entity({(float)(rand() % 30), (float)(rand() % 10), EntitySpawn::Type::Piranha}, sprite_texture);
+//    }
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -66,7 +67,11 @@ int main(){
         PollInputEvents();
 
 
-        if(IsKeyDown(KEY_ENTER)) in_builder = !in_builder;
+        if(IsKeyDown(KEY_ENTER) != last_enter_key){
+            last_enter_key = IsKeyDown(KEY_ENTER);
+
+            if(IsKeyDown(KEY_ENTER)) in_builder = !in_builder;
+        }
 
         InputState input {
             .left = IsKeyDown(KEY_LEFT),
@@ -74,16 +79,15 @@ int main(){
             .up = IsKeyDown(KEY_UP),
             .down = IsKeyDown(KEY_DOWN),
             .space = IsKeyDown(KEY_SPACE),
+            .f = IsKeyDown(KEY_F)
         };
 
         
         if(in_builder){
             ui.handle_events();
         } else {
-            if (!mario->is_dead())
+            if (!level.mario().is_dead())
                 level.update(input);
-            else
-                break;
         }
 
         Camera2D cam{};
@@ -95,21 +99,30 @@ int main(){
         BeginDrawing();
         {
             ClearBackground(RAYWHITE);
+
+            if (level.mario().is_dead())
+                cam.offset = { 0, 0 };
+
             BeginMode2D(cam);
             {
-                // draw mountains
-                float paralax_mountains = mario->rect().x * -40;
-                float paralax_clouds = mario->rect().x * -53;
+                if (level.mario().is_dead())
+                    DrawTextureTiled(end_texture, { 100, 0, 1500, 705 }, { 0, 0, 1024, 1024 }, { 0,0 }, 0, 1, WHITE);
+                else {
+                    // draw mountains
+                    float paralax_mountains = level.mario().rect().x * -40;
+                    float paralax_clouds = level.mario().rect().x * -53;
 
-                DrawTextureTiled(background_texture, {0, 512, 1024,512}, {-1024, 512, 6*1024,512},{paralax_mountains,0},0,1,WHITE);
-                DrawTextureTiled(background_texture, {0, 0, 1024,512}, {-1024, 0, 6*1024,512},{paralax_clouds,0},0,1,WHITE);
-                Vector2 top_left = {(float)0, (float)0};
-                Vector2 bottom_right = {(float)screenWidth, (float)screenHeight};
+                    DrawTextureTiled(background_texture, { 0, 512, 1024,512 }, { -1024, 512, 6 * 1024,512 }, { paralax_mountains,0 }, 0, 1, WHITE);
+                    DrawTextureTiled(background_texture, { 0, 0, 1024,512 }, { -1024, 0, 6 * 1024,512 }, { paralax_clouds,0 }, 0, 1, WHITE);
+                    Vector2 top_left = { (float)0, (float)0 };
+                    Vector2 bottom_right = { (float)screenWidth, (float)screenHeight };
 
 
-                level.render(top_left, bottom_right);
+                    level.render(top_left, bottom_right);
+                }
             }
             EndMode2D();
+            
 
         }
 
@@ -118,7 +131,7 @@ int main(){
         EndDrawing();
 
     }
-
+    /*
     while (!WindowShouldClose()) {
         // dead screen
         BeginDrawing();
@@ -137,8 +150,9 @@ int main(){
             EndMode2D();
         }
         EndDrawing();
-    }
+    }*/
 
+    std::ofstream("saved_level.json") << level.to_json();
 
     CloseWindow();                                                      // Close window and OpenGL context
 
