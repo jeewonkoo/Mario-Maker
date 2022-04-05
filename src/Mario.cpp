@@ -138,12 +138,12 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
  */
 void Mario::on_collide(EntityCollision collision) {
 
-    if (power_up == MarioPowerUp::SmallInv)
-        invincibility++;
-    if (invincibility == 180) {
-        invincibility = 0;
-        power_up = MarioPowerUp::Small;
-    }
+    //if (power_up == MarioPowerUp::SmallInv)
+    //    invincibility++;
+    //if (invincibility == 180) {
+    //    invincibility = 0;
+    //    power_up = MarioPowerUp::Small;
+    //}
 
     switch(collision.other.type()){
         case EntityType::Mushroom:
