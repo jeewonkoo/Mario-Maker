@@ -138,8 +138,11 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
  */
 void Mario::on_collide(EntityCollision collision) {
 
-    if (power_up == MarioPowerUp::SmallInv)
+    if (power_up == MarioPowerUp::SmallInv){
         invincibility++;
+    } else {
+        invincibility = 0;
+    }
     if (invincibility == 180) {
         invincibility = 0;
         power_up = MarioPowerUp::Small;
