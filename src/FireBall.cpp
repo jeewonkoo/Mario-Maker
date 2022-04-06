@@ -20,7 +20,7 @@ FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex
  * @param size size of FireBall on graphic
  */
 void FireBall::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, SpriteLocations::FireBall, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::FireBall, Rectangle{ 0, 0, 30, 30}, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -75,7 +75,7 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
  * @return resized hitbox
  */
 Rectangle FireBall::rect() const {
-    return { position.x, position.y, 0.9, 0.9 };
+    return { position.x, position.y, 0.45, 0.45 };
 }
 
 /**

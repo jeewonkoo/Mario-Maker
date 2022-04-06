@@ -526,15 +526,16 @@ TEST_CASE("FireFlower") {
 			level.set_tile(i, 10, t);
 		}
 
-		EntitySpawn g(10, 10, EntitySpawn::Type::FireFlower);
+		EntitySpawn g(10, 9 ,EntitySpawn::Type::FireFlower);
 		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
 
 
 
-		InputState s = { true,false,false,false,false };
+		InputState s = { false,true,false,false,false };
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
 		}
+
 
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Fire);
