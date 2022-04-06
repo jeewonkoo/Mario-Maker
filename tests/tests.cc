@@ -62,7 +62,9 @@ TEST_CASE("Test Collision,[Collision]") {
 	}
 }
 
-//Test Entity movement based on Key board input by User 
+/**
+ * This is a test for Entity movement based on Key board input by User
+ */
 TEST_CASE("Movement") {
 
 	Level level{ Texture{},Texture{},5,5 };
@@ -131,8 +133,9 @@ TEST_CASE("Movement") {
 	}
 
 }
-
-//Test functionality of Goomba Entity
+/**
+ * This is a test to check functionality of Goomba Entity
+ */
 TEST_CASE("Goomba") {
 
 	//Check if Goomba entity can move in right direction 
@@ -250,7 +253,9 @@ TEST_CASE("Goomba") {
 
 }
 
-//Test functionality of Boo Entity
+/**
+ * This is a test to check functionality of Boo Entity
+ */
 TEST_CASE("BOO") {
 
 	//Check if Boo follows wherever Mario goes 
@@ -311,7 +316,13 @@ TEST_CASE("BOO") {
 
 }
 
+
+/**
+ * This is a test to check functionality of Small Mushroom Entity
+ */
 TEST_CASE("Small Mushroom") {
+
+	//Check if Small Mushroom can move in right direction when respective key input is pressed by user 
 	SECTION("Small Mushroom moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -337,6 +348,7 @@ TEST_CASE("Small Mushroom") {
 		REQUIRE(finalPos.x > initialpos.x);
 	}
 
+	//Check if small mushroom entity can move in opposite direction after hitting tile block 
 	SECTION("Small mushroom left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -364,6 +376,8 @@ TEST_CASE("Small Mushroom") {
 		REQUIRE(finalPos.x < initialpos.x);
 	}
 
+
+	//Check if Mario entity changes into smaller size after stepping on small mushroom entity 
 	SECTION("Mario gets Small after stepping on small mushroom") {
 		Level level{ Texture{},Texture{},5,8 };
 		Mario& mario = level.mario();
@@ -393,7 +407,13 @@ TEST_CASE("Small Mushroom") {
 	}
 }
 
+
+/**
+ * This is a test to check functionality of Mushroom Entity
+ */
 TEST_CASE("Mushroom") {
+
+	////Check if Mushroom can move in right direction when respective key input is pressed by user 
 	SECTION("Mushroom moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -419,7 +439,8 @@ TEST_CASE("Mushroom") {
 		REQUIRE(finalPos.x > initialpos.x);
 	}
 
-	SECTION("Small mushroom left after hitting block") {
+	//Check if Mushroom entity can move in opposite direction after hitting tile block 
+	SECTION("Mushroom left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
 		Tile t(true, TileLocations::Ground);
@@ -446,6 +467,7 @@ TEST_CASE("Mushroom") {
 		REQUIRE(finalPos.x < initialpos.x);
 	}
 
+	//Check if Mario entity changes into bigger size after stepping on small mushroom entity	
 	SECTION("Mario gets big after stepping on mushroom") {
 		Level level{ Texture{},Texture{},5,8 };
 		Mario& mario = level.mario();
@@ -487,7 +509,13 @@ TEST_CASE("Mushroom") {
 
 }
 
+
+/**
+ * This is a test to check functionality of FireFlower Entity
+ */
 TEST_CASE("FireFlower") {
+
+	//Check if Mario tunrs into Fire-Mario when it hits FireFloewr block
 	SECTION("Mario gets a FireFlower powerup walking on the fireflower") {
 		Level level{ Texture{},Texture{},5,8 };
 		Mario& mario = level.mario();
