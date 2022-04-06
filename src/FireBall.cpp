@@ -31,7 +31,6 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  */
 #include<iostream>
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
-    //std::cout << velocity.x << ' ' << velocity.y << '\n';
     if (facing_right) {
         position = Vector2Add(position, velocity);
     }

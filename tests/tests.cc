@@ -143,7 +143,7 @@ TEST_CASE("Goomba") {
 	SECTION("Goomba moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -263,7 +263,9 @@ TEST_CASE("BOO") {
 	SECTION("Boo moves towards mario") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t{true, TileLocations::Ground};
+
+		Tile t{ true, TileLocations::Ground };
+
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -327,7 +329,7 @@ TEST_CASE("Small Mushroom") {
 	SECTION("Small Mushroom moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -353,7 +355,7 @@ TEST_CASE("Small Mushroom") {
 	SECTION("Small mushroom left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -384,7 +386,7 @@ TEST_CASE("Small Mushroom") {
 		Mario& mario = level.mario();
 		
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -418,7 +420,7 @@ TEST_CASE("Mushroom") {
 	SECTION("Mushroom moving right") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -444,7 +446,7 @@ TEST_CASE("Mushroom") {
 	SECTION("Mushroom left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -474,7 +476,7 @@ TEST_CASE("Mushroom") {
 		Mario& mario = level.mario();
 
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -521,7 +523,7 @@ TEST_CASE("FireFlower") {
 		Level level{ Texture{},Texture{},5,8 };
 		Mario& mario = level.mario();
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
