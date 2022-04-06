@@ -13,6 +13,7 @@ public:
     void update(const TileGrid& level, const InputState& keyboard_input) override;
     bool should_remove() override;
     EntityType type() override { return EntityType::FireFlower; }
+    Vector2 getPosition() { return position; }
 private:
     Texture tex;
     Vector2 position;

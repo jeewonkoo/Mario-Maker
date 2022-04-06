@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "TileGrid.h"
 #include "Mario.h"
+<<<<<<< HEAD
 #include "enemies/Goomba.h"
 #include "enemies/Boo.h"
 #include "enemies/Piranha.h"
@@ -8,10 +9,19 @@
 #include "powerups/SmallShroom.h"
 #include "powerups/FireFlower.h"
 #include "FireBall.h"
+=======
+>>>>>>> 35d83cabf78761a61e21c06e68fe60d65ab60269
 #include "Level.h"
+#include "Menu.h"
 #include "BuilderUI.h"
 #include <iostream>
 #include <fstream>
+
+Level load_level(std::string file_name, Texture tiles, Texture sprites){
+    nlohmann::json level_json;
+    std::ifstream(file_name) >> level_json;
+    return Level::from_json(level_json, tiles, sprites);
+}
 
 int main(){
     // Initialization
@@ -39,28 +49,16 @@ int main(){
 
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
+    bool in_menu = false;
     bool in_builder = false;
     bool last_enter_key = false;
 
-    nlohmann::json level_json;
-    std::ifstream("saved_level.json") >> level_json;
-    Level level = Level::from_json(level_json, tile_texture, sprite_texture);
-    BuilderUI ui(level, sprite_texture, tile_texture);
 
-//    for(int i = 0; i < 16; i++){
-//        level.add_entity({(float)i, 10, EntitySpawn::Type::Mushroom}, sprite_texture);
-//    }
-//    for (int i = 0; i < 16; i++) {
-//        level.add_entity({(float)i, 10, EntitySpawn::Type::Goomba}, sprite_texture);
-//    }
-//
-//    level.add_entity({5, 10, EntitySpawn::Type::FireFlower}, sprite_texture);
-//
-//    level.add_entity({10, 10, EntitySpawn::Type::Boo}, sprite_texture);
-//
-//    for (int i = 0; i < 16; i++) {
-//        level.add_entity({(float)(rand() % 30), (float)(rand() % 10), EntitySpawn::Type::Piranha}, sprite_texture);
-//    }
+    Level level = load_level("saved_level.json", tile_texture, sprite_texture);
+    BuilderUI builder_ui(level, sprite_texture, tile_texture);
+    Menu menu{
+        [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
+        [&](){in_builder = true;}};
 
     // Main game loop
     while (!WindowShouldClose()){
@@ -71,7 +69,14 @@ int main(){
         if(IsKeyDown(KEY_ENTER) != last_enter_key){
             last_enter_key = IsKeyDown(KEY_ENTER);
 
-            if(IsKeyDown(KEY_ENTER)) in_builder = !in_builder;
+            if(IsKeyDown(KEY_ENTER)) {
+                in_menu = !in_menu;
+                if(in_menu){
+                    menu.open();
+                } else {
+                    menu.close();
+                }
+            }
         }
 
         InputState input {
@@ -83,9 +88,10 @@ int main(){
             .f = IsKeyDown(KEY_F)
         };
 
-        
-        if(in_builder){
-            ui.handle_events();
+        if(in_menu){
+            menu.handle_events();
+        } else if(in_builder){
+            builder_ui.handle_events();
         } else {
             if (!level.mario().is_dead())
                 level.update(input);
@@ -126,8 +132,13 @@ int main(){
             
 
         }
+        if(in_builder){
+            builder_ui.render({0,0},{screenWidth, screenHeight});
+        }
+        if(in_menu) {
+            menu.render();
+        };
 
-        if(in_builder) ui.render({0,0}, {screenWidth, screenHeight});
 
         EndDrawing();
 
