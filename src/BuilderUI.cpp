@@ -43,6 +43,15 @@ void BuilderUI::handle_events() {
             else if (current_action == TANOOKIE) {
                 level.add_entity({ x, y, EntitySpawn::Type::TanookieLeaf }, sprite_tex);
             }
+            else if (current_action == GOOMBA) {
+                level.add_entity({ x, y, EntitySpawn::Type::Goomba }, sprite_tex);
+            }
+            else if (current_action == BOO) {
+                level.add_entity({ x, y, EntitySpawn::Type::Boo }, sprite_tex);
+            }
+            else if (current_action == PIRANHA) {
+                level.add_entity({ x, y, EntitySpawn::Type::Piranha }, sprite_tex);
+            }
         }
     }
 
@@ -63,4 +72,7 @@ void BuilderUI::render(Vector2 top_left, Vector2 size) {
     DrawTexturePro(sprite_tex, SpriteLocations::Mushroom, { 1024 - 96, 288, 64, 64 }, { 0,0 }, 0, WHITE);
     DrawTexturePro(sprite_tex, SpriteLocations::FireFlower, { 1024 - 128, 384, 128, 128 }, { 0,0 }, 0, WHITE);
     DrawTexturePro(sprite_tex, SpriteLocations::TanookieLeafLeft, { 1024 - 128, 512, 128, 128 }, { 0,0 }, 0, WHITE);
+    DrawTexturePro(sprite_tex, SpriteLocations::GoombaStep1, { 1024 - 128, 640, 128, 128 }, { 0,0 }, 0, WHITE);
+    DrawTexturePro(sprite_tex, SpriteLocations::BooOpen, { 1024 - 128, 768, 128, 128 }, { 0,0 }, 0, WHITE);
+    DrawTexturePro(sprite_tex, SpriteLocations::Piranha, { 1024 - 128, 896, 128, 128 }, { 0,0 }, 0, WHITE);
 }
