@@ -262,7 +262,7 @@ TEST_CASE("BOO") {
 	SECTION("Boo moves towards mario") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{ true, TileLocations::Ground };
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
