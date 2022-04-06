@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include "../src/TileGrid.h"
+#include "../src/Tile.h"
 #include "../src/Mario.h"
 #include "../src/enemies/Goomba.h"
 #include "../src/enemies/Boo.h"
@@ -168,7 +169,7 @@ TEST_CASE("Goomba") {
 	SECTION("Goomba moving left after hitting block") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -198,7 +199,7 @@ TEST_CASE("Goomba") {
 	SECTION("Mario kills Goomba while stepping on top") {
 		Level level{ Texture{},Texture{},5,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -227,7 +228,7 @@ TEST_CASE("Goomba") {
 		Level level{ Texture{},Texture{},10,8 };
 		Mario& mario = level.mario();
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -262,7 +263,7 @@ TEST_CASE("BOO") {
 	SECTION("Boo moves towards mario") {
 		Level level{ Texture{},Texture{},30,8 };
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
@@ -290,7 +291,7 @@ TEST_CASE("BOO") {
 		Level level{ Texture{},Texture{},10,8 };
 		Mario& mario = level.mario();
 
-		Tile t(true, TileLocations::Ground);
+		Tile t{true, TileLocations::Ground};
 
 		for (int i = 0; i < 30; i++) {
 			level.set_tile(i, 10, t);
