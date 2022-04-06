@@ -25,7 +25,9 @@ private:
         SMALLSHROOM,
         FIREFLOWER,
         TANOOKIE,
-
+        GOOMBA,
+        BOO,
+        PIRANHA,
         NONE
     };
 
@@ -56,7 +58,19 @@ private:
             return TANOOKIE;
         }
 
-        if(y < 768){
+        if (y < 768) {
+            return GOOMBA;
+        }
+
+        if (y < 896) {
+            return BOO;
+        }
+
+        if (y < 1024) {
+            return PIRANHA;
+        }
+
+        if(y < 1152){
             return DELETE;
         }
 
