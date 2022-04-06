@@ -48,7 +48,7 @@ int main(){
     BuilderUI builder_ui(level, sprite_texture, tile_texture);
     Menu menu{
         [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
-        [&](){in_builder = true;}};
+        [&](){in_builder = true; menu.close();}};
 
     // Main game loop
     while (!WindowShouldClose()){
