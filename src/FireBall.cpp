@@ -10,7 +10,7 @@
  * @param py start y axis location
  * @param texture rendered FireBall image sprite
  */
-FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex(texture), position({ px, py }), velocity({ 0,0 }), is_dead(false), facing_right(facing_right) {
+FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex(texture), position({ px, py }), velocity({ 0.1,0.1 }), is_dead(false), facing_right(facing_right) {
 }
 
 /**
@@ -31,7 +31,6 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  */
 #include<iostream>
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
-    // std::cout << velocity.x << ' ' << velocity.y << '\n';
     if (facing_right) {
         position = Vector2Add(position, velocity);
     }
