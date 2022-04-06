@@ -1,16 +1,6 @@
 #include <raylib.h>
 #include "TileGrid.h"
 #include "Mario.h"
-<<<<<<< HEAD
-#include "enemies/Goomba.h"
-#include "enemies/Boo.h"
-#include "enemies/Piranha.h"
-#include "powerups/Mushroom.h"
-#include "powerups/SmallShroom.h"
-#include "powerups/FireFlower.h"
-#include "FireBall.h"
-=======
->>>>>>> 35d83cabf78761a61e21c06e68fe60d65ab60269
 #include "Level.h"
 #include "Menu.h"
 #include "BuilderUI.h"
