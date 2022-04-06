@@ -7,6 +7,7 @@
 #include "powerups/Mushroom.h"
 #include "powerups/SmallShroom.h"
 #include "powerups/FireFlower.h"
+#include "FireBall.h"
 #include "Level.h"
 #include "BuilderUI.h"
 #include <iostream>

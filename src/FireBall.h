@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MARIO_MAKER_FIREBALL_H
+#define MARIO_MAKER_FIREBALL_H
 
 #include "Entity.h"
 
@@ -20,3 +21,5 @@ private:
     bool is_dead;
     bool facing_right;
 };
+
+#endif

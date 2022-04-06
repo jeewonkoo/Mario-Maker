@@ -29,7 +29,9 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  * @param level TileGrid object to determine collision
  * @param keyboard_input pressed keyboard by user
  */
+#include<iostream>
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
+    std::cout << velocity.x << ' ' << velocity.y << '\n';
     if (facing_right) {
         position = Vector2Add(position, velocity);
     }
@@ -85,7 +87,11 @@ Rectangle FireBall::rect() const {
  *  @param collision array of colided entity set
  */
 void FireBall::on_collide(EntityCollision collision) {
-    
+    if (collision.other.type() != EntityType::Mario) {
+        if (collision.side != Side::TOP) {
+            is_dead = true;
+        }
+    }
 }
 
 /**
