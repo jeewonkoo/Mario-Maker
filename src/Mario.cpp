@@ -10,7 +10,6 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-
 Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
@@ -249,6 +248,11 @@ bool Mario::is_dead() {
     return dead;
 }
 
+/**
+ * Determines if Mario entity faces right direction or not. 
+ * 
+ * @return true if Mario faces right else false 
+ * */
 bool Mario::is_right() {
     return facing_right;
 }

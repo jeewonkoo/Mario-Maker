@@ -26,6 +26,9 @@ private:
     bool is_dead;
     bool walkingright = true;
     int runanimationframe = 0;
+    bool counterstart = false;
+    bool is_squished = false;
+    int counter = 0;
 };
 
 #endif
