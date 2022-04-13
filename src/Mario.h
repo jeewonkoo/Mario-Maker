@@ -58,6 +58,7 @@ private:
     int invincibility;
 
     bool facing_right;
+    int run_animation_frame = 0;
 
     Level* level;
 
