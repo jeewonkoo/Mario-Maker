@@ -36,7 +36,7 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
     if (alive_count == 120)
         is_dead = true;
 
-    position = Vector2Add(position, Vector2Multiply(velocity, {(float)facing_right, (float)facing_down}));
+    position = Vector2Add(position, Vector2Multiply(velocity, {(float)facing_right, 1}));
 
     //terminate the loop if too many collisions
     for (int coll_idx = 0; coll_idx < 10; coll_idx++) {
@@ -60,15 +60,24 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
                 is_dead = true;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::BOTTOM; }) != collisions.collisions.end()) {
-                facing_down = -1;
-            }
-            else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::TOP; }) != collisions.collisions.end()) {
-                facing_down = 1;
+                //facing_down = -1;
+                bounce = true;
+                frames_since_jump = 0;
+                velocity.y -= jump_instant_accel;
             }
         }
         else {
             break;
         }
+
+        if (bounce
+            && (frames_since_jump < jump_continuous_frames)
+            && (frames_since_jump >= jump_continuous_delay)) {
+            velocity.y -= jump_continuous_accel;
+        }
+
+        velocity.y += gravity;
+        frames_since_jump++;
     }
 }
 
