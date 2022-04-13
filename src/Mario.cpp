@@ -91,16 +91,23 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 	    run_animation_frame = 0;
 	}
 
-	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
-	    frames_since_jump = 0;
-	    velocity.y -= jump_instant_accel;
-	}
+    if (keyboard_input.space && power_up == MarioPowerUp::Tanookie) {
+        if (velocity.y > 0) {
+            velocity.y = 0.05;
+        }
+    }
 
-	if (keyboard_input.space
-	    && (frames_since_jump < jump_continuous_frames)
-	    && (frames_since_jump >= jump_continuous_delay)){
-	    velocity.y -= jump_continuous_accel;
-	}
+    if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
+        frames_since_jump = 0;
+        velocity.y -= jump_instant_accel;
+    }
+
+    if (keyboard_input.space
+        && (frames_since_jump < jump_continuous_frames)
+        && (frames_since_jump >= jump_continuous_delay)) {
+        velocity.y -= jump_continuous_accel;
+    }
+
 
     if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
@@ -172,6 +179,9 @@ void Mario::on_collide(EntityCollision collision) {
     }
 
     switch(collision.other.type()){
+        case EntityType::TanookieLeaf:
+            power_up = MarioPowerUp::Tanookie;
+            break;
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
             break;
