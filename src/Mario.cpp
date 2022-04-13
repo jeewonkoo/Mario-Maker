@@ -70,7 +70,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
     if (keyboard_input.space && power_up == MarioPowerUp::Tanookie) {
         if (velocity.y > 0) {
-            velocity.y = 0.1;
+            velocity.y = 0.05;
         }
     }
 
