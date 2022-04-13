@@ -61,11 +61,11 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
-        facing_right = true;
+        facing_right = 1;
 	}
 	else if (keyboard_input.left) {
 		velocity.x -= acceleration;
-        facing_right = false;
+        facing_right = -1;
 	}
 
 	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
@@ -216,6 +216,6 @@ bool Mario::is_dead() {
     return dead;
 }
 
-bool Mario::is_right() {
+int Mario::is_right() {
     return facing_right;
 }

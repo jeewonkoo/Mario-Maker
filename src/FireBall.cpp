@@ -10,7 +10,8 @@
  * @param py start y axis location
  * @param texture rendered FireBall image sprite
  */
-FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex(texture), position({ px, py }), velocity({ 0.1,0.1 }), is_dead(false), facing_right(facing_right) {
+FireBall::FireBall(float px, float py, Texture texture, int facing_right) : tex(texture), position({ px, py }), is_dead(false), facing_right(facing_right), alive_count(0) {
+    velocity = { facing_right*0.1f, 0.1 };
 }
 
 /**
@@ -31,12 +32,11 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  */
 #include<iostream>
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
-    if (facing_right) {
-        position = Vector2Add(position, velocity);
-    }
-    else {
-        position = Vector2Add(position, Vector2Multiply({-1, 1}, velocity));
-    }
+    alive_count++;
+    if (alive_count == 120)
+        is_dead = true;
+
+    position = Vector2Add(position, Vector2Multiply(velocity, {(float)facing_right, (float)facing_down}));
 
     //terminate the loop if too many collisions
     for (int coll_idx = 0; coll_idx < 10; coll_idx++) {
@@ -54,13 +54,16 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
 
 
             if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::RIGHT; }) != collisions.collisions.end()) {
-                is_dead = true;
+                if (facing_right) facing_right = -1;
+                else facing_right = 1;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
-                is_dead = true;
+                if (facing_right) facing_right = -1;
+                else facing_right = 1;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::BOTTOM; }) != collisions.collisions.end()) {
-                velocity = {0,0};
+                if (facing_down) facing_down = -1;
+                else facing_down = 1;
             }
         }
         else {
