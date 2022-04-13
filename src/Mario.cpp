@@ -79,12 +79,11 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
-        facing_right = true;
-        run_animation_frame ++;
+        facing_right = 1;
 	}
 	else if (keyboard_input.left) {
 	    velocity.x -= acceleration;
-	    facing_right = false;
+	    facing_right = -1;
 	    run_animation_frame++;
 	} else {
 	    run_animation_frame = 0;
@@ -253,6 +252,6 @@ bool Mario::is_dead() {
  * 
  * @return true if Mario faces right else false 
  * */
-bool Mario::is_right() {
+int Mario::is_right() {
     return facing_right;
 }
