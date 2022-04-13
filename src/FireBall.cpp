@@ -54,24 +54,16 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
 
 
             if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::RIGHT; }) != collisions.collisions.end()) {
-                //if (facing_right)
-                facing_right = -1;
-                //else facing_right = 1;
+                is_dead = true;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
-                //if (facing_right) facing_right = -1;
-                //else
-                facing_right = 1;
+                is_dead = true;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::BOTTOM; }) != collisions.collisions.end()) {
-                //if (facing_down)
                 facing_down = -1;
-                //else facing_down = 1;
             }
             else if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::TOP; }) != collisions.collisions.end()) {
-                //if (facing_down)
                 facing_down = 1;
-                //else facing_down = 1;
             }
         }
         else {
