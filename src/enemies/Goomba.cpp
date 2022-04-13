@@ -18,7 +18,16 @@ Goomba::Goomba (float px, float py, Texture texture) : tex(texture), position({ 
  * @param size size of Goomba on graphic 
  */
 void Goomba::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, SpriteLocations::GoombaStep1, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    auto src = SpriteLocations::GoombaStep1;
+    if ((runanimationframe / 16) % 2 == 0) {
+        src = SpriteLocations::GoombaStep2;
+    }
+
+    if (walkingright == false) {
+        src.width *= -1;
+    }
+
+    DrawTexturePro(tex, src, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -31,6 +40,7 @@ void Goomba::update (const TileGrid& level, const InputState & keyboard_input) {
 
     position = Vector2Add(position, velocity);
     velocity.y += 0.02;
+    runanimationframe++;
 
     //terminate the loop if too many collisions
     for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
@@ -49,9 +59,11 @@ void Goomba::update (const TileGrid& level, const InputState & keyboard_input) {
 
             if (std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::RIGHT; }) != collisions.collisions.end()) {
                 velocity.x = -0.05;
+                walkingright = false;
             }
             else if(std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto& a) {return a.collision.collision_side == Side::LEFT; }) != collisions.collisions.end()) {
                 velocity.x = 0.05;
+                walkingright = true;
             }
         }
         else {

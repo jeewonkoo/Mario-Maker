@@ -24,6 +24,8 @@ private:
     Vector2 position;
     Vector2 velocity;
     bool is_dead;
+    bool walkingright = true;
+    int runanimationframe = 0;
 };
 
 #endif
