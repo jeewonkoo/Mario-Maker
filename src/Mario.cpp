@@ -10,7 +10,6 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-
 Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
@@ -26,14 +25,24 @@ Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}
  */
 void Mario::render(Vector2 top_left, Vector2 size) {
     auto src = sprite_sources.at((size_t)power_up);
+    auto dest = sprite_dests.at((size_t)power_up);
     if((run_animation_frame / 16) % 2 == 0){
         src.x += 18;
+        if(power_up == MarioPowerUp::Small || power_up == MarioPowerUp::SmallInv){
+            // small mario running is slightly bigger sprite
+            src.x -= 2;
+            src.y -= 1;
+            src.width += 2;
+            src.height += 1;
+            dest.width += 4;
+            dest.height += 2;
+        }
     }
+
     if(!facing_right){
-        src.x += src.width;
         src.width *= -1;
     }
-    DrawTexturePro(tex, src, sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -239,6 +248,11 @@ bool Mario::is_dead() {
     return dead;
 }
 
+/**
+ * Determines if Mario entity faces right direction or not. 
+ * 
+ * @return true if Mario faces right else false 
+ * */
 bool Mario::is_right() {
     return facing_right;
 }
