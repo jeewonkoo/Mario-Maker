@@ -18,7 +18,7 @@ TanookieLeaf::TanookieLeaf (float px, float py, Texture texture) : tex(texture),
  * @param size size of TanookieLeaf on graphic 
  */
 void TanookieLeaf::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, Rectangle{ 0, 0, 24, 25 }, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::TanookieLeafLeft, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**

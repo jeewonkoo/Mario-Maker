@@ -5,11 +5,21 @@
 #include<vector>
 #include<optional>
 
-#include<nlohmann/json.hpp>
 
+#include<nlohmann/json.hpp>
+/**
+ * Tile struct for tile grid (brick tile block)
+ */
 struct Tile {
+
     bool solid{};
     Rectangle tex_src;
+
+    /**
+     * This function converts tile location/data into json in order to save/load level 
+     * 
+     * @return tile_json converted json
+     */
     nlohmann::json to_json() const {
         auto tile_json = nlohmann::json();
         tile_json["solid"] = solid;
@@ -20,6 +30,12 @@ struct Tile {
         return tile_json;
     }
 
+    /**
+     * This function converts json types of tile location/data into tile struct
+     * 
+     * @param json json type data 
+     * @return converted tile struct 
+     */
     static Tile from_json(const nlohmann::json & json){
         return {
             .solid = json["solid"],
@@ -55,6 +71,17 @@ struct TileCollisionSet {
     std::vector<TileCollision> collisions;
     std::optional<Vector2> eject_vector;
 };
+
+/**
+ * This function checks collision between two different tile struct. 
+ * If two struct collies on left side, it returns Collision struct with left side and respective vector.
+ * If two struct collies on right side, it returns Collision struct with right side and respective vector.
+ * If two struct collies on top side, it returns Collision struct with top side and respective vector.
+ * If two struct collies on bottm side, it returns Collision struct with bottm side and respective vector.
+ * if not, return nullopt.
+ * 
+ * @return Collision struct.
+ */
 
 inline std::optional<Collision> collide_rect(Rectangle from, Rectangle against){
     // less than 0 means inside

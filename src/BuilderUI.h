@@ -20,8 +20,14 @@ public:
 private:
     enum ActionType {
         DELETE,
-        MUSHROOM,
         TILE,
+        MUSHROOM,
+        SMALLSHROOM,
+        FIREFLOWER,
+        TANOOKIE,
+        GOOMBA,
+        BOO,
+        PIRANHA,
         NONE
     };
 
@@ -33,16 +39,42 @@ private:
 
     static ActionType icon_at(int x, int y){
         if(y < 128){
-            return MUSHROOM;
-        }
-
-        if(y < 256){
             return TILE;
         }
 
-        if(y < 384){
+        if(y < 256){
+            return MUSHROOM;
+        }
+
+        if (y < 384) {
+            return SMALLSHROOM;
+        }
+
+        if (y < 512) {
+            return FIREFLOWER;
+        }
+
+        if (y < 640) {
+            return TANOOKIE;
+        }
+
+        if (y < 768) {
+            return GOOMBA;
+        }
+
+        if (y < 896) {
+            return BOO;
+        }
+
+        if (y < 1024) {
+            return PIRANHA;
+        }
+
+        if(y < 1152){
             return DELETE;
         }
+
+        
 
         return NONE;
     }

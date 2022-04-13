@@ -10,7 +10,7 @@
  * @param py start y axis location
  * @param texture rendered FireBall image sprite
  */
-FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex(texture), position({ px, py }), velocity({ 0,0 }), is_dead(false), facing_right(facing_right) {
+FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex(texture), position({ px, py }), velocity({ 0.1,0.1 }), is_dead(false), facing_right(facing_right) {
 }
 
 /**
@@ -20,7 +20,7 @@ FireBall::FireBall(float px, float py, Texture texture, bool facing_right) : tex
  * @param size size of FireBall on graphic
  */
 void FireBall::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, SpriteLocations::FireBall, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+    DrawTexturePro(tex, SpriteLocations::FireBall, Rectangle{ 0, 0, 30, 30}, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -29,6 +29,7 @@ void FireBall::render(Vector2 top_left, Vector2 size) {
  * @param level TileGrid object to determine collision
  * @param keyboard_input pressed keyboard by user
  */
+#include<iostream>
 void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
     if (facing_right) {
         position = Vector2Add(position, velocity);
@@ -75,7 +76,7 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
  * @return resized hitbox
  */
 Rectangle FireBall::rect() const {
-    return { position.x, position.y, 0.9, 0.9 };
+    return { position.x, position.y, 0.45, 0.45 };
 }
 
 /**
@@ -85,7 +86,11 @@ Rectangle FireBall::rect() const {
  *  @param collision array of colided entity set
  */
 void FireBall::on_collide(EntityCollision collision) {
-    
+    if (collision.other.type() != EntityType::Mario) {
+        if (collision.side != Side::TOP) {
+            is_dead = true;
+        }
+    }
 }
 
 /**
