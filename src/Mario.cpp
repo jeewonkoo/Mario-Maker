@@ -30,7 +30,6 @@ void Mario::render(Vector2 top_left, Vector2 size) {
         src.x += 18;
     }
     if(!facing_right){
-        src.x += src.width;
         src.width *= -1;
     }
     DrawTexturePro(tex, src, sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
