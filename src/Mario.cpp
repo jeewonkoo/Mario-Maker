@@ -25,7 +25,15 @@ Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}
  * @param size size of mario on graphic 
  */
 void Mario::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, sprite_sources.at((size_t)power_up), sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
+    auto src = sprite_sources.at((size_t)power_up);
+    if((run_animation_frame / 16) % 2 == 0){
+        src.x += 18;
+    }
+    if(!facing_right){
+        src.x += src.width;
+        src.width *= -1;
+    }
+    DrawTexturePro(tex, src, sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -58,14 +66,19 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     float traction = grounded ? ground_traction : air_traction;
 	if (keyboard_input.left && keyboard_input.right) {
 		velocity.x += 0;
+		run_animation_frame = 0;
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
         facing_right = true;
+        run_animation_frame ++;
 	}
 	else if (keyboard_input.left) {
-		velocity.x -= acceleration;
-        facing_right = false;
+	    velocity.x -= acceleration;
+	    facing_right = false;
+	    run_animation_frame++;
+	} else {
+	    run_animation_frame = 0;
 	}
 
     if (keyboard_input.space && power_up == MarioPowerUp::Tanookie) {
