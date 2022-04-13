@@ -112,6 +112,6 @@ void Menu::handle_events(){
  * 
  * @return true if it is in bound else false
  */
-static bool Menu::in_rect(Rectangle const&r, int x, int y){
+bool Menu::in_rect(Rectangle const&r, int x, int y){
     return x >= r.x && x < r.x + r.width && y >= r.y && y < r.y + r.height;
 }
