@@ -100,10 +100,9 @@ inline std::optional<Collision> collide_rect(Rectangle from, Rectangle against){
     float y_dist = std::min(std::abs(from.y - against.y - against.height), std::abs(against.y - from.y - from.height));
     float area = x_dist * y_dist;
 
-
+    if(closest == top) return {Collision{ Side::TOP, Vector2{0, -top}, area}};
     if(closest == left) return {Collision{ Side::LEFT, Vector2{-left, 0}, area}};
     if(closest == right) return {Collision{ Side::RIGHT, Vector2{right, 0}, area}};
-    if(closest == top) return {Collision{ Side::TOP, Vector2{0, -top}, area}};
     if(closest == bottom) return {Collision{ Side::BOTTOM, Vector2{0, bottom}, area}};
 
     return std::nullopt;
