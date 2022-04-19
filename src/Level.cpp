@@ -4,6 +4,25 @@
 
 #include "Level.h"
 
+/**
+ * Constructor for level class. Add tile and entity to level respectively.
+ * 
+ * @param grid_json json type of TileGrid
+ * @param entities_json json type of Entity
+ * @param grid_tex  texture type of TileGrid
+ * @param sprite_tex  texture type of Entity
+ */
+Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex, this) {
+    for(const auto &ent : entities_json){
+        add_entity(EntitySpawn::from_json(ent), sprite_tex);
+    }
+}
+
+/**
+ * Updates location and direction of each entity in level
+ * 
+ * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
+ */
 void Level::update(InputState keyboard_input) {
     for(auto & e : entities_){
         e->update(grid_, keyboard_input);
@@ -33,6 +52,12 @@ void Level::update(InputState keyboard_input) {
     entities_.erase(std::remove_if(entities_.begin(), entities_.end(), [](auto & e){ return e->should_remove();}), entities_.end());
 }
 
+/**
+ * Renders(draw) entity on graphic. Accepts two Vector2 as parameters
+ *
+ * @param top_left top left location of mario on graphic
+ * @param size size of FireFlower on graphic
+ */
 void Level::render(Vector2 top_left, Vector2 size) {
     grid_.render(top_left, size);
     for(auto & e : entities_){
@@ -47,6 +72,11 @@ void Level::render(Vector2 top_left, Vector2 size) {
     mario_.render(top_left, size);
 }
 
+/**
+ * This function converts tile location/data into json in order to save/load level 
+ * 
+ * @return converted json
+ */
 nlohmann::json Level::to_json() {
     auto json = nlohmann::json{};
     json["tiles"] = std::move(grid_.to_json());
@@ -57,12 +87,15 @@ nlohmann::json Level::to_json() {
     return json;
 }
 
+/**
+ * This function converts json into level class
+ * 
+ * @param json json type data 
+ * @param tile_tex texture type of tile for level
+ * @param sprite_tex texture type of sprite for level
+ * @return converted level class 
+ */
 Level Level::from_json(const nlohmann::json &json, Texture tile_tex, Texture sprite_tex) {
     return {json["tiles"], json["entities"], tile_tex, sprite_tex};
 }
 
-Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex, this) {
-    for(const auto &ent : entities_json){
-        add_entity(EntitySpawn::from_json(ent), sprite_tex);
-    }
-}

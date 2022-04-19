@@ -10,7 +10,6 @@
  * @param py start y axis location
  * @param texture rendered mario image sprite
  */
-
 Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}), velocity({0,0}), tex(texture), dead(false), invincibility(0), level(lvl) {
     for(int i = 0; i < sprite_sources.size(); i++){
         sprite_dests[i] = {0, 0, sprite_sources[i].width * 3, sprite_sources[i].height*3};
@@ -25,7 +24,25 @@ Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}
  * @param size size of mario on graphic 
  */
 void Mario::render(Vector2 top_left, Vector2 size) {
-    DrawTexturePro(tex, sprite_sources.at((size_t)power_up), sprite_dests.at((size_t)power_up), Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
+    auto src = sprite_sources.at((size_t)power_up);
+    auto dest = sprite_dests.at((size_t)power_up);
+    if((run_animation_frame / 16) % 2 == 0){
+        src.x += 18;
+        if(power_up == MarioPowerUp::Small || power_up == MarioPowerUp::SmallInv){
+            // small mario running is slightly bigger sprite
+            src.x -= 2;
+            src.y -= 1;
+            src.width += 2;
+            src.height += 1;
+            dest.width += 4;
+            dest.height += 2;
+        }
+    }
+
+    if(facing_right == -1){
+        src.width *= -1;
+    }
+    DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -58,26 +75,38 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     float traction = grounded ? ground_traction : air_traction;
 	if (keyboard_input.left && keyboard_input.right) {
 		velocity.x += 0;
+		run_animation_frame = 0;
 	}
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
-        facing_right = true;
+        facing_right = 1;
+        run_animation_frame++;
 	}
 	else if (keyboard_input.left) {
-		velocity.x -= acceleration;
-        facing_right = false;
+	    velocity.x -= acceleration;
+	    facing_right = -1;
+	    run_animation_frame++;
+	} else {
+	    run_animation_frame = 0;
 	}
 
-	if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
-	    frames_since_jump = 0;
-	    velocity.y -= jump_instant_accel;
-	}
+    if (keyboard_input.space && power_up == MarioPowerUp::Tanookie) {
+        if (velocity.y > 0) {
+            velocity.y = 0.05;
+        }
+    }
 
-	if (keyboard_input.space
-	    && (frames_since_jump < jump_continuous_frames)
-	    && (frames_since_jump >= jump_continuous_delay)){
-	    velocity.y -= jump_continuous_accel;
-	}
+    if (keyboard_input.space && grounded && (last_space != keyboard_input.space)) {
+        frames_since_jump = 0;
+        velocity.y -= jump_instant_accel;
+    }
+
+    if (keyboard_input.space
+        && (frames_since_jump < jump_continuous_frames)
+        && (frames_since_jump >= jump_continuous_delay)) {
+        velocity.y -= jump_continuous_accel;
+    }
+
 
     if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
@@ -149,6 +178,9 @@ void Mario::on_collide(EntityCollision collision) {
     }
 
     switch(collision.other.type()){
+        case EntityType::TanookieLeaf:
+            power_up = MarioPowerUp::Tanookie;
+            break;
         case EntityType::Mushroom:
             power_up = MarioPowerUp::Big;
             break;
@@ -216,6 +248,11 @@ bool Mario::is_dead() {
     return dead;
 }
 
-bool Mario::is_right() {
+/**
+ * Determines if Mario entity faces right direction or not. 
+ * 
+ * @return true if Mario faces right else false 
+ * */
+int Mario::is_right() {
     return facing_right;
 }
