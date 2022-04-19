@@ -42,7 +42,7 @@ public:
 
     bool is_dead();
 
-    bool is_right();
+    int is_right();
 
 private:
     Vector2 position;
@@ -57,7 +57,7 @@ private:
     bool dead;
     int invincibility;
 
-    bool facing_right;
+    int facing_right;
     int run_animation_frame = 0;
 
     Level* level;
