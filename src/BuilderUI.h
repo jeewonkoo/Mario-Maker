@@ -34,7 +34,7 @@ private:
     Level& level;
     Texture sprite_tex;
     Texture tile_tex;
-    ActionType current_action;
+    ActionType current_action = NONE;
     bool pressed_last_frame = false;
 
     static ActionType icon_at(int x, int y){

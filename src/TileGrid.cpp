@@ -14,7 +14,7 @@
  * @param height height of TileGrid
  * @param rows reference type of json type data
  */
-TileGrid::TileGrid(Texture texture, size_t width, size_t height, const json &rows): tex(texture), width(width), height(height) {
+TileGrid::TileGrid(Texture texture, size_t width, size_t height, const nlohmann::json &rows): tex(texture), width(width), height(height) {
     resize(width, height);
     for(size_t y = 0; y < height; y++){
         for(size_t x = 0; x < width; x++){
