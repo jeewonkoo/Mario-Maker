@@ -53,6 +53,8 @@ private:
     bool jumping{};
     //whether mario pressed space in the previous frame
     bool last_space{};
+    // whether mario pressed f in the previous frame
+    bool last_f{};
 
     bool dead;
     int invincibility;
