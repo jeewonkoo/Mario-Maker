@@ -75,5 +75,8 @@ Rectangle Piranha::rect() const {
  *  @param collision array of colided entity set 
  */
 void Piranha::on_collide(EntityCollision collision) {
+	if (collision.other.type() == EntityType::FireBall) {
+		is_dead = true;
+	}
 	return;
 }
