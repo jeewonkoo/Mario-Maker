@@ -69,16 +69,16 @@ void FireBall::update(const TileGrid& level, const InputState& keyboard_input) {
         else {
             break;
         }
-
-        if (bounce
-            && (frames_since_jump < jump_continuous_frames)
-            && (frames_since_jump >= jump_continuous_delay)) {
-            velocity.y -= jump_continuous_accel;
-        }
-
-        velocity.y += gravity;
-        frames_since_jump++;
     }
+
+    if (bounce
+        && (frames_since_jump < jump_continuous_frames)
+        && (frames_since_jump >= jump_continuous_delay)) {
+        velocity.y -= jump_continuous_accel;
+    }
+
+    velocity.y += gravity;
+    frames_since_jump++;
 }
 
 /**
