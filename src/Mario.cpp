@@ -39,7 +39,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
         }
     }
 
-    if(!facing_right){
+    if(facing_right == -1){
         src.width *= -1;
     }
     DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
@@ -80,6 +80,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 	else if (keyboard_input.right) {
 		velocity.x += acceleration;
         facing_right = 1;
+        run_animation_frame++;
 	}
 	else if (keyboard_input.left) {
 	    velocity.x -= acceleration;
