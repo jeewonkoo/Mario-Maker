@@ -21,13 +21,24 @@ public:
 
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
-    Entity* add_entity(EntitySpawn ent, Texture tex) {
+
+    void delete_entity(float x, float y);
+
+    Entity* add_entity_editor(EntitySpawn ent, Texture tex) {
         entity_spawns_.push_back(ent);
         auto spawned = ent.make(tex, &mario());
         auto ret = spawned.get();
         entities_.push_back(std::move(spawned));
         return ret;
     }
+
+    Entity* add_entity_transient(EntitySpawn ent, Texture tex) {
+        auto spawned = ent.make(tex, &mario());
+        auto ret = spawned.get();
+        entities_.push_back(std::move(spawned));
+        return ret;
+    }
+
     void set_tile(int x, int y, Tile tile){
         grid_.at_mut(x, y) = tile;
     }
@@ -49,7 +60,7 @@ public:
 
 private:
     Level(const nlohmann::json& grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex);
-    TileGrid grid_;
+public:TileGrid grid_;
     std::vector<std::unique_ptr<Entity>> entities_;
     std::vector<EntitySpawn> entity_spawns_;
     Mario mario_;

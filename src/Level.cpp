@@ -14,7 +14,7 @@
  */
 Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex, this) {
     for(const auto &ent : entities_json){
-        add_entity(EntitySpawn::from_json(ent), sprite_tex);
+        add_entity_editor(EntitySpawn::from_json(ent), sprite_tex);
     }
 }
 
@@ -97,5 +97,12 @@ nlohmann::json Level::to_json() {
  */
 Level Level::from_json(const nlohmann::json &json, Texture tile_tex, Texture sprite_tex) {
     return {json["tiles"], json["entities"], tile_tex, sprite_tex};
+}
+
+
+void Level::delete_entity(float x, float y) {
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(), [&](auto& e) { 
+        return (static_cast<int>(e->rect().x) == static_cast<int>(x)) && (static_cast<int>(e->rect().y) == static_cast<int>(y));
+        }), entities_.end());
 }
 

@@ -151,7 +151,7 @@ TEST_CASE("Goomba") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 		
 		Vector2 initialpos = goomba->get_position();
 
@@ -177,7 +177,7 @@ TEST_CASE("Goomba") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -208,7 +208,7 @@ TEST_CASE("Goomba") {
 
 		level.set_tile(5, 12, t);
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 		
 
@@ -237,7 +237,7 @@ TEST_CASE("Goomba") {
 
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 
 
@@ -273,7 +273,7 @@ TEST_CASE("BOO") {
 		}
 
 		EntitySpawn b(5, 0, EntitySpawn::Type::Boo);
-		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
 
 		Vector2 initialpos = boo->get_position();
 
@@ -302,7 +302,7 @@ TEST_CASE("BOO") {
 
 
 		EntitySpawn b(9, 5, EntitySpawn::Type::Boo);
-		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
 
 
 
@@ -337,7 +337,7 @@ TEST_CASE("Small Mushroom") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		Vector2 initialpos = smallshroom->getPosition();
 
@@ -363,7 +363,7 @@ TEST_CASE("Small Mushroom") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -398,7 +398,7 @@ TEST_CASE("Small Mushroom") {
 
 		level.set_tile(8, 9, t);
 		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		InputState s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
@@ -428,7 +428,7 @@ TEST_CASE("Mushroom") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g, Texture{}));
 
 		Vector2 initialpos = mush->getPosition();
 
@@ -454,7 +454,7 @@ TEST_CASE("Mushroom") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -489,7 +489,7 @@ TEST_CASE("Mushroom") {
 		REQUIRE(currmar == MarioPowerUp::Big);
 
 		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		InputState s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
@@ -500,7 +500,7 @@ TEST_CASE("Mushroom") {
 		REQUIRE(currmar == MarioPowerUp::Small);
 
 		EntitySpawn g1(5, 6, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g1, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g1, Texture{}));
 
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
@@ -531,7 +531,7 @@ TEST_CASE("FireFlower") {
 		}
 
 		EntitySpawn g(10, 9 ,EntitySpawn::Type::FireFlower);
-		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
+		Entity* fire = (Entity*)(level.add_entity_editor(g, Texture{}));
 
 
 
