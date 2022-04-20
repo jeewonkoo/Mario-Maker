@@ -20,7 +20,7 @@ BuilderUI::BuilderUI(Level & level, Texture sprite_tex, Texture tile_tex, Textur
  */
 void BuilderUI::handle_events() {
     bool pressed_this_frame = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
-    if(pressed_this_frame && !pressed_last_frame){
+    if(pressed_this_frame && (!pressed_last_frame || current_action == TILE)){
         if(GetMouseX() > 1024 - 128){
             current_action = icon_at(GetMouseX(), GetMouseY());
         }
