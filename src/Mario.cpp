@@ -112,7 +112,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     }
 
 
-    if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire && last_f != keyboard_input.f) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
         level->add_entity(ent, tex);
     }
@@ -161,6 +161,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
 
 	last_space = keyboard_input.space;
+    last_f = keyboard_input.f;
 	frames_since_jump++;
 }
 
