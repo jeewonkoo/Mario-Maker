@@ -547,7 +547,12 @@ TEST_CASE("FireFlower") {
 
 }
 
+/**
+ * This is a test to check functionality of Tanookie Entity
+ */
 TEST_CASE("Tanookie Leaf") {
+
+	//Check if mario sprite changes(mario changes power up status to Tanookie) after it collides with Tanookie
 	SECTION("Mario gets a Tanookie powerup walking on the Tanookie Leaf") {
 		Level level{ Texture{},Texture{},5,8 };
 		Mario& mario = level.mario();
@@ -574,7 +579,12 @@ TEST_CASE("Tanookie Leaf") {
 	}
 }
 
+/**
+ * This is a test to check functionality of Piranha plant Entity
+ */
 TEST_CASE("Piranha Plant") {
+
+	//Check if Piranha plants appears and disappaers alternatively uniformly
 	SECTION("Piranha plant appears and disappears") {
 		Level level{ Texture{},Texture{},30,8 };
 
@@ -616,6 +626,7 @@ TEST_CASE("Piranha Plant") {
 
 	}
 
+	//Check if Mario entity dies or changes powerup status after collides with Piranha entity 
 	SECTION("Mario Takes Damage Stepping on Piranha") {
 		Level level{ Texture{},Texture{},10,8 };
 		Mario& mario = level.mario();
@@ -626,11 +637,8 @@ TEST_CASE("Piranha Plant") {
 			level.set_tile(i, 10, t);
 		}
 
-
 		EntitySpawn g(5, 9, EntitySpawn::Type::Piranha);
 		Piranha* piranha = (Piranha*)(level.add_entity(g, Texture{}));
-
-
 
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Big);
