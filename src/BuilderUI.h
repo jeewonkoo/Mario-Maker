@@ -13,7 +13,7 @@
 #include "powerups/Mushroom.h"
 class BuilderUI {
 public:
-    BuilderUI(Level & level, Texture sprite_tex, Texture tile_tex);
+    BuilderUI(Level & level, Texture sprite_tex, Texture tile_tex, Texture x_tex);
     void handle_events(); 
     void render(Vector2 top_left, Vector2 size);
 
@@ -34,43 +34,44 @@ private:
     Level& level;
     Texture sprite_tex;
     Texture tile_tex;
+    Texture delete_tex;
     ActionType current_action = NONE;
     bool pressed_last_frame = false;
 
     static ActionType icon_at(int x, int y){
-        if(y < 128){
+        if(y < 115){
             return TILE;
         }
 
-        if(y < 256){
+        if(y < 230){
             return MUSHROOM;
         }
 
-        if (y < 384) {
+        if (y < 345) {
             return SMALLSHROOM;
         }
 
-        if (y < 512) {
+        if (y < 460) {
             return FIREFLOWER;
         }
 
-        if (y < 640) {
+        if (y < 575) {
             return TANOOKIE;
         }
 
-        if (y < 768) {
+        if (y < 690) {
             return GOOMBA;
         }
 
-        if (y < 896) {
+        if (y < 805) {
             return BOO;
         }
 
-        if (y < 1024) {
+        if (y < 920) {
             return PIRANHA;
         }
 
-        if(y < 1152){
+        if(y < 1035){
             return DELETE;
         }
 

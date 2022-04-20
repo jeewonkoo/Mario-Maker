@@ -37,6 +37,10 @@ int main(){
     Texture2D end_texture = LoadTextureFromImage(end_img);    //load end_screen image to turn into texture
     UnloadImage(end_img);
 
+    Image delete_img = LoadImage("images/delete_button.png");        //set delete button
+    Texture2D delete_tex = LoadTextureFromImage(delete_img);        //load delete button image to turn into texture
+    UnloadImage(delete_img);
+
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
     bool in_menu = false;
@@ -45,7 +49,7 @@ int main(){
 
 
     Level level = load_level("saved_level.json", tile_texture, sprite_texture);
-    BuilderUI builder_ui(level, sprite_texture, tile_texture);
+    BuilderUI builder_ui(level, sprite_texture, tile_texture, delete_tex);
     Menu menu{
         [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
         [&](){in_builder = true; menu.close(); in_menu = false;}};

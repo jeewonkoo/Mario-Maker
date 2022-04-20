@@ -24,6 +24,7 @@ namespace SpriteLocations {
     constexpr Rectangle Piranha = { 21.4, 834, 16, 32 };
     constexpr Rectangle FireFlower = { 459,995,16,16 };
     constexpr Rectangle FireBall = {498, 622, 12, 15};
+    constexpr Rectangle Delete = {39, 39, 230, 230};
 }
 
 namespace TileLocations {
