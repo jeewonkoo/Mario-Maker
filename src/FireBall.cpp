@@ -98,10 +98,8 @@ Rectangle FireBall::rect() const {
  *  @param collision array of colided entity set
  */
 void FireBall::on_collide(EntityCollision collision) {
-    if (collision.other.type() != EntityType::Mario) {
-        if (collision.side != Side::TOP) {
-            is_dead = true;
-        }
+    if (collision.other.type() != EntityType::Mario && collision.other.type() != EntityType::FireBall) {
+        is_dead = true;
     }
 }
 
