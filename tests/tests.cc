@@ -12,6 +12,7 @@
 #include "../src/powerups/SmallShroom.h"
 #include "../src/Level.h"
 #include "../src/SpriteLocations.h"
+#include "../src/enemies/Piranha.h"
 
 
 /**
@@ -211,7 +212,7 @@ TEST_CASE("Goomba") {
 
 		
 
-		bool goomdead = goomba->is_goomba_dead();
+		bool goomdead = goomba->is_goomba_squished();
 		REQUIRE(goomdead == false);
 
 		InputState s = { false,false,false,false,false };
@@ -219,7 +220,7 @@ TEST_CASE("Goomba") {
 			level.update(s);
 		}
 
-		goomdead = goomba->is_goomba_dead();
+		goomdead = goomba->is_goomba_squished();
 		REQUIRE(goomdead);
 	}
 
@@ -546,3 +547,100 @@ TEST_CASE("FireFlower") {
 
 }
 
+TEST_CASE("Tanookie Leaf") {
+	SECTION("Mario gets a Tanookie powerup walking on the Tanookie Leaf") {
+		Level level{ Texture{},Texture{},5,8 };
+		Mario& mario = level.mario();
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(10, 9, EntitySpawn::Type::TanookieLeaf);
+		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
+
+
+
+		InputState s = { false,true,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Tanookie);
+	}
+}
+
+TEST_CASE("Piranha Plant") {
+	SECTION("Piranha plant appears and disappears") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::Piranha);
+		Piranha* piranha = (Piranha*)(level.add_entity(g, Texture{}));
+
+		int active = piranha->get_Activeplant();
+		int dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active == 0);
+		REQUIRE(dormant == 0);
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		active = piranha->get_Activeplant();
+		dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active > 0);
+		REQUIRE(dormant == 0);
+
+		for (int i = 0; i < 25; i++) {
+			level.update(s);
+		}
+
+		active = piranha->get_Activeplant();
+		dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active == 0);
+		REQUIRE(dormant > 0);
+
+	}
+
+	SECTION("Mario Takes Damage Stepping on Piranha") {
+		Level level{ Texture{},Texture{},10,8 };
+		Mario& mario = level.mario();
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+
+		EntitySpawn g(5, 9, EntitySpawn::Type::Piranha);
+		Piranha* piranha = (Piranha*)(level.add_entity(g, Texture{}));
+
+
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::SmallInv);
+	}
+}
