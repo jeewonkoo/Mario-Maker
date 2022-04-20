@@ -99,3 +99,10 @@ Level Level::from_json(const nlohmann::json &json, Texture tile_tex, Texture spr
     return {json["tiles"], json["entities"], tile_tex, sprite_tex};
 }
 
+
+void Level::delete_entity(float x, float y) {
+    entities_.erase(std::remove_if(entities_.begin(), entities_.end(), [&](auto& e) { 
+        return (static_cast<int>(e->rect().x) == static_cast<int>(x)) && (static_cast<int>(e->rect().y) == static_cast<int>(y));
+        }), entities_.end());
+}
+
