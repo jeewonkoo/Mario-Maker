@@ -26,8 +26,12 @@ Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}
 void Mario::render(Vector2 top_left, Vector2 size) {
     auto src = sprite_sources.at((size_t)power_up);
     auto dest = sprite_dests.at((size_t)power_up);
+<<<<<<< HEAD
     if((run_animation_frame / 16) % 2 == 0){
         
+=======
+    if((run_animation_frame / 16) % 2 != 0){
+>>>>>>> b121e825d9c4e9f843250eafa7815162dcdc61bb
         src.x += 18;
         if(power_up == MarioPowerUp::Small || power_up == MarioPowerUp::SmallInv){
             // small mario running is slightly bigger sprite
@@ -38,7 +42,14 @@ void Mario::render(Vector2 top_left, Vector2 size) {
             dest.width += 4;
             dest.height += 2;
         }
+<<<<<<< HEAD
         // else if (power_up == MarioPowerUp::Tanookie) {src.x -=1;}
+=======
+
+        if(power_up == MarioPowerUp::Tanookie){
+            src = SpriteLocations::MarioTanookieRun;
+        }
+>>>>>>> b121e825d9c4e9f843250eafa7815162dcdc61bb
     }
 
     if(facing_right == -1){
@@ -110,7 +121,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     }
 
 
-    if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire && last_f != keyboard_input.f) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
         level->add_entity(ent, tex);
     }
@@ -159,6 +170,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
 
 	last_space = keyboard_input.space;
+    last_f = keyboard_input.f;
 	frames_since_jump++;
 }
 
