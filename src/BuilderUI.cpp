@@ -52,6 +52,9 @@ void BuilderUI::handle_events() {
             else if (current_action == PIRANHA) {
                 level.add_entity({ x, y, EntitySpawn::Type::Piranha }, sprite_tex);
             }
+            else if (current_action == DELETE) {
+                level.delete_entity(x, y);
+            }
         }
     }
 

@@ -21,6 +21,7 @@ public:
 
     void update(InputState keyboard_input);
     void render(Vector2 top_left, Vector2 size);
+    void delete_entity(float x, float y);
     Entity* add_entity(EntitySpawn ent, Texture tex) {
         entity_spawns_.push_back(ent);
         auto spawned = ent.make(tex, &mario());
