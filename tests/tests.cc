@@ -564,7 +564,7 @@ TEST_CASE("Tanookie Leaf") {
 		}
 
 		EntitySpawn g(10, 9, EntitySpawn::Type::TanookieLeaf);
-		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
+		Entity* fire = (Entity*)(level.add_entity_editor(g, Texture{}));
 
 
 
@@ -595,7 +595,7 @@ TEST_CASE("Piranha Plant") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Piranha);
-		Piranha* piranha = (Piranha*)(level.add_entity(g, Texture{}));
+		Piranha* piranha = (Piranha*)(level.add_entity_editor(g, Texture{}));
 
 		int active = piranha->get_Activeplant();
 		int dormant = piranha->get_Dormanplant();
@@ -638,7 +638,7 @@ TEST_CASE("Piranha Plant") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::Piranha);
-		Piranha* piranha = (Piranha*)(level.add_entity(g, Texture{}));
+		Piranha* piranha = (Piranha*)(level.add_entity_editor(g, Texture{}));
 
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Big);
