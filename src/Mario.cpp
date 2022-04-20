@@ -27,6 +27,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
     auto src = sprite_sources.at((size_t)power_up);
     auto dest = sprite_dests.at((size_t)power_up);
     if((run_animation_frame / 16) % 2 == 0){
+        
         src.x += 18;
         if(power_up == MarioPowerUp::Small || power_up == MarioPowerUp::SmallInv){
             // small mario running is slightly bigger sprite
@@ -37,6 +38,7 @@ void Mario::render(Vector2 top_left, Vector2 size) {
             dest.width += 4;
             dest.height += 2;
         }
+        // else if (power_up == MarioPowerUp::Tanookie) {src.x -=1;}
     }
 
     if(facing_right == -1){
