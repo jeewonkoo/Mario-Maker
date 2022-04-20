@@ -37,8 +37,9 @@ void Mario::render(Vector2 top_left, Vector2 size) {
             dest.width += 4;
             dest.height += 2;
         }
+        // else if (power_up == MarioPowerUp::Tanookie) {src.x -=1;}
 
-        if(power_up == MarioPowerUp::Tanookie){
+       if(power_up == MarioPowerUp::Tanookie){
             src = SpriteLocations::MarioTanookieRun;
         }
     }
@@ -48,7 +49,6 @@ void Mario::render(Vector2 top_left, Vector2 size) {
     }
     DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
-
 /**
  * Updates location and direction of mario entity
  * 
@@ -114,7 +114,7 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
 
     if (keyboard_input.f && power_up == MarioPowerUp::Fire && last_f != keyboard_input.f) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
-        level->add_entity(ent, tex);
+        level->add_entity_transient(ent, tex);
     }
 
 	velocity.y += gravity;

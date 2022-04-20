@@ -32,25 +32,25 @@ void BuilderUI::handle_events() {
                 level.set_tile(x, y, { .solid = true, .tex_src = TileLocations::Ground });
             }
             else if (current_action == MUSHROOM) {
-                level.add_entity({ x, y, EntitySpawn::Type::Mushroom }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::Mushroom}, sprite_tex);
             }
             else if (current_action == SMALLSHROOM) {
-                level.add_entity({ x, y, EntitySpawn::Type::SmallShroom }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::SmallShroom}, sprite_tex);
             }
             else if (current_action == FIREFLOWER) {
-                level.add_entity({ x, y, EntitySpawn::Type::FireFlower }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::FireFlower}, sprite_tex);
             }
             else if (current_action == TANOOKIE) {
-                level.add_entity({ x, y, EntitySpawn::Type::TanookieLeaf }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::TanookieLeaf}, sprite_tex);
             }
             else if (current_action == GOOMBA) {
-                level.add_entity({ x, y, EntitySpawn::Type::Goomba }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::Goomba}, sprite_tex);
             }
             else if (current_action == BOO) {
-                level.add_entity({ x, y, EntitySpawn::Type::Boo }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::Boo}, sprite_tex);
             }
             else if (current_action == PIRANHA) {
-                level.add_entity({ x, y, EntitySpawn::Type::Piranha }, sprite_tex);
+                level.add_entity_editor({x, y, EntitySpawn::Type::Piranha}, sprite_tex);
             }
             else if (current_action == DELETE) {
                 level.delete_entity(x, y);
