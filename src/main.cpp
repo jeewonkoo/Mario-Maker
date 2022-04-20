@@ -49,6 +49,7 @@ int main(){
 
 
     Level level = load_level("saved_level.json", tile_texture, sprite_texture);
+//    Level level = Level(tile_texture, sprite_texture, 5, 5);
     BuilderUI builder_ui(level, sprite_texture, tile_texture, delete_tex);
     Menu menu{
         [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
@@ -82,6 +83,7 @@ int main(){
             .f = IsKeyDown(KEY_F)
         };
 
+//        level.mario().update(level.grid_, input);
         if(in_menu){
             menu.handle_events();
         } else if(in_builder){

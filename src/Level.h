@@ -57,7 +57,7 @@ public:
 
 private:
     Level(const nlohmann::json& grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex);
-    TileGrid grid_;
+public:TileGrid grid_;
     std::vector<std::unique_ptr<Entity>> entities_;
     std::vector<EntitySpawn> entity_spawns_;
     Mario mario_;
