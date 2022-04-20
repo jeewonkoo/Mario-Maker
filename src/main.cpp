@@ -48,14 +48,8 @@ int main(){
     bool last_enter_key = false;
 
 
-<<<<<<< HEAD
-    // Level level{tile_texture, sprite_texture, 5, 5};
-    Level level = load_level("level1.json", tile_texture, sprite_texture);
-    BuilderUI builder_ui(level, sprite_texture, tile_texture);
-=======
     Level level = load_level("saved_level.json", tile_texture, sprite_texture);
     BuilderUI builder_ui(level, sprite_texture, tile_texture, delete_tex);
->>>>>>> e1da2002a504b2e96978ec376f38e5c75d3b31f2
     Menu menu{
         [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
         [&](){in_builder = true; menu.close(); in_menu = false;}};

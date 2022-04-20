@@ -39,14 +39,16 @@ void Mario::render(Vector2 top_left, Vector2 size) {
         }
         // else if (power_up == MarioPowerUp::Tanookie) {src.x -=1;}
 
-        if(power_up == MarioPowerUp::Tanookie){
+       if(power_up == MarioPowerUp::Tanookie){
+            src = SpriteLocations::MarioTanookieRun;
+        }
     }
 
     if(facing_right == -1){
         src.width *= -1;
+    }
     DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
-
 /**
  * Updates location and direction of mario entity
  * 
