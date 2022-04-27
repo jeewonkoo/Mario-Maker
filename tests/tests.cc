@@ -307,14 +307,14 @@ TEST_CASE("BOO") {
 		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
 
 
-
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Big);
 
 		InputState s = { false,true,false,false,false };
 		level.update(s);
+		level.update(s);
 		s = { false,false,false,false,false };
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 200; i++) {
 			level.update(s);
 		}
 
