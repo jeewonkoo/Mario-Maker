@@ -135,6 +135,7 @@ TEST_CASE("Movement") {
 	}
 
 }
+
 /**
  * This is a test to check functionality of Goomba Entity
  */
