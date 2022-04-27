@@ -111,6 +111,9 @@ void Goomba::on_collide(EntityCollision collision) {
             is_squished = true;
         }
     }
+    if (collision.other.type() == EntityType::FireBall) {
+        is_dead = true;
+    }
 }
 
 /**

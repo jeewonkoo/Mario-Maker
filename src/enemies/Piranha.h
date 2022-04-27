@@ -16,6 +16,13 @@ public:
 	bool should_remove() override;
 	EntityType type() override { return EntityType::SpikeEnemy; }
 
+	int get_Dormanplant() {
+		return dormantPlant;
+	}
+	int get_Activeplant() {
+		return activePlant;
+	}
+
 private:
 	Texture tex;
 	Vector2 initPos;

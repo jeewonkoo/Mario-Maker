@@ -24,6 +24,7 @@ private:
 	Vector2 position;
 	Vector2 velocity;
 
+	bool is_shy;
 	bool is_dead;
 };
 

@@ -11,6 +11,8 @@ namespace SpriteLocations {
     constexpr Rectangle MarioBig = {197, 48, 14, 27};
     constexpr Rectangle MarioFire = {200, 109, 14, 27};
     constexpr Rectangle MarioTanookie = {57, 421, 21, 29};
+    constexpr Rectangle MarioTanookieRun = {81, 421, 22, 29};
+
     constexpr Rectangle BooClosed = {336, 865, 16, 16,};
     constexpr Rectangle BooOpen = {354, 865, 16, 16};
     constexpr Rectangle GoombaStep1 = {47, 724, 16, 16};
@@ -22,6 +24,7 @@ namespace SpriteLocations {
     constexpr Rectangle Piranha = { 21.4, 834, 16, 32 };
     constexpr Rectangle FireFlower = { 459,995,16,16 };
     constexpr Rectangle FireBall = {498, 622, 12, 15};
+    constexpr Rectangle Delete = {39, 39, 230, 230};
 }
 
 namespace TileLocations {

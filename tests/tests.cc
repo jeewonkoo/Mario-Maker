@@ -12,6 +12,7 @@
 #include "../src/powerups/SmallShroom.h"
 #include "../src/Level.h"
 #include "../src/SpriteLocations.h"
+#include "../src/enemies/Piranha.h"
 
 
 /**
@@ -150,7 +151,7 @@ TEST_CASE("Goomba") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 		
 		Vector2 initialpos = goomba->get_position();
 
@@ -176,7 +177,7 @@ TEST_CASE("Goomba") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -207,11 +208,11 @@ TEST_CASE("Goomba") {
 
 		level.set_tile(5, 12, t);
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 		
 
-		bool goomdead = goomba->is_goomba_dead();
+		bool goomdead = goomba->is_goomba_squished();
 		REQUIRE(goomdead == false);
 
 		InputState s = { false,false,false,false,false };
@@ -219,7 +220,7 @@ TEST_CASE("Goomba") {
 			level.update(s);
 		}
 
-		goomdead = goomba->is_goomba_dead();
+		goomdead = goomba->is_goomba_squished();
 		REQUIRE(goomdead);
 	}
 
@@ -236,7 +237,7 @@ TEST_CASE("Goomba") {
 
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Goomba);
-		Goomba* goomba = (Goomba*)(level.add_entity(g, Texture{}));
+		Goomba* goomba = (Goomba*)(level.add_entity_editor(g, Texture{}));
 
 
 
@@ -261,7 +262,7 @@ TEST_CASE("BOO") {
 
 	//Check if Boo follows wherever Mario goes 
 	SECTION("Boo moves towards mario") {
-		Level level{ Texture{},Texture{},30,8 };
+		Level level{ Texture{},Texture{},10,8 };
 
 
 		Tile t{ true, TileLocations::Ground };
@@ -272,12 +273,14 @@ TEST_CASE("BOO") {
 		}
 
 		EntitySpawn b(5, 0, EntitySpawn::Type::Boo);
-		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
 
 		Vector2 initialpos = boo->get_position();
 
 
-		InputState s = { false,false,false,false,false };
+		InputState s = { false,true,false,false,false };
+		level.update(s);
+		s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
 		}
@@ -300,15 +303,17 @@ TEST_CASE("BOO") {
 		}
 
 
-		EntitySpawn b(9, 5, EntitySpawn::Type::Boo);
-		Boo* boo = (Boo*)(level.add_entity(b, Texture{}));
+		EntitySpawn b(5, 5, EntitySpawn::Type::Boo);
+		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
 
 
 
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Big);
 
-		InputState s = { false,false,false,false,false };
+		InputState s = { false,true,false,false,false };
+		level.update(s);
+		s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
 		}
@@ -336,7 +341,7 @@ TEST_CASE("Small Mushroom") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		Vector2 initialpos = smallshroom->getPosition();
 
@@ -362,7 +367,7 @@ TEST_CASE("Small Mushroom") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -397,7 +402,7 @@ TEST_CASE("Small Mushroom") {
 
 		level.set_tile(8, 9, t);
 		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		InputState s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
@@ -427,7 +432,7 @@ TEST_CASE("Mushroom") {
 		}
 
 		EntitySpawn g(5, 9, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g, Texture{}));
 
 		Vector2 initialpos = mush->getPosition();
 
@@ -453,7 +458,7 @@ TEST_CASE("Mushroom") {
 		}
 
 		EntitySpawn g(5, 10, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g, Texture{}));
 
 		level.set_tile(8, 9, t);
 
@@ -488,7 +493,7 @@ TEST_CASE("Mushroom") {
 		REQUIRE(currmar == MarioPowerUp::Big);
 
 		EntitySpawn g(5, 6, EntitySpawn::Type::SmallShroom);
-		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity(g, Texture{}));
+		SmallShroom* smallshroom = (SmallShroom*)(level.add_entity_editor(g, Texture{}));
 
 		InputState s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
@@ -499,7 +504,7 @@ TEST_CASE("Mushroom") {
 		REQUIRE(currmar == MarioPowerUp::Small);
 
 		EntitySpawn g1(5, 6, EntitySpawn::Type::Mushroom);
-		Mushroom* mush = (Mushroom*)(level.add_entity(g1, Texture{}));
+		Mushroom* mush = (Mushroom*)(level.add_entity_editor(g1, Texture{}));
 
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
@@ -530,7 +535,7 @@ TEST_CASE("FireFlower") {
 		}
 
 		EntitySpawn g(10, 9 ,EntitySpawn::Type::FireFlower);
-		Entity* fire = (Entity*)(level.add_entity(g, Texture{}));
+		Entity* fire = (Entity*)(level.add_entity_editor(g, Texture{}));
 
 
 
@@ -546,3 +551,108 @@ TEST_CASE("FireFlower") {
 
 }
 
+/**
+ * This is a test to check functionality of Tanookie Entity
+ */
+TEST_CASE("Tanookie Leaf") {
+
+	//Check if mario sprite changes(mario changes power up status to Tanookie) after it collides with Tanookie
+	SECTION("Mario gets a Tanookie powerup walking on the Tanookie Leaf") {
+		Level level{ Texture{},Texture{},5,8 };
+		Mario& mario = level.mario();
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(10, 9, EntitySpawn::Type::TanookieLeaf);
+		Entity* fire = (Entity*)(level.add_entity_editor(g, Texture{}));
+
+
+
+		InputState s = { false,true,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Tanookie);
+	}
+}
+
+/**
+ * This is a test to check functionality of Piranha plant Entity
+ */
+TEST_CASE("Piranha Plant") {
+
+	//Check if Piranha plants appears and disappaers alternatively uniformly
+	SECTION("Piranha plant appears and disappears") {
+		Level level{ Texture{},Texture{},30,8 };
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 10, EntitySpawn::Type::Piranha);
+		Piranha* piranha = (Piranha*)(level.add_entity_editor(g, Texture{}));
+
+		int active = piranha->get_Activeplant();
+		int dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active == 0);
+		REQUIRE(dormant == 0);
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		active = piranha->get_Activeplant();
+		dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active > 0);
+		REQUIRE(dormant == 0);
+
+		for (int i = 0; i < 25; i++) {
+			level.update(s);
+		}
+
+		active = piranha->get_Activeplant();
+		dormant = piranha->get_Dormanplant();
+
+		REQUIRE(active == 0);
+		REQUIRE(dormant > 0);
+
+	}
+
+	//Check if Mario entity dies or changes powerup status after collides with Piranha entity 
+	SECTION("Mario Takes Damage Stepping on Piranha") {
+		Level level{ Texture{},Texture{},10,8 };
+		Mario& mario = level.mario();
+
+		Tile t{ true, TileLocations::Ground };
+
+		for (int i = 0; i < 30; i++) {
+			level.set_tile(i, 10, t);
+		}
+
+		EntitySpawn g(5, 9, EntitySpawn::Type::Piranha);
+		Piranha* piranha = (Piranha*)(level.add_entity_editor(g, Texture{}));
+
+		MarioPowerUp currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::Big);
+
+		InputState s = { true,false,false,false,false };
+		for (int i = 0; i < 100; i++) {
+			level.update(s);
+		}
+
+		currmar = mario.get_PowerUp();
+		REQUIRE(currmar == MarioPowerUp::SmallInv);
+	}
+}

@@ -26,7 +26,7 @@ Mario::Mario(float px, float py, Texture texture, Level* lvl): position({px, py}
 void Mario::render(Vector2 top_left, Vector2 size) {
     auto src = sprite_sources.at((size_t)power_up);
     auto dest = sprite_dests.at((size_t)power_up);
-    if((run_animation_frame / 16) % 2 == 0){
+    if((run_animation_frame / 16) % 2 != 0){
         src.x += 18;
         if(power_up == MarioPowerUp::Small || power_up == MarioPowerUp::SmallInv){
             // small mario running is slightly bigger sprite
@@ -37,6 +37,11 @@ void Mario::render(Vector2 top_left, Vector2 size) {
             dest.width += 4;
             dest.height += 2;
         }
+        // else if (power_up == MarioPowerUp::Tanookie) {src.x -=1;}
+
+       if(power_up == MarioPowerUp::Tanookie){
+            src = SpriteLocations::MarioTanookieRun;
+        }
     }
 
     if(facing_right == -1){
@@ -44,7 +49,6 @@ void Mario::render(Vector2 top_left, Vector2 size) {
     }
     DrawTexturePro(tex, src, dest, Vector2Subtract(top_left, Vector2Multiply(position, {64.f, 64.f })), 0, WHITE);
 }
-
 /**
  * Updates location and direction of mario entity
  * 
@@ -61,34 +65,34 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     }
 
     float acceleration = [&]{
-       if(grounded){
-           if(std::abs(velocity.x) < low_speed_threshold){
-               return ground_acceleration_low_speed;
-           } else {
-               return ground_acceleration_high_speed;
-           }
-       } else {
-           return air_acceleration;
-       }
+        if(grounded){
+            if(std::abs(velocity.x) < low_speed_threshold){
+                return ground_acceleration_low_speed;
+            } else {
+                return ground_acceleration_high_speed;
+            }
+        } else {
+            return air_acceleration;
+        }
     }();
 
     float traction = grounded ? ground_traction : air_traction;
-	if (keyboard_input.left && keyboard_input.right) {
-		velocity.x += 0;
-		run_animation_frame = 0;
-	}
-	else if (keyboard_input.right) {
-		velocity.x += acceleration;
+    if (keyboard_input.left && keyboard_input.right) {
+        velocity.x += 0;
+        run_animation_frame = 0;
+    }
+    else if (keyboard_input.right) {
+        velocity.x += acceleration;
         facing_right = 1;
         run_animation_frame++;
-	}
-	else if (keyboard_input.left) {
-	    velocity.x -= acceleration;
-	    facing_right = -1;
-	    run_animation_frame++;
-	} else {
-	    run_animation_frame = 0;
-	}
+    }
+    else if (keyboard_input.left) {
+        velocity.x -= acceleration;
+        facing_right = -1;
+        run_animation_frame++;
+    } else {
+        run_animation_frame = 0;
+    }
 
     if (keyboard_input.space && power_up == MarioPowerUp::Tanookie) {
         if (velocity.y > 0) {
@@ -102,61 +106,65 @@ void Mario::update(const TileGrid &grid, const InputState & keyboard_input) {
     }
 
     if (keyboard_input.space
-        && (frames_since_jump < jump_continuous_frames)
-        && (frames_since_jump >= jump_continuous_delay)) {
+    && (frames_since_jump < jump_continuous_frames)
+    && (frames_since_jump >= jump_continuous_delay)) {
         velocity.y -= jump_continuous_accel;
     }
 
 
-    if (keyboard_input.f && power_up == MarioPowerUp::Fire) {
+    if (keyboard_input.f && power_up == MarioPowerUp::Fire && last_f != keyboard_input.f) {
         EntitySpawn ent(position.x, position.y, EntitySpawn::Type::FireBall);
-        level->add_entity(ent, tex);
+        level->add_entity_transient(ent, tex);
     }
 
-	velocity.y += gravity;
+    velocity.y += gravity;
 
-	if(velocity.x > 0){
-	    velocity.x = std::max(velocity.x - traction, 0.f);
-	} else {
-	    velocity.x = std::min(velocity.x + traction, 0.f);
-	}
-
-
-	velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
-
-	if(velocity.y > max_fall){
-	    velocity.y = max_fall;
-	}
+    if(velocity.x > 0){
+        velocity.x = std::max(velocity.x - traction, 0.f);
+    } else {
+        velocity.x = std::min(velocity.x + traction, 0.f);
+    }
 
 
-	position = Vector2Add(position, velocity);
+    velocity.x = std::clamp(velocity.x, -max_speed, max_speed);
 
-	grounded = false;
-	//terminate the loop if too many collisions
-	for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
-	    auto collisions = grid.collide(rect());
+    if(velocity.y > max_fall){
+        velocity.y = max_fall;
+    }
 
-        if(collisions.eject_vector.has_value()){
+    grounded = false;
 
-            auto eject = collisions.eject_vector.value();
+    for(int i = 0; i < 4; i++){
 
-            //ignore collisions that are impossible because of our movement direction
-            if(Vector2DotProduct(eject, velocity) > 0) break;
-            position = Vector2Add(position, eject);
-            auto eject_norm = Vector2Normalize(eject);
-            auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
-            velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
+        position = Vector2Add(position, Vector2Multiply(velocity, {0.25, 0.25}));
 
-            if(std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end()){
-                grounded = true;
+        //terminate the loop if too many collisions
+        for(int coll_idx = 0; coll_idx < 10; coll_idx++) {
+            auto collisions = grid.collide(rect());
+
+            if(collisions.eject_vector.has_value()){
+
+                auto eject = collisions.eject_vector.value();
+
+                //ignore collisions that are impossible because of our movement direction
+                if(Vector2DotProduct(eject, velocity) > 0) break;
+                position = Vector2Add(position, eject);
+                auto eject_norm = Vector2Normalize(eject);
+                auto velocity_diff = Vector2DotProduct(velocity, eject_norm);
+                velocity = Vector2Subtract(velocity, Vector2Multiply(eject_norm, {velocity_diff, velocity_diff}));
+
+                if(std::find_if(collisions.collisions.begin(), collisions.collisions.end(), [](auto&a){return a.collision.collision_side == Side::BOTTOM;}) != collisions.collisions.end()){
+                    grounded = true;
+                }
+            } else {
+                break;
             }
-        } else {
-            break;
         }
     }
 
 
 	last_space = keyboard_input.space;
+    last_f = keyboard_input.f;
 	frames_since_jump++;
 }
 

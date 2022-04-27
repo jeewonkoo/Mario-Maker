@@ -19,6 +19,9 @@ public:
     bool is_goomba_dead() {
         return is_dead;
     };
+    bool is_goomba_squished() {
+        return is_squished;
+    }
 private:
     Texture tex;
     Vector2 position;
