@@ -64,5 +64,7 @@ Each member worked together to contribute to the overall code, but we also split
 
 
 #
+Game Architecture:
+![Game Architecture](architecture.png)
 course-project-pb-b created by GitHub Classroom
 
