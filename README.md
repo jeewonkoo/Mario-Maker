@@ -33,7 +33,7 @@ Mario is a game that many people enjoy, but with Mario Maker, people are allowed
 <div align=center>
 
 </br></br>
-[![Click Me](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=Windows&logoColor=white)](https://www.mysql.com/products/connector/)
+<img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=Windows&logoColor=white"></br>
 ```
 git submodule update --init --recursive
 mkdir build && cd build
