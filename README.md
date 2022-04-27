@@ -4,7 +4,10 @@
 
 ![header](https://capsule-render.vercel.app/api?type=soft&&color=timeAuto&height=200&section=header&text=Mario%20Maker&fontSize=60&fontAlignY=43&desc=CS+222+@+Software+Design+Lab+Project&descAlign=50&descAlignY=70&animation=twinkling)
 
-## 
+### Introduction 
+
+Our project was inspired by the video game, Super Mario MakerTM. However, OUR Mario Maker runs on PC and is more ✨personalized✨. Our primary goal with this project is to provide a creative space where users can challenge themselves and share their talents, all while having fun. 
+
 
 ## Team 
 > Nicholas Phillips (nwp2@illinois.edu)
