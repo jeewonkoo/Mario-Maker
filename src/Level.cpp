@@ -60,12 +60,12 @@ void Level::update(InputState keyboard_input) {
  */
 void Level::render(Vector2 top_left, Vector2 size) {
     grid_.render(top_left, size);
-    for(auto & e : entities_){
-        Rectangle r = e->rect();
-        Vector2 pos = {r.x * 64, r.y * 64};
-        Vector2 size = {r.width * 64, r.height * 64};
-        DrawRectangleV(pos, size, GREEN);
-    }
+//    for(auto & e : entities_){
+//        Rectangle r = e->rect();
+//        Vector2 pos = {r.x * 64, r.y * 64};
+//        Vector2 size = {r.width * 64, r.height * 64};
+//        DrawRectangleV(pos, size, GREEN);
+//    }
     for(auto & e : entities_){
         e->render(top_left, size);
     }
