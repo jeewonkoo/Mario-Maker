@@ -53,7 +53,7 @@ make mario_maker
 
 ### Group Roles
 
--Each member worked together to contribute to the overall code, but we also split our work based on specializations and specific features:
+Each member worked together to contribute to the overall code, but we also split our work based on specializations and specific features:
 > Rendy focusing more on test cases
 > 
 > Nick on json features like saving and loading as well as overall movement of sprites
