@@ -36,11 +36,17 @@ Mario is a game that many people enjoy, but with Mario Maker, people are allowed
 [![Click Me](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=Windows&logoColor=white)](https://www.mysql.com/products/connector/)
 ```
 git submodule update --init --recursive
+mkdir build && cd build
+cmake ..
+make mario_maker
 ```
 <img src="https://img.shields.io/badge/mac%20OS-000000?style=for-the-badge&logo=MacOS&logoColor=white"></br>
 
 ```
 git submodule update --init --recursive
+mkdir build && cd build
+cmake ..
+make mario_maker
 ```
 
 </div>
