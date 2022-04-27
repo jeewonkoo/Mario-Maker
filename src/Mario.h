@@ -44,6 +44,10 @@ public:
 
     int is_right();
 
+    void setLevel(Level*l){
+        level = l;
+    }
+
 private:
     Vector2 position;
     Vector2 velocity;

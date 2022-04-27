@@ -16,7 +16,7 @@
 
 class Level {
 public:
-    explicit Level(Texture tileset_texture, Texture sprite_texture,float px, float py): grid_(tileset_texture, 100, 16), mario_(px, py, sprite_texture, this){}
+    explicit Level(Texture tileset_texture, Texture sprite_texture,float px, float py): grid_(tileset_texture, 100, 16), mario_(std::make_unique<Mario>(px, py, sprite_texture, this)){}
 
 
     void update(InputState keyboard_input);
@@ -44,10 +44,10 @@ public:
     }
 
     Mario& mario(){
-        return mario_;
+        return *mario_;
     }
     Vector2 get_camera_offset(){
-        auto r = mario_.rect();
+        auto r = mario_->rect();
         return {r.x + r.width / 2, 0};
     }
 
@@ -63,7 +63,7 @@ private:
 public:TileGrid grid_;
     std::vector<std::unique_ptr<Entity>> entities_;
     std::vector<EntitySpawn> entity_spawns_;
-    Mario mario_;
+    std::unique_ptr<Mario> mario_;
 };
 
 

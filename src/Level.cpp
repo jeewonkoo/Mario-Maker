@@ -12,7 +12,7 @@
  * @param grid_tex  texture type of TileGrid
  * @param sprite_tex  texture type of Entity
  */
-Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(5, 5, sprite_tex, this) {
+Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_json, Texture grid_tex, Texture sprite_tex): grid_(TileGrid::from_json(grid_json, grid_tex)), mario_(std::make_unique<Mario>(5, 5, sprite_tex, this)) {
     for(const auto &ent : entities_json){
         add_entity_editor(EntitySpawn::from_json(ent), sprite_tex);
     }
@@ -24,6 +24,7 @@ Level::Level(const nlohmann::json &grid_json, const nlohmann::json& entities_jso
  * @param keyboard_input pressed keyboard by user to determine directions/jump of mario entity 
  */
 void Level::update(InputState keyboard_input) {
+    mario_->setLevel(this);
     for(auto & e : entities_){
         e->update(grid_, keyboard_input);
     }
@@ -41,11 +42,11 @@ void Level::update(InputState keyboard_input) {
     }
 
     for(auto & e : entities_){
-        if(auto collision = collide_rect(e->rect(),mario_.rect()); collision.has_value()){
-            e->on_collide({ .other = mario_, .side = collision->collision_side});
+        if(auto collision = collide_rect(e->rect(),mario_->rect()); collision.has_value()){
+            e->on_collide({ .other = *mario_, .side = collision->collision_side});
         }
-        if(auto collision = collide_rect(mario_.rect(),e->rect()); collision.has_value()){
-            mario_.on_collide({ .other = *e, .side = collision->collision_side});
+        if(auto collision = collide_rect(mario_->rect(),e->rect()); collision.has_value()){
+            mario_->on_collide({ .other = *e, .side = collision->collision_side});
         }
     }
 
@@ -69,7 +70,7 @@ void Level::render(Vector2 top_left, Vector2 size) {
     for(auto & e : entities_){
         e->render(top_left, size);
     }
-    mario_.render(top_left, size);
+    mario_->render(top_left, size);
 }
 
 /**
