@@ -18,7 +18,28 @@ Boo::Boo(float px, float py, Texture texture, Mario* mpt) : position({ px, py })
  * @param size size of Boo on graphic 
  */
 void Boo::render(Vector2 top_left, Vector2 size) {
-	DrawTexturePro(tex, SpriteLocations::BooOpen, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
+	auto src = SpriteLocations::BooOpen;
+	Vector2 mPos = MarioPointer->getPosition();
+	if (mPos.x < this->position.x) {
+		if (is_shy == true) {
+			src = SpriteLocations::BooClosed;
+			src.width *= -1;
+		}
+		else {
+			src = SpriteLocations::BooOpen;
+		}
+	}
+
+	else {
+		if (is_shy == true) {
+			src = SpriteLocations::BooClosed;
+		}
+		else {
+			src = SpriteLocations::BooOpen;
+			src.width *= -1;
+		}
+	}
+	DrawTexturePro(tex, src, Rectangle{ 0, 0, 64, 64 }, Vector2Subtract(top_left, Vector2Multiply(position, { 64.f, 64.f })), 0, WHITE);
 }
 
 /**
@@ -30,18 +51,40 @@ void Boo::render(Vector2 top_left, Vector2 size) {
 void Boo::update(const TileGrid& level, const InputState& keyboard_input) {
 	Vector2 mPos = MarioPointer->getPosition();
 	if (mPos.x < this->position.x) {
-		position.x -= 0.03;
+		if (MarioPointer->is_right() == -1) {
+			is_shy = false;
+			position.x -= 0.03;
+			if (mPos.y > this->position.y) {
+				position.y += 0.03;
+			}
+			else if (mPos.y < this->position.y) {
+				position.y -= 0.03;
+			}
+		}
+		else {
+			is_shy = true;
+			position.x += 0;
+			position.y += 0;
+		}
 	}
 	else if (mPos.x > this->position.x) {
-		position.x += 0.03;
+		if (MarioPointer->is_right() == 1) {
+			is_shy = false;
+			position.x += 0.03;
+			if (mPos.y > this->position.y) {
+				position.y += 0.03;
+			}
+			else if (mPos.y < this->position.y) {
+				position.y -= 0.03;
+			}
+		}
+		else {
+			is_shy = true;
+			position.x += 0;
+			position.y += 0;
+		}
 	}
 
-	if (mPos.y > this->position.y) {
-		position.y += 0.03;
-	}
-	else if (mPos.y < this->position.y) {
-		position.y -= 0.03;
-	}
 	
 }
 

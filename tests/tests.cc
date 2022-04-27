@@ -263,7 +263,7 @@ TEST_CASE("BOO") {
 
 	//Check if Boo follows wherever Mario goes 
 	SECTION("Boo moves towards mario") {
-		Level level{ Texture{},Texture{},30,8 };
+		Level level{ Texture{},Texture{},10,8 };
 
 
 		Tile t{ true, TileLocations::Ground };
@@ -279,7 +279,9 @@ TEST_CASE("BOO") {
 		Vector2 initialpos = boo->get_position();
 
 
-		InputState s = { false,false,false,false,false };
+		InputState s = { false,true,false,false,false };
+		level.update(s);
+		s = { false,false,false,false,false };
 		for (int i = 0; i < 100; i++) {
 			level.update(s);
 		}
@@ -302,16 +304,18 @@ TEST_CASE("BOO") {
 		}
 
 
-		EntitySpawn b(9, 5, EntitySpawn::Type::Boo);
+		EntitySpawn b(5, 5, EntitySpawn::Type::Boo);
 		Boo* boo = (Boo*)(level.add_entity_editor(b, Texture{}));
-
 
 
 		MarioPowerUp currmar = mario.get_PowerUp();
 		REQUIRE(currmar == MarioPowerUp::Big);
 
-		InputState s = { false,false,false,false,false };
-		for (int i = 0; i < 100; i++) {
+		InputState s = { false,true,false,false,false };
+		level.update(s);
+		level.update(s);
+		s = { false,false,false,false,false };
+		for (int i = 0; i < 200; i++) {
 			level.update(s);
 		}
 
