@@ -51,6 +51,17 @@ make mario_maker
 
 </div>
 
+### Group Roles
+
+-Each member worked together to contribute to the overall code, but we also split our work based on specializations and specific features:
+> Rendy focusing more on test cases
+> 
+> Nick on json features like saving and loading as well as overall movement of sprites
+> 
+> Elaine on UI and making sprites
+>
+> Jeewon on documentation and sprites
+
 
 #
 course-project-pb-b created by GitHub Classroom
