@@ -31,7 +31,7 @@ Mario is a game that many people enjoy, but with Mario Maker, people are allowed
 #### Enemies: Enemies for the user to fight/avoid
 #### PowerUps: Users can collect power ups that will change the behavior of the character
 
-## Build Instructions
+## Installation Instructions
 
 <div align=center>
 
