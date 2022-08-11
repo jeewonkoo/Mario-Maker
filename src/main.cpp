@@ -43,6 +43,28 @@ int main(){
 
     SetTargetFPS(60);                                                   // Set our game to run at 60 frames-per-second
 
+    auto m = std::make_unique<Mario>(10, 3, sprite_texture);
+
+    Mario * mario = m.get();
+    level.add_entity(std::move(m));
+
+    //add mushroom entity for Mario powerUp
+    for(int i = 0; i < 16; i++){
+        level.add_entity(std::make_unique<Mushroom>(i, 10, sprite_texture));
+    }
+
+    //add mushroom entity for Mario powerUp
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<SmallShroom>(i, 10, sprite_texture));
+    }
+
+    //add Goomba entity (villian)
+    for (int i = 0; i < 16; i++) {
+        level.add_entity(std::make_unique<Goomba>(i, 10, sprite_texture));
+    }
+
+    //add Boo entity (villian)
+    level.add_entity(std::make_unique<Boo>(5,10, sprite_texture,mario));
     bool in_menu = false;
     bool in_builder = false;
     bool last_enter_key = false;
@@ -55,11 +77,13 @@ int main(){
         [&](auto file_name){ level = load_level(file_name, tile_texture, sprite_texture); in_builder = false;},
         [&](){in_builder = true; menu.close(); in_menu = false;}};
 
+
     // Main game loop
     while (!WindowShouldClose()){
 
         PollInputEvents();
 
+        //receive keoboard input for direction/jump
 
         if(IsKeyDown(KEY_ENTER) != last_enter_key){
             last_enter_key = IsKeyDown(KEY_ENTER);
@@ -73,7 +97,6 @@ int main(){
                 }
             }
         }
-
         InputState input {
             .left = IsKeyDown(KEY_LEFT),
             .right = IsKeyDown(KEY_RIGHT),
@@ -82,7 +105,10 @@ int main(){
             .space = IsKeyDown(KEY_SPACE),
             .f = IsKeyDown(KEY_F)
         };
+        
+        level.update(input);
 
+        //adjust background image of graphic while mario is moving  
 //        level.mario().update(level.grid_, input);
         if(in_menu){
             menu.handle_events();
@@ -162,7 +188,8 @@ int main(){
 
     std::ofstream("saved_level.json") << level.to_json();
 
-    CloseWindow();                                                      // Close window and OpenGL context
+    // Close window and OpenGL context
+    CloseWindow();     
 
     return 0;
 }

@@ -52,9 +52,11 @@ private:
     Vector2 position;
     Vector2 velocity;
     Texture tex;
+
     //whether mario is currently grounded
     bool grounded{};
     bool jumping{};
+    
     //whether mario pressed space in the previous frame
     bool last_space{};
     // whether mario pressed f in the previous frame
@@ -71,7 +73,9 @@ private:
     MarioPowerUp power_up = MarioPowerUp::Big;
 
     int frames_since_jump{};
-    static constexpr float jump_instant_accel = 0.3;
+
+    //static float variable for gravity, delay, acceleration, speed of mario
+    static constexpr float jump_instant_accel = 0.3;                        
     static constexpr float jump_continuous_accel = 0.025;
     static constexpr float low_speed_threshold = 0.2;
     static constexpr int jump_continuous_frames = 12;
@@ -85,6 +89,8 @@ private:
     static constexpr float ground_traction = 0.05;
     static constexpr float air_traction = 0;
 
+
+    //static array for changing mario size (chaning image sprite)
     static constexpr std::array<Rectangle, 6> sprite_sources = {
             SpriteLocations::MarioSmall,
             SpriteLocations::MarioBig,

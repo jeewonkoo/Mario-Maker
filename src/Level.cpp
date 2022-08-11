@@ -5,6 +5,10 @@
 #include "Level.h"
 
 /**
+ * update graphic based on keyboard_input, which is same as how mario moves
+ * 
+ * @param keyborad_input keyboard pressed by Users 
+=======
  * Constructor for level class. Add tile and entity to level respectively.
  * 
  * @param grid_json json type of TileGrid
@@ -54,6 +58,11 @@ void Level::update(InputState keyboard_input) {
 }
 
 /**
+ * Render(draw) graphic 
+ * 
+ * @param top_left top_left location of entity/tile that you want to render 
+ * @param size size of entity/tile that you want to render 
+=======
  * Renders(draw) entity on graphic. Accepts two Vector2 as parameters
  *
  * @param top_left top left location of mario on graphic

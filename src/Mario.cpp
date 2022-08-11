@@ -226,6 +226,10 @@ void Mario::on_collide(EntityCollision collision) {
 }
 
 /**
+ * Returns rectangle object to get position of mario for drawing or getting offset purpose 
+ * 
+ * @return box returns rectangle
+=======
  * Resize hitbox of Mario entity
  * (Hitbox refers padding of entity image that determins collision with other entity)
  * 
