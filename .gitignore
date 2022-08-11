@@ -4,3 +4,4 @@ cmake-*
 .vscode
 out
 build
+saved_level.json

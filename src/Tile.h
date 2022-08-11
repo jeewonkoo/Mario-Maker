@@ -5,8 +5,48 @@
 #include<vector>
 #include<optional>
 
+
+#include<nlohmann/json.hpp>
+/**
+ * Tile struct for tile grid (brick tile block)
+ */
 struct Tile {
+
     bool solid{};
+    Rectangle tex_src;
+
+    /**
+     * This function converts tile location/data into json in order to save/load level 
+     * 
+     * @return tile_json converted json
+     */
+    nlohmann::json to_json() const {
+        auto tile_json = nlohmann::json();
+        tile_json["solid"] = solid;
+        tile_json["x"] = tex_src.x;
+        tile_json["y"] = tex_src.y;
+        tile_json["w"] = tex_src.width;
+        tile_json["h"] = tex_src.height;
+        return tile_json;
+    }
+
+    /**
+     * This function converts json types of tile location/data into tile struct
+     * 
+     * @param json json type data 
+     * @return converted tile struct 
+     */
+    static Tile from_json(const nlohmann::json & json){
+        return {
+            .solid = json["solid"],
+            .tex_src = {
+                .x = json["x"],
+                .y = json["y"],
+                .width = json["w"],
+                .height = json["h"]
+            }
+        };
+    }
 };
 
 enum class Side {
@@ -32,6 +72,17 @@ struct TileCollisionSet {
     std::optional<Vector2> eject_vector;
 };
 
+/**
+ * This function checks collision between two different tile struct. 
+ * If two struct collies on left side, it returns Collision struct with left side and respective vector.
+ * If two struct collies on right side, it returns Collision struct with right side and respective vector.
+ * If two struct collies on top side, it returns Collision struct with top side and respective vector.
+ * If two struct collies on bottm side, it returns Collision struct with bottm side and respective vector.
+ * if not, return nullopt.
+ * 
+ * @return Collision struct.
+ */
+
 inline std::optional<Collision> collide_rect(Rectangle from, Rectangle against){
     // less than 0 means inside
     float left = -against.x - against.width + from.x;
@@ -49,10 +100,9 @@ inline std::optional<Collision> collide_rect(Rectangle from, Rectangle against){
     float y_dist = std::min(std::abs(from.y - against.y - against.height), std::abs(against.y - from.y - from.height));
     float area = x_dist * y_dist;
 
-
+    if(closest == top) return {Collision{ Side::TOP, Vector2{0, -top}, area}};
     if(closest == left) return {Collision{ Side::LEFT, Vector2{-left, 0}, area}};
     if(closest == right) return {Collision{ Side::RIGHT, Vector2{right, 0}, area}};
-    if(closest == top) return {Collision{ Side::TOP, Vector2{0, -top}, area}};
     if(closest == bottom) return {Collision{ Side::BOTTOM, Vector2{0, bottom}, area}};
 
     return std::nullopt;

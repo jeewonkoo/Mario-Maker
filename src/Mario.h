@@ -5,6 +5,9 @@
 #include "Entity.h"
 #include "InputState.h"
 #include "SpriteLocations.h"
+#include "EntitySpawn.h"
+
+class Level;
 
 enum class MarioPowerUp {
     None = 0,
@@ -12,11 +15,12 @@ enum class MarioPowerUp {
     Small = 2,
     Fire = 3,
     Tanookie = 4,
+    SmallInv = 5
 };
 
 class Mario : public Entity {
 public:
-    Mario(float px, float py, Texture texture);
+    Mario(float px, float py, Texture texture, Level* lvl);
 
     void render(Vector2 top_left, Vector2 size) override;
 
@@ -34,6 +38,16 @@ public:
 
     Vector2 getPosition() { return position; }
 
+    MarioPowerUp get_PowerUp() { return power_up; }
+
+    bool is_dead();
+
+    int is_right();
+
+    void setLevel(Level*l){
+        level = l;
+    }
+
 private:
     Vector2 position;
     Vector2 velocity;
@@ -45,8 +59,18 @@ private:
     
     //whether mario pressed space in the previous frame
     bool last_space{};
+    // whether mario pressed f in the previous frame
+    bool last_f{};
 
-    MarioPowerUp power_up = MarioPowerUp::Fire;
+    bool dead;
+    int invincibility;
+
+    int facing_right;
+    int run_animation_frame = 0;
+
+    Level* level;
+
+    MarioPowerUp power_up = MarioPowerUp::Big;
 
     int frames_since_jump{};
 
@@ -67,17 +91,18 @@ private:
 
 
     //static array for changing mario size (chaning image sprite)
-    static constexpr std::array<Rectangle, 5> sprite_sources = {
+    static constexpr std::array<Rectangle, 6> sprite_sources = {
             SpriteLocations::MarioSmall,
             SpriteLocations::MarioBig,
             SpriteLocations::MarioSmall, //mini
             SpriteLocations::MarioFire,
             SpriteLocations::MarioTanookie,
+            SpriteLocations::MarioSmall
     };
 
-    std::array<Rectangle, 5> sprite_dests{};
+    std::array<Rectangle, 6> sprite_dests{};
 
-    std::array<Rectangle, 5> hit_boxes{};
+    std::array<Rectangle, 6> hit_boxes{};
 };
 
 #endif

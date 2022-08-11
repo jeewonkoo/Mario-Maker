@@ -6,6 +6,23 @@
 #include <cassert>
 #include <raymath.h>
 
+/** 
+ * Constructor for TileGrid class. 
+ * 
+ * @param texture TileGrid texture 
+ * @param width width of TileGrid
+ * @param height height of TileGrid
+ * @param rows reference type of json type data
+ */
+TileGrid::TileGrid(Texture texture, size_t width, size_t height, const nlohmann::json& rows): tex(texture), width(width), height(height) {
+    resize(width, height);
+    for(size_t y = 0; y < height; y++){
+        for(size_t x = 0; x < width; x++){
+            at_mut(x,y) = Tile::from_json(rows[y][x]);
+        }
+    }
+}
+
 /**
  * Renders(draw) tile grids on graphic. Accepts two Vector2 as parameters
  * 
@@ -20,7 +37,7 @@ void TileGrid::render(Vector2 top_left, Vector2 size) const {
             auto left = Vector2Add(top_left, Vector2Multiply(step, {float(x), float(y)}));
             if(at(x,y).solid){
                 //DrawRectangleV(left, step, RED);
-                DrawTexturePro(tex, Rectangle{ 1, 205, 15, 15 }, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
+                DrawTexturePro(tex, at(x,y).tex_src, Rectangle{ left.x, left.y, 64, 64 }, Vector2Subtract(left, Vector2Multiply({ static_cast<float>(x), static_cast<float>(y) }, { 64.f, 64.f })), 0, WHITE);
             } else {
 
             }
@@ -119,3 +136,40 @@ void TileGrid::resize(size_t width, size_t height) {
     this->height = height;
 }
 
+using namespace nlohmann;
+
+/**
+ * This function converts tile location/data into json in order to save/load level 
+ * 
+ * @return grid_json converted json
+ */
+nlohmann::json TileGrid::to_json() const {
+    auto grid_json = json{};
+    grid_json["width"] = width;
+    grid_json["height"] = height;
+
+    auto rows = json::array();
+    for(int y = 0; y < height; y++){
+        auto row = json::array();
+        for(int x = 0; x < width; x++){
+            row.push_back(at(x,y).to_json());
+        }
+        rows.push_back(std::move(row));
+    }
+
+    grid_json["rows"] = std::move(rows);
+    return grid_json;
+}
+
+/**
+ * This function converts json types of tile location/data into tile struct
+ * 
+ * @param json json type data 
+ * @param tex TileGrid texture
+ * @return converted tile struct 
+ */
+TileGrid TileGrid::from_json(const nlohmann::json& json, Texture tex) {
+    size_t width = json["width"];
+    size_t height = json["height"];
+    return {tex, width, height, json["rows"]};
+}

@@ -4,6 +4,7 @@
 #include"Tile.h"
 #include"TileGrid.h"
 #include "InputState.h"
+#include<memory>
 
 
 //Class called Entity. This class is for villians and mario powerUps. 
@@ -22,8 +23,11 @@ enum class EntityType {
     Mushroom,
     TanookieLeaf,
     SmallShroom,
-    Piranha
+    Piranha,
+    FireFlower,
+    FireBall
 };
+
 
 class Entity {
 public:
@@ -40,12 +44,13 @@ public:
     //update the entity
     virtual void update(const TileGrid &level, const InputState &keyboard_input) = 0;
 
-    //weather the entity should be removed from the current entities list
+    //whether the entity should be removed from the current entities list
     virtual bool should_remove() = 0;
 
     virtual EntityType type() = 0;
 
     virtual ~Entity() = default;
 };
+
 
 #endif //MARIO_MAKER_ENTITY_H
